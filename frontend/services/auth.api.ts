@@ -27,7 +27,7 @@ export const authApi = {
           phone: "+1234567890",
           status: "ACTIVE",
           roleId: "admin-role",
-          role: { id: "admin-role", name: "ADMIN", description: "System Administrator", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+          role: { id: "admin-role", name: "ADMIN", description: "System Administrator" },
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         }
@@ -44,7 +44,7 @@ export const authApi = {
           phone: "+1987654321",
           status: "ACTIVE",
           roleId: "guest-role",
-          role: { id: "guest-role", name: "GUEST", description: "Hotel Guest", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+          role: { id: "guest-role", name: "GUEST", description: "Hotel Guest" },
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         }
@@ -73,7 +73,7 @@ export const authApi = {
         phone: data.phone || "+1234567890",
         status: "ACTIVE",
         roleId: "guest-role",
-        role: { id: "guest-role", name: "GUEST", description: "Hotel Guest", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+        role: { id: "guest-role", name: "GUEST", description: "Hotel Guest" },
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }
@@ -95,7 +95,7 @@ export const authApi = {
       phone: "+1234567890",
       status: "ACTIVE",
       roleId: "admin-role",
-      role: { id: "admin-role", name: "ADMIN", description: "System Administrator", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+      role: { id: "admin-role", name: "ADMIN", description: "System Administrator" },
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
