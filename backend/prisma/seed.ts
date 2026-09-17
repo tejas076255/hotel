@@ -357,64 +357,31 @@ async function main() {
   );
   console.log(`✅ Created ${roomImagesData.length} room images`);
 
-  // Create sample rooms
-  console.log('📝 Creating sample rooms...');
+  // Create 50 rooms (Floors 1 to 5)
+  console.log('📝 Creating 50 sample rooms across 5 floors...');
   const standardType = roomTypes[0];
   const deluxeType = roomTypes[1];
   const suiteType = roomTypes[2];
 
-  const rooms: Promise<any>[] = [];
-
-  // Create 5 standard rooms (floor 1)
-  for (let i = 1; i <= 5; i++) {
-    rooms.push(
-      prisma.room.upsert({
-        where: { roomNumber: `10${i}` },
+  let roomCount = 0;
+  for (let floor = 1; floor <= 5; floor++) {
+    const type = floor <= 2 ? standardType : floor <= 4 ? deluxeType : suiteType;
+    for (let i = 1; i <= 10; i++) {
+      const roomNum = `${floor}${i < 10 ? '0' + i : i}`;
+      await prisma.room.upsert({
+        where: { roomNumber: roomNum },
         update: {},
         create: {
-          roomNumber: `10${i}`,
-          floor: 1,
+          roomNumber: roomNum,
+          floor: floor,
           status: 'AVAILABLE',
-          typeId: standardType.id,
+          typeId: type.id,
         },
-      }),
-    );
+      });
+      roomCount++;
+    }
   }
-
-  // Create 5 deluxe rooms (floor 2)
-  for (let i = 1; i <= 5; i++) {
-    rooms.push(
-      prisma.room.upsert({
-        where: { roomNumber: `20${i}` },
-        update: {},
-        create: {
-          roomNumber: `20${i}`,
-          floor: 2,
-          status: 'AVAILABLE',
-          typeId: deluxeType.id,
-        },
-      }),
-    );
-  }
-
-  // Create 3 suite rooms (floor 3)
-  for (let i = 1; i <= 3; i++) {
-    rooms.push(
-      prisma.room.upsert({
-        where: { roomNumber: `30${i}` },
-        update: {},
-        create: {
-          roomNumber: `30${i}`,
-          floor: 3,
-          status: 'AVAILABLE',
-          typeId: suiteType.id,
-        },
-      }),
-    );
-  }
-
-  await Promise.all(rooms);
-  console.log(`Created ${rooms.length} rooms`);
+  console.log(`✅ Created ${roomCount} rooms`);
 
   // Create Admin & Guest Users
   console.log('📝 Creating demo users...');
