@@ -6,8 +6,10 @@
 // Check if browser supports WebAuthn
 export const isWebAuthnSupported = (): boolean => {
   return (
-    window?.PublicKeyCredential !== undefined &&
-    navigator?.credentials !== undefined
+    typeof window !== 'undefined' &&
+    typeof navigator !== 'undefined' &&
+    typeof window.PublicKeyCredential !== 'undefined' &&
+    typeof navigator.credentials !== 'undefined'
   );
 };
 
@@ -31,7 +33,9 @@ export const base64urlToUint8Array = (base64url: string): Uint8Array => {
   const padding = '='.repeat((4 - (base64url.length % 4)) % 4);
   const base64 = (base64url + padding).replace(/-/g, '+').replace(/_/g, '/');
   
-  const rawData = window.atob(base64);
+  const rawData = typeof window !== 'undefined' 
+    ? window.atob(base64) 
+    : Buffer.from(base64, 'base64').toString('binary');
   const outputArray = new Uint8Array(rawData.length);
   
   for (let i = 0; i < rawData.length; ++i) {
@@ -44,7 +48,10 @@ export const base64urlToUint8Array = (base64url: string): Uint8Array => {
  * Convert Uint8Array to base64url string
  */
 export const uint8ArrayToBase64url = (buffer: Uint8Array): string => {
-  const base64 = window.btoa(String.fromCharCode(...buffer));
+  const binary = Array.from(buffer).map(b => String.fromCharCode(b)).join('');
+  const base64 = typeof window !== 'undefined'
+    ? window.btoa(binary)
+    : Buffer.from(buffer).toString('base64');
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 };
 
