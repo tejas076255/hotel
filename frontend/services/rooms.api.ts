@@ -53,6 +53,7 @@ const MOCK_ROOM_TYPES: RoomType[] = [
   {
     id: "1",
     name: "Standard Deluxe Room",
+    slug: "standard-deluxe-room",
     description: "Comfortable room with modern amenities, king bed, and city view.",
     basePrice: 2500,
     capacity: 2,
@@ -60,8 +61,9 @@ const MOCK_ROOM_TYPES: RoomType[] = [
     bedCount: 1,
     size: 32,
     amenities: ["WiFi", "TV", "Air Conditioning", "Minibar"],
+    displayOrder: 1,
     images: [
-      { id: "img1", url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&auto=format&fit=crop", altText: "Room", isPrimary: true, displayOrder: 1 }
+      { id: "img1", roomTypeId: "1", url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&auto=format&fit=crop", caption: "Room", isPrimary: true, displayOrder: 1 }
     ],
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -70,6 +72,7 @@ const MOCK_ROOM_TYPES: RoomType[] = [
   {
     id: "2",
     name: "Executive Ocean View Suite",
+    slug: "executive-ocean-view-suite",
     description: "Spacious suite featuring panoramic ocean views, private balcony, and luxury bath.",
     basePrice: 4500,
     capacity: 3,
@@ -77,8 +80,9 @@ const MOCK_ROOM_TYPES: RoomType[] = [
     bedCount: 1,
     size: 55,
     amenities: ["WiFi", "TV", "Air Conditioning", "Minibar", "Balcony", "Bathtub"],
+    displayOrder: 2,
     images: [
-      { id: "img2", url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&auto=format&fit=crop", altText: "Suite", isPrimary: true, displayOrder: 1 }
+      { id: "img2", roomTypeId: "2", url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&auto=format&fit=crop", caption: "Suite", isPrimary: true, displayOrder: 1 }
     ],
     isActive: true,
     createdAt: new Date().toISOString(),
@@ -87,6 +91,7 @@ const MOCK_ROOM_TYPES: RoomType[] = [
   {
     id: "3",
     name: "Presidential Royal Suite",
+    slug: "presidential-royal-suite",
     description: "Ultra-luxurious suite with private dining, jacuzzi, butler service, and skyline view.",
     basePrice: 8500,
     capacity: 4,
@@ -94,8 +99,9 @@ const MOCK_ROOM_TYPES: RoomType[] = [
     bedCount: 2,
     size: 90,
     amenities: ["WiFi", "TV", "Air Conditioning", "Minibar", "Balcony", "Bathtub", "Safe", "Work Desk"],
+    displayOrder: 3,
     images: [
-      { id: "img3", url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&auto=format&fit=crop", altText: "Presidential", isPrimary: true, displayOrder: 1 }
+      { id: "img3", roomTypeId: "3", url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&auto=format&fit=crop", caption: "Presidential", isPrimary: true, displayOrder: 1 }
     ],
     isActive: true,
     createdAt: new Date().toISOString(),
