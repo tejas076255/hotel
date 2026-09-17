@@ -27,8 +27,8 @@ async function bootstrap() {
     }),
   );
   app.enableCors({
-    origin: 'http://localhost:3000', // Chỉ cho phép Next.js gọi
-    credentials: true, // Cho phép gửi cookie/token
+    origin: true, // Allow requests from any origin (Vercel, localhost, etc.) with credentials
+    credentials: true, // Allow cookies and auth headers
   });
   await app.listen(process.env.PORT ?? 3001);
 }

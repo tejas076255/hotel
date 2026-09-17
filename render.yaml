@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: stayzy-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx prisma db push && npm run start:prod
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        value: super_secret_hotel_jwt_key_2026
+      - key: DATABASE_URL
+        value: postgresql://postgres:Tejas%4003311@db.zpqbrvmgjjubhvqomler.supabase.co:5432/postgres
+      - key: DIRECT_URL
+        value: postgresql://postgres:Tejas%4003311@db.zpqbrvmgjjubhvqomler.supabase.co:5432/postgres
+      - key: REDIS_HOST
+        value: localhost
+      - key: REDIS_PORT
+        value: 6379
