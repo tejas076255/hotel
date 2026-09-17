@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Query } fr
 import { RoomTypesService } from './room-types.service';
 import { CreateRoomTypeDto, QueryRoomTypesDto, UpdateRoomTypeDto } from './dto/room-type.dto';
 import { ZodValidationPipe } from 'nestjs-zod';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('room-types')
 export class RoomTypesController {
@@ -14,13 +15,14 @@ export class RoomTypesController {
         return this.roomTypesService.create(createRoomTypeDto);
     }
 
+    @Public()
     @Get()
     @UsePipes(ZodValidationPipe)
     findAll(@Query() query: QueryRoomTypesDto) {
         return this.roomTypesService.findAll(query);
     }
 
-
+    @Public()
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.roomTypesService.findOne(id);

@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@ne
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto, UpdateRoomDto } from './dto/room.dto';
 import { ZodValidationPipe } from 'nestjs-zod';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('rooms')
 export class RoomsController {
@@ -13,11 +14,13 @@ export class RoomsController {
     return this.roomsService.create(createRoomDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.roomsService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.roomsService.findOne(id);
