@@ -55,12 +55,12 @@ export default function RoomTypesPage() {
     const deleteMutation = useMutation({
         mutationFn: (id: string) => roomsApi.deleteRoomType(id),
         onSuccess: () => {
-            toast.success("Đã xóa loại phòng thành công!");
+            toast.success("Room type deleted successfully!");
             queryClient.invalidateQueries({ queryKey: ["room-types"] });
             setDeletingRoomType(null);
         },
         onError: (error: any) => {
-            toast.error("Không thể xóa loại phòng", {
+            toast.error("Failed to delete room type", {
                 description: error.response?.data?.message || error.message,
             });
         },
@@ -72,16 +72,13 @@ export default function RoomTypesPage() {
     );
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-        }).format(amount);
+        return "₹" + amount.toLocaleString("en-IN");
     };
 
     const getBedTypeLabel = (bedType: string) => {
         const labels: Record<string, string> = {
-            SINGLE: "Đơn",
-            DOUBLE: "Đôi",
+            SINGLE: "Single",
+            DOUBLE: "Double",
             QUEEN: "Queen",
             KING: "King",
             TWIN: "Twin",
@@ -95,10 +92,10 @@ export default function RoomTypesPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
-                        Quản lý loại phòng
+                        Room Types Management
                     </h1>
                     <p className="text-muted-foreground mt-1">
-                        Quản lý các loại phòng trong khách sạn
+                        Manage all room categories and pricing
                     </p>
                 </div>
                 <AddRoomTypeDialog />
@@ -109,7 +106,7 @@ export default function RoomTypesPage() {
                 <div className="relative flex-1 max-w-md">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
-                        placeholder="Tìm kiếm loại phòng..."
+                        placeholder="Search room types..."
                         className="pl-10 rounded-xl"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -133,7 +130,7 @@ export default function RoomTypesPage() {
             ) : filteredRoomTypes.length === 0 ? (
                 <Card className="border-0 shadow-lg rounded-2xl">
                     <CardContent className="p-8 text-center text-muted-foreground">
-                        Không tìm thấy loại phòng nào
+                        No room types found
                     </CardContent>
                 </Card>
             ) : (
@@ -177,20 +174,20 @@ export default function RoomTypesPage() {
                                                     onClick={() => setEditingRoomType(roomType)}
                                                 >
                                                     <Edit className="h-4 w-4 mr-2" />
-                                                    Chỉnh sửa
+                                                    Edit
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem
                                                     className="cursor-pointer text-red-600"
                                                     onClick={() => setDeletingRoomType(roomType)}
                                                 >
                                                     <Trash2 className="h-4 w-4 mr-2" />
-                                                    Xóa
+                                                    Delete
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </div>
                                     <Badge className="absolute bottom-3 left-3 bg-white/90 dark:bg-black/70 text-slate-900 dark:text-white backdrop-blur-sm">
-                                        {roomType.isActive ? "Đang hoạt động" : "Tạm ngưng"}
+                                        {roomType.isActive ? "Active" : "Inactive"}
                                     </Badge>
                                 </div>
 
@@ -200,7 +197,7 @@ export default function RoomTypesPage() {
                                         <div>
                                             <h3 className="font-semibold text-lg">{roomType.name}</h3>
                                             <p className="text-sm text-muted-foreground line-clamp-1">
-                                                {roomType.description || "Không có mô tả"}
+                                                {roomType.description || "No description"}
                                             </p>
                                         </div>
                                         <p className="text-lg font-bold text-orange-600">
@@ -211,7 +208,7 @@ export default function RoomTypesPage() {
                                     <div className="flex items-center gap-3 text-sm text-muted-foreground">
                                         <div className="flex items-center gap-1">
                                             <Users className="h-4 w-4" />
-                                            <span>{roomType.capacity} khách</span>
+                                            <span>{roomType.capacity} guests</span>
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <BedDouble className="h-4 w-4" />
@@ -232,10 +229,10 @@ export default function RoomTypesPage() {
             <Dialog open={!!deletingRoomType} onOpenChange={() => setDeletingRoomType(null)}>
                 <DialogContent className="sm:max-w-md rounded-2xl">
                     <DialogHeader>
-                        <DialogTitle>Xác nhận xóa</DialogTitle>
+                        <DialogTitle>Confirm Delete</DialogTitle>
                         <DialogDescription>
-                            Bạn có chắc chắn muốn xóa loại phòng "{deletingRoomType?.name}"?
-                            Hành động này không thể hoàn tác.
+                            Are you sure you want to delete room type "{deletingRoomType?.name}"?
+                            This action cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
@@ -245,16 +242,16 @@ export default function RoomTypesPage() {
                             className="rounded-xl"
                             disabled={deleteMutation.isPending}
                         >
-                            Hủy
+                            Cancel
                         </Button>
                         <Button
                             variant="destructive"
                             onClick={() => deletingRoomType && deleteMutation.mutate(deletingRoomType.id)}
-                            className="rounded-xl"
+                            className="rounded-xl text-white"
                             disabled={deleteMutation.isPending}
                         >
                             {deleteMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                            Xóa
+                            Delete
                         </Button>
                     </DialogFooter>
                 </DialogContent>

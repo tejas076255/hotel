@@ -39,7 +39,7 @@ export function RoomFilters({
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder="Tìm theo số phòng..."
+                            placeholder="Search by room number..."
                             className="pl-10 rounded-xl border-0 bg-slate-100 dark:bg-slate-800"
                             value={searchQuery}
                             onChange={(e) => onSearchChange(e.target.value)}
@@ -47,10 +47,10 @@ export function RoomFilters({
                     </div>
                     <Select value={typeFilter} onValueChange={onTypeChange}>
                         <SelectTrigger className="w-full sm:w-48 rounded-xl border-0 bg-slate-100 dark:bg-slate-800">
-                            <SelectValue placeholder="Loại phòng" />
+                            <SelectValue placeholder="Room Type" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="all">Tất cả loại</SelectItem>
+                            <SelectItem value="all">All Types</SelectItem>
                             {roomTypes.map((type) => (
                                 <SelectItem key={type.id} value={type.id}>
                                     {type.name}
@@ -60,10 +60,10 @@ export function RoomFilters({
                     </Select>
                     <Select value={statusFilter} onValueChange={onStatusChange}>
                         <SelectTrigger className="w-full sm:w-40 rounded-xl border-0 bg-slate-100 dark:bg-slate-800">
-                            <SelectValue placeholder="Trạng thái" />
+                            <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="all">Tất cả</SelectItem>
+                            <SelectItem value="all">All Statuses</SelectItem>
                             {statusOptions.map((opt) => (
                                 <SelectItem key={opt.value} value={opt.value}>
                                     {opt.label}

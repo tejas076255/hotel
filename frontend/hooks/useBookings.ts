@@ -43,11 +43,11 @@ export function useCreateBooking() {
     mutationFn: (data: CreateBookingDto) => bookingsApi.createBooking(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: bookingKeys.lists() });
-      toast.success('Đặt phòng thành công!');
+      toast.success('Room booked successfully!');
     },
     onError: (error: any) => {
       const message =
-        error.response?.data?.message || 'Đặt phòng thất bại. Vui lòng thử lại.';
+        error.response?.data?.message || 'Booking failed. Please try again.';
       toast.error(message);
     },
   });
@@ -67,12 +67,12 @@ export function useUpdateBooking() {
       queryClient.invalidateQueries({
         queryKey: bookingKeys.detail(variables.id),
       });
-      toast.success('Cập nhật đặt phòng thành công!');
+      toast.success('Booking updated successfully!');
     },
     onError: (error: any) => {
       const message =
         error.response?.data?.message ||
-        'Cập nhật thất bại. Vui lòng thử lại.';
+        'Update failed. Please try again.';
       toast.error(message);
     },
   });
@@ -92,11 +92,11 @@ export function useCancelBooking() {
       queryClient.invalidateQueries({
         queryKey: bookingKeys.detail(variables.id),
       });
-      toast.success('Hủy đặt phòng thành công!');
+      toast.success('Booking cancelled successfully!');
     },
     onError: (error: any) => {
       const message =
-        error.response?.data?.message || 'Hủy đặt phòng thất bại. Vui lòng thử lại.';
+        error.response?.data?.message || 'Cancellation failed. Please try again.';
       toast.error(message);
     },
   });
@@ -123,12 +123,12 @@ export function useUpdateBookingStatus() {
       queryClient.invalidateQueries({
         queryKey: bookingKeys.detail(variables.id),
       });
-      toast.success('Cập nhật trạng thái thành công!');
+      toast.success('Booking status updated successfully!');
     },
     onError: (error: any) => {
       const message =
         error.response?.data?.message ||
-        'Cập nhật trạng thái thất bại. Vui lòng thử lại.';
+        'Failed to update booking status. Please try again.';
       toast.error(message);
     },
   });

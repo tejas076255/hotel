@@ -54,9 +54,9 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
     };
 
     const labels: Record<string, string> = {
-      ACTIVE: 'Hoạt động',
-      INACTIVE: 'Không hoạt động',
-      BANNED: 'Đã khóa',
+      ACTIVE: 'Active',
+      INACTIVE: 'Inactive',
+      BANNED: 'Banned',
     };
 
     return (
@@ -81,19 +81,19 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
           <TableHeader>
             <TableRow className="border-slate-200/50 dark:border-slate-800/50 hover:bg-transparent">
               <TableHead className="font-semibold">Email</TableHead>
-              <TableHead className="font-semibold">Họ tên</TableHead>
-              <TableHead className="font-semibold">Số điện thoại</TableHead>
-              <TableHead className="font-semibold">Vai trò</TableHead>
-              <TableHead className="font-semibold">Trạng thái</TableHead>
-              <TableHead className="font-semibold">Ngày tạo</TableHead>
-              <TableHead className="text-right font-semibold">Hành động</TableHead>
+              <TableHead className="font-semibold">Full Name</TableHead>
+              <TableHead className="font-semibold">Phone Number</TableHead>
+              <TableHead className="font-semibold">Role</TableHead>
+              <TableHead className="font-semibold">Status</TableHead>
+              <TableHead className="font-semibold">Created Date</TableHead>
+              <TableHead className="text-right font-semibold">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                  Không có dữ liệu
+                  No data found
                 </TableCell>
               </TableRow>
             ) : (
@@ -109,9 +109,7 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
                   </TableCell>
                   <TableCell>{getStatusBadge(user.status)}</TableCell>
                   <TableCell>
-                    {format(new Date(user.createdAt), 'dd/MM/yyyy', {
-                      locale: vi,
-                    })}
+                    {format(new Date(user.createdAt), 'MMM dd, yyyy')}
                   </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
@@ -121,19 +119,19 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="rounded-xl">
-                        <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => setEditUser(user)}>
                           <Edit className="mr-2 h-4 w-4" />
-                          Chỉnh sửa
+                          Edit User
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setRoleUser(user)}>
                           <UserCog className="mr-2 h-4 w-4" />
-                          Đổi vai trò
+                          Change Role
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setStatusUser(user)}>
                           <Ban className="mr-2 h-4 w-4" />
-                          Đổi trạng thái
+                          Change Status
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
@@ -141,7 +139,7 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
                           className="text-red-600 focus:text-red-600"
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
-                          Xóa
+                          Delete User
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -157,7 +155,7 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
       {meta && meta.totalPages > 1 && (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            Trang {meta.page} / {meta.totalPages} (Tổng: {meta.total} người dùng)
+            Page {meta.page} of {meta.totalPages} (Total: {meta.total} users)
           </p>
           <div className="flex gap-2">
             <Button
@@ -167,7 +165,7 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
               disabled={meta.page === 1}
               className="rounded-xl"
             >
-              Trước
+              Previous
             </Button>
             <Button
               variant="outline"
@@ -176,7 +174,7 @@ export function UsersTable({ data, meta, isLoading, onPageChange }: UsersTablePr
               disabled={meta.page === meta.totalPages}
               className="rounded-xl"
             >
-              Sau
+              Next
             </Button>
           </div>
         </div>

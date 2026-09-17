@@ -144,25 +144,25 @@ export const servicesApi = {
 // Helper functions
 export const getCategoryLabel = (category: ServiceCategory): string => {
     const labels: Record<ServiceCategory, string> = {
-        FOOD_BEVERAGE: "An uong",
+        FOOD_BEVERAGE: "Food & Beverage",
         SPA_WELLNESS: "Spa & Wellness",
-        RECREATION: "Giai tri",
-        TRANSPORTATION: "Van chuyen",
-        BUSINESS: "Doanh nghiep",
-        LAUNDRY: "Giat ui",
+        RECREATION: "Recreation",
+        TRANSPORTATION: "Transportation",
+        BUSINESS: "Business",
+        LAUNDRY: "Laundry",
         CONCIERGE: "Concierge",
-        ROOM_SERVICE: "Phuc vu phong",
-        OTHER: "Khac",
+        ROOM_SERVICE: "Room Service",
+        OTHER: "Other",
     };
     return labels[category] || category;
 };
 
 export const getPricingTypeLabel = (pricingType: ServicePricingType): string => {
     const labels: Record<ServicePricingType, string> = {
-        FIXED: "Co dinh",
-        PER_HOUR: "/gio",
-        PER_PERSON: "/nguoi",
-        PER_ITEM: "/mon",
+        FIXED: "Fixed",
+        PER_HOUR: "/hour",
+        PER_PERSON: "/person",
+        PER_ITEM: "/item",
     };
     return labels[pricingType] || pricingType;
 };
@@ -171,12 +171,8 @@ export const formatServicePrice = (
     basePrice: number,
     pricingType: ServicePricingType
 ): string => {
-    const formatted = new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(basePrice);
+    const formatted = "₹" + basePrice.toLocaleString("en-IN");
 
     if (pricingType === "FIXED") return formatted;
     return `${formatted}${getPricingTypeLabel(pricingType)}`;
 };
-

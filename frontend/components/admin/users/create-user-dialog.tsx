@@ -32,11 +32,11 @@ import { useCreateUser } from '@/hooks/useUsers';
 import { useRoles } from '@/hooks/useRoles';
 
 const createUserSchema = z.object({
-  email: z.string().email('Email không hợp lệ'),
-  password: z.string().min(6, 'Mật khẩu phải có ít nhất 6 ký tự'),
-  fullName: z.string().min(2, 'Họ tên phải có ít nhất 2 ký tự'),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   phone: z.string().optional(),
-  roleId: z.string().min(1, 'Vui lòng chọn vai trò'),
+  roleId: z.string().min(1, 'Please select a role'),
 });
 
 type CreateUserForm = z.infer<typeof createUserSchema>;
@@ -74,9 +74,9 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Thêm người dùng mới</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Add New User</DialogTitle>
           <DialogDescription>
-            Tạo tài khoản người dùng mới trong hệ thống
+            Create a new user account in the system
           </DialogDescription>
         </DialogHeader>
 
@@ -101,7 +101,7 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mật khẩu</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="••••••" {...field} className="rounded-xl" />
                   </FormControl>
@@ -115,9 +115,9 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Họ tên</FormLabel>
+                  <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nguyễn Văn A" {...field} className="rounded-xl" />
+                    <Input placeholder="John Doe" {...field} className="rounded-xl" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -129,9 +129,9 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Số điện thoại (tùy chọn)</FormLabel>
+                  <FormLabel>Phone Number (optional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="0123456789" {...field} className="rounded-xl" />
+                    <Input placeholder="+1234567890" {...field} className="rounded-xl" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -143,11 +143,11 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
               name="roleId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Vai trò</FormLabel>
+                  <FormLabel>Role</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="rounded-xl">
-                        <SelectValue placeholder="Chọn vai trò" />
+                        <SelectValue placeholder="Select a role" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -176,14 +176,14 @@ export function CreateUserDialog({ open, onOpenChange }: CreateUserDialogProps) 
                 disabled={isPending}
                 className="rounded-xl"
               >
-                Hủy
+                Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500"
+                className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
               >
-                {isPending ? 'Đang tạo...' : 'Tạo người dùng'}
+                {isPending ? 'Creating...' : 'Create User'}
               </Button>
             </DialogFooter>
           </form>

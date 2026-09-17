@@ -49,7 +49,7 @@ export class PasskeyService {
         });
 
         if (!user) {
-            throw new NotFoundException('Không tìm thấy người dùng');
+            throw new NotFoundException('User not found');
         }
 
         // Get existing credentials for this user
@@ -116,7 +116,7 @@ export class PasskeyService {
 
         if (!challenge) {
             throw new BadRequestException(
-                'Không tìm thấy challenge hoặc đã hết hạn. Vui lòng thử lại.',
+                'Challenge not found or expired. Please try again.',
             );
         }
 
@@ -131,7 +131,7 @@ export class PasskeyService {
             });
 
             if (!verification.verified || !verification.registrationInfo) {
-                throw new BadRequestException('Xác thực passkey không thành công');
+                throw new BadRequestException('Passkey authentication failed');
             }
 
             const { credential: verifiedCredential, credentialDeviceType, credentialBackedUp } =
@@ -147,7 +147,7 @@ export class PasskeyService {
             );
 
             if (existingCredential) {
-                throw new ConflictException('Passkey này đã được đăng ký');
+                throw new ConflictException('This passkey is already registered');
             }
 
             // Store credential
@@ -157,7 +157,7 @@ export class PasskeyService {
                     credentialId: verifiedCredential.id,
                     publicKey: Buffer.from(verifiedCredential.publicKey),
                     signCount: verifiedCredential.counter,
-                    deviceName: deviceName || 'Thiết bị không xác định',
+                    deviceName: deviceName || 'Unknown Device',
                     aaguid: verifiedCredential.id.substring(0, 36), // Use first part of ID as aaguid
                     transports: verifiedCredential.transports || [],
                     isActive: true,
@@ -173,11 +173,11 @@ export class PasskeyService {
             return {
                 success: true,
                 credentialId: passkeyCredential.id,
-                message: 'Đăng ký passkey thành công',
+                message: 'Passkey registered successfully',
             };
         } catch (error) {
             throw new BadRequestException(
-                `Xác thực thất bại: ${error.message || 'Lỗi không xác định'}`,
+                `Authentication failed: ${error.message || 'Unknown error'}`,
             );
         }
     }
@@ -197,12 +197,12 @@ export class PasskeyService {
         });
 
         if (!user) {
-            throw new NotFoundException('Không tìm thấy người dùng');
+            throw new NotFoundException('User not found');
         }
 
         if (user.passkeyCredentials.length === 0) {
             throw new BadRequestException(
-                'Người dùng chưa đăng ký passkey nào',
+                'User has no registered passkeys',
             );
         }
 
@@ -252,7 +252,7 @@ export class PasskeyService {
         });
 
         if (!user) {
-            throw new NotFoundException('Không tìm thấy người dùng');
+            throw new NotFoundException('User not found');
         }
 
         // Find challenge
@@ -267,7 +267,7 @@ export class PasskeyService {
         });
 
         if (!challenge) {
-            throw new BadRequestException('Challenge không hợp lệ hoặc đã hết hạn');
+            throw new BadRequestException('Invalid or expired challenge');
         }
 
         // Find the credential
@@ -276,7 +276,7 @@ export class PasskeyService {
         );
 
         if (!passkeyCredential) {
-            throw new UnauthorizedException('Passkey không hợp lệ');
+            throw new UnauthorizedException('Invalid passkey');
         }
 
         try {
@@ -296,7 +296,7 @@ export class PasskeyService {
             });
 
             if (!verification.verified) {
-                throw new UnauthorizedException('Xác thực passkey thất bại');
+                throw new UnauthorizedException('Passkey authentication failed');
             }
 
             // Check sign count (detect cloning)
@@ -308,7 +308,7 @@ export class PasskeyService {
                     data: { isActive: false },
                 });
                 throw new UnauthorizedException(
-                    'Phát hiện passkey bị sao chép. Passkey đã bị vô hiệu hóa.',
+                    'Potential credential cloning detected. Passkey has been disabled.',
                 );
             }
 
@@ -385,11 +385,11 @@ export class PasskeyService {
         });
 
         if (!credential) {
-            throw new NotFoundException('Không tìm thấy passkey');
+            throw new NotFoundException('Passkey not found');
         }
 
         if (credential.userId !== userId) {
-            throw new UnauthorizedException('Bạn không có quyền xóa passkey này');
+            throw new UnauthorizedException('You do not have permission to delete this passkey');
         }
 
         // Check if this is the last authentication method
@@ -403,12 +403,12 @@ export class PasskeyService {
         });
 
         if (!user) {
-            throw new NotFoundException('Không tìm thấy người dùng');
+            throw new NotFoundException('User not found');
         }
 
         if (!user.password && user.passkeyCredentials.length === 1) {
             throw new BadRequestException(
-                'Không thể xóa phương thức xác thực cuối cùng',
+                'Cannot remove the last authentication method',
             );
         }
 
@@ -417,7 +417,7 @@ export class PasskeyService {
             data: { isActive: false },
         });
 
-        return { success: true, message: 'Đã xóa passkey' };
+        return { success: true, message: 'Passkey deleted' };
     }
 
     /**
@@ -433,12 +433,12 @@ export class PasskeyService {
         });
 
         if (!credential) {
-            throw new NotFoundException('Không tìm thấy passkey');
+            throw new NotFoundException('Passkey not found');
         }
 
         if (credential.userId !== userId) {
             throw new UnauthorizedException(
-                'Bạn không có quyền cập nhật passkey này',
+                'You do not have permission to update this passkey',
             );
         }
 
@@ -447,7 +447,7 @@ export class PasskeyService {
             data: { deviceName },
         });
 
-        return { success: true, message: 'Đã cập nhật tên thiết bị' };
+        return { success: true, message: 'Device name updated' };
     }
 
     /**

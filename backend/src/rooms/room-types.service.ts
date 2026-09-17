@@ -177,7 +177,7 @@ export class RoomTypesService {
 
         if (roomsCount > 0) {
             throw new ConflictException(
-                `Không thể xóa loại phòng "${roomType.name}" vì có ${roomsCount} phòng đang sử dụng loại phòng này`
+                `Cannot delete room type "${roomType.name}" because ${roomsCount} room(s) are currently using it`
             );
         }
 

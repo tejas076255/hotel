@@ -10,25 +10,25 @@ interface RoomStatsCardsProps {
 export function RoomStatsCards({ rooms }: RoomStatsCardsProps) {
     const stats = [
         {
-            label: "Tổng phòng",
+            label: "Total Rooms",
             value: rooms.length,
             color: "text-orange-600",
             bg: "bg-orange-50 dark:bg-orange-950/30",
         },
         {
-            label: "Trống",
+            label: "Available",
             value: rooms.filter((r) => r.status === "AVAILABLE").length,
             color: "text-emerald-600",
             bg: "bg-emerald-50 dark:bg-emerald-950/30",
         },
         {
-            label: "Đang sử dụng",
+            label: "Occupied",
             value: rooms.filter((r) => r.status === "OCCUPIED").length,
             color: "text-amber-600",
             bg: "bg-amber-50 dark:bg-amber-950/30",
         },
         {
-            label: "Bảo trì",
+            label: "Maintenance",
             value: rooms.filter((r) => r.status === "MAINTENANCE").length,
             color: "text-red-600",
             bg: "bg-red-50 dark:bg-red-950/30",

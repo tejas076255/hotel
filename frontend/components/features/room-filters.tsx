@@ -6,9 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Filter, X, Users, DollarSign } from "lucide-react";
+import { Filter, X, Users, IndianRupee } from "lucide-react";
 
 interface RoomFiltersProps {
     onFilterChange: (filters: RoomFilterValues) => void;
@@ -22,27 +21,23 @@ export interface RoomFilterValues {
 }
 
 const AMENITIES_OPTIONS = [
-    "Wifi",
+    "WiFi",
     "TV",
-    "Điều hòa",
+    "Air Conditioning",
     "Minibar",
-    "Ban công",
-    "Bồn tắm",
-    "Két sắt",
-    "Bàn làm việc",
+    "Balcony",
+    "Bathtub",
+    "Safe",
+    "Work Desk",
 ];
 
-export function RoomFilters({ onFilterChange, maxPrice = 5000000 }: RoomFiltersProps) {
+export function RoomFilters({ onFilterChange, maxPrice = 15000 }: RoomFiltersProps) {
     const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
     const [maxGuests, setMaxGuests] = useState<number | null>(null);
     const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-            maximumFractionDigits: 0,
-        }).format(amount);
+        return "₹" + amount.toLocaleString("en-IN");
     };
 
     const handlePriceChange = (value: number[]) => {
@@ -85,12 +80,12 @@ export function RoomFilters({ onFilterChange, maxPrice = 5000000 }: RoomFiltersP
                 <div className="flex items-center justify-between">
                     <CardTitle className="text-lg flex items-center gap-2">
                         <Filter className="h-5 w-5 text-orange-500" />
-                        Bộ lọc
+                        Filters
                     </CardTitle>
                     {hasActiveFilters && (
                         <Button variant="ghost" size="sm" onClick={handleClearFilters} className="text-slate-500 hover:text-red-500 h-8">
                             <X className="h-4 w-4 mr-1" />
-                            Xóa
+                            Clear
                         </Button>
                     )}
                 </div>
@@ -99,13 +94,13 @@ export function RoomFilters({ onFilterChange, maxPrice = 5000000 }: RoomFiltersP
                 {/* Price Range */}
                 <div className="space-y-4">
                     <Label className="flex items-center gap-2 text-sm font-medium">
-                        <DollarSign className="h-4 w-4 text-orange-500" />
-                        Khoảng giá / đêm
+                        <IndianRupee className="h-4 w-4 text-orange-500" />
+                        Price Range / Night
                     </Label>
                     <Slider
                         min={0}
                         max={maxPrice}
-                        step={100000}
+                        step={100}
                         value={priceRange}
                         onValueChange={handlePriceChange}
                         className="mt-2"
@@ -120,7 +115,7 @@ export function RoomFilters({ onFilterChange, maxPrice = 5000000 }: RoomFiltersP
                 <div className="space-y-3">
                     <Label className="flex items-center gap-2 text-sm font-medium">
                         <Users className="h-4 w-4 text-orange-500" />
-                        Số khách tối đa
+                        Max Guests
                     </Label>
                     <div className="flex gap-2">
                         {[1, 2, 3, 4].map((num) => (
@@ -139,7 +134,7 @@ export function RoomFilters({ onFilterChange, maxPrice = 5000000 }: RoomFiltersP
 
                 {/* Amenities */}
                 <div className="space-y-3">
-                    <Label className="text-sm font-medium">Tiện nghi</Label>
+                    <Label className="text-sm font-medium">Amenities</Label>
                     <div className="grid grid-cols-2 gap-2">
                         {AMENITIES_OPTIONS.map((amenity) => (
                             <div
@@ -167,7 +162,7 @@ export function RoomFilters({ onFilterChange, maxPrice = 5000000 }: RoomFiltersP
                     className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white cursor-pointer"
                     onClick={handleApplyFilters}
                 >
-                    Áp dụng bộ lọc
+                    Apply Filters
                 </Button>
 
                 {/* Active Filters Display */}
@@ -175,17 +170,17 @@ export function RoomFilters({ onFilterChange, maxPrice = 5000000 }: RoomFiltersP
                     <div className="flex flex-wrap gap-2 pt-2">
                         {priceRange[0] > 0 && (
                             <Badge variant="secondary" className="bg-orange-100 text-orange-700">
-                                Từ {formatCurrency(priceRange[0])}
+                                From {formatCurrency(priceRange[0])}
                             </Badge>
                         )}
                         {priceRange[1] < maxPrice && (
                             <Badge variant="secondary" className="bg-orange-100 text-orange-700">
-                                Đến {formatCurrency(priceRange[1])}
+                                To {formatCurrency(priceRange[1])}
                             </Badge>
                         )}
                         {maxGuests && (
                             <Badge variant="secondary" className="bg-orange-100 text-orange-700">
-                                {maxGuests}+ khách
+                                {maxGuests}+ Guests
                             </Badge>
                         )}
                         {selectedAmenities.map((a) => (

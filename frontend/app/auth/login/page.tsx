@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Icons } from '@/components/ui/icons';
 import { useAuthStore } from '@/stores/auth.store';
 import { loginSchema, type LoginFormData } from '@/features/auth/auth.schema';
@@ -17,14 +16,13 @@ import { toast } from 'sonner';
 import { Fingerprint } from 'lucide-react';
 import { loginPasskeyBegin, loginPasskeyComplete } from '@/services/passkey.api';
 import { startPasskeyAuthentication, isWebAuthnSupported } from '@/lib/webauthn';
-import { Role, User } from '@/types/auth';
+import { User } from '@/types/auth';
 
 export default function LoginPage() {
   const router = useRouter();
   const { login, isLoading, error, clearError, setUser, setToken } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [passkeyLoading, setPasskeyLoading] = useState(false);
-  const [showPasskeyLogin, setShowPasskeyLogin] = useState(false);
 
   const {
     register,
@@ -59,24 +57,24 @@ export default function LoginPage() {
       const { user } = useAuthStore.getState();
       const redirectPath = getRedirectPath(user?.role?.name);
 
-      toast.success('Đăng nhập thành công!');
+      toast.success('Login successful!');
       router.push(redirectPath);
     } catch (err) {
       // Error handled by store
       console.error('Login error:', err);
-      toast.error('Đăng nhập thất bại');
+      toast.error('Login failed');
     }
   };
 
   const handlePasskeyLogin = async () => {
     if (!isWebAuthnSupported()) {
-      toast.error('Trình duyệt của bạn không hỗ trợ Passkey');
+      toast.error('Your browser does not support Passkey');
       return;
     }
 
     const email = (document.getElementById('email') as HTMLInputElement)?.value;
     if (!email) {
-      toast.error('Vui lòng nhập email để đăng nhập bằng Passkey');
+      toast.error('Please enter your email to login with Passkey');
       return;
     }
 
@@ -103,15 +101,15 @@ export default function LoginPage() {
         updatedAt: new Date().toISOString(),
       } as User);
 
-      // Store refresh token in localStorage (in production, use httpOnly cookie)
+      // Store refresh token in localStorage
       localStorage.setItem('refresh_token', response.refresh_token);
 
       const redirectPath = getRedirectPath(response.user.role.name);
-      toast.success('Đăng nhập thành công ');
+      toast.success('Login successful!');
       router.push(redirectPath);
     } catch (error: any) {
       console.error('Passkey login error:', error);
-      toast.error(error.message || 'Không thể đăng nhập bằng Passkey');
+      toast.error(error.message || 'Failed to login with Passkey');
     } finally {
       setPasskeyLoading(false);
     }
@@ -121,10 +119,10 @@ export default function LoginPage() {
     <div className="flex flex-col space-y-6">
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Chào mừng trở lại
+          Welcome back
         </h1>
         <p className="text-sm text-muted-foreground">
-          Nhập email và mật khẩu để đăng nhập
+          Enter your email and password to sign in
         </p>
       </div>
 
@@ -156,12 +154,12 @@ export default function LoginPage() {
 
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Mật khẩu</Label>
+                <Label htmlFor="password">Password</Label>
                 <Link
                   href="/auth/forgot-password"
                   className="text-sm text-muted-foreground hover:underline"
                 >
-                  Quên mật khẩu?
+                  Forgot password?
                 </Link>
               </div>
               <div className="relative">
@@ -196,7 +194,7 @@ export default function LoginPage() {
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Đăng nhập
+              Sign In
             </Button>
 
             {isWebAuthnSupported() && (
@@ -212,7 +210,7 @@ export default function LoginPage() {
                 ) : (
                   <Fingerprint className="mr-2 h-4 w-4" />
                 )}
-                Đăng nhập bằng Passkey
+                Sign in with Passkey
               </Button>
             )}
           </div>
@@ -224,7 +222,7 @@ export default function LoginPage() {
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-slate-50 px-2 text-muted-foreground dark:bg-slate-950">
-              Hoặc tiếp tục với
+              Or continue with
             </span>
           </div>
         </div>
@@ -254,7 +252,7 @@ export default function LoginPage() {
           href="/auth/register"
           className="hover:text-brand underline underline-offset-4"
         >
-          Chưa có tài khoản? Đăng ký ngay
+          Don't have an account? Register now
         </Link>
       </p>
     </div>

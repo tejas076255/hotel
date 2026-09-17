@@ -92,12 +92,12 @@ export function Pagination({
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 {showItemCount && (
                     <span>
-                        Hiển thị {startItem}-{endItem} / {totalItems} mục
+                        Showing {startItem}-{endItem} of {totalItems} items
                     </span>
                 )}
                 {showPageSizeSelector && onPageSizeChange && (
                     <div className="flex items-center gap-2">
-                        <span>Hiển thị</span>
+                        <span>Show</span>
                         <Select
                             value={pageSize.toString()}
                             onValueChange={(value) => onPageSizeChange(Number(value))}
@@ -113,7 +113,7 @@ export function Pagination({
                                 ))}
                             </SelectContent>
                         </Select>
-                        <span>mục</span>
+                        <span>per page</span>
                     </div>
                 )}
             </div>
@@ -130,7 +130,7 @@ export function Pagination({
                         disabled={currentPage === 1}
                     >
                         <ChevronsLeft className="h-4 w-4" />
-                        <span className="sr-only">Trang đầu</span>
+                        <span className="sr-only">First page</span>
                     </Button>
 
                     {/* Previous page */}
@@ -142,7 +142,7 @@ export function Pagination({
                         disabled={currentPage === 1}
                     >
                         <ChevronLeft className="h-4 w-4" />
-                        <span className="sr-only">Trang trước</span>
+                        <span className="sr-only">Previous page</span>
                     </Button>
 
                     {/* Page numbers */}
@@ -182,7 +182,7 @@ export function Pagination({
                         disabled={currentPage === totalPages}
                     >
                         <ChevronRight className="h-4 w-4" />
-                        <span className="sr-only">Trang sau</span>
+                        <span className="sr-only">Next page</span>
                     </Button>
 
                     {/* Last page */}
@@ -194,7 +194,7 @@ export function Pagination({
                         disabled={currentPage === totalPages}
                     >
                         <ChevronsRight className="h-4 w-4" />
-                        <span className="sr-only">Trang cuối</span>
+                        <span className="sr-only">Last page</span>
                     </Button>
                 </div>
             )}

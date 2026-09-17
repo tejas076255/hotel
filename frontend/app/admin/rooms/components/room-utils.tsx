@@ -8,8 +8,8 @@ export const getStatusConfig = (status: RoomStatus) => {
     switch (status) {
         case "AVAILABLE":
             return {
-                label: "Sẵn sàng",
-                actionLabel: "Nhận phòng",
+                label: "Available",
+                actionLabel: "Check-in",
                 variant: "success",
                 className: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
                 borderColor: "border-l-green-500",
@@ -19,8 +19,8 @@ export const getStatusConfig = (status: RoomStatus) => {
             };
         case "OCCUPIED":
             return {
-                label: "Đang có khách",
-                actionLabel: "Thanh toán",
+                label: "Occupied",
+                actionLabel: "Checkout",
                 variant: "destructive",
                 className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
                 borderColor: "border-l-red-500",
@@ -30,8 +30,8 @@ export const getStatusConfig = (status: RoomStatus) => {
             };
         case "CLEANING":
             return {
-                label: "Đang dọn",
-                actionLabel: "Xong",
+                label: "Cleaning",
+                actionLabel: "Done",
                 variant: "warning",
                 className: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
                 borderColor: "border-l-amber-500",
@@ -41,8 +41,8 @@ export const getStatusConfig = (status: RoomStatus) => {
             };
         case "MAINTENANCE":
             return {
-                label: "Bảo trì",
-                actionLabel: "Xong",
+                label: "Maintenance",
+                actionLabel: "Done",
                 variant: "warning",
                 className: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
                 borderColor: "border-l-orange-500",
@@ -52,8 +52,8 @@ export const getStatusConfig = (status: RoomStatus) => {
             };
         case "OUT_OF_ORDER":
             return {
-                label: "Hỏng",
-                actionLabel: "Sửa",
+                label: "Out of Order",
+                actionLabel: "Repair",
                 variant: "secondary",
                 className: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400",
                 borderColor: "border-l-slate-500",
@@ -64,7 +64,7 @@ export const getStatusConfig = (status: RoomStatus) => {
         default:
             return {
                 label: status,
-                actionLabel: "Chi tiết",
+                actionLabel: "Details",
                 variant: "default",
                 className: "bg-slate-100 text-slate-700",
                 borderColor: "border-l-slate-300",
@@ -85,17 +85,14 @@ export const getAmenityIcon = (amenity: string) => {
     return null;
 };
 
-export const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(amount);
+export const formatCurrency = (amount: number): string => {
+    return "₹" + amount.toLocaleString("en-IN");
 };
 
 export const statusOptions: { value: RoomStatus; label: string }[] = [
-    { value: "AVAILABLE", label: "Trống" },
-    { value: "OCCUPIED", label: "Đang sử dụng" },
-    { value: "CLEANING", label: "Đang dọn" },
-    { value: "MAINTENANCE", label: "Bảo trì" },
-    { value: "OUT_OF_ORDER", label: "Hỏng" },
+    { value: "AVAILABLE", label: "Available" },
+    { value: "OCCUPIED", label: "Occupied" },
+    { value: "CLEANING", label: "Cleaning" },
+    { value: "MAINTENANCE", label: "Maintenance" },
+    { value: "OUT_OF_ORDER", label: "Out of Order" },
 ];

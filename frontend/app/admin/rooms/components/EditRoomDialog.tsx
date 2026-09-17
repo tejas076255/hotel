@@ -69,7 +69,7 @@ export function EditRoomDialog({
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         <div className="absolute bottom-3 left-4">
                             <p className="text-white/80 text-xs">{selectedRoomType?.name}</p>
-                            <p className="text-white text-lg font-bold">Phòng {room?.roomNumber}</p>
+                            <p className="text-white text-lg font-bold">Room {room?.roomNumber}</p>
                         </div>
                     </div>
                 )}
@@ -77,21 +77,21 @@ export function EditRoomDialog({
                 <DialogHeader className={primaryImage?.url ? '' : 'mb-4'}>
                     {!primaryImage?.url && (
                         <>
-                            <DialogTitle>Chỉnh sửa phòng {room?.roomNumber}</DialogTitle>
-                            <DialogDescription>Cập nhật thông tin phòng</DialogDescription>
+                            <DialogTitle>Edit Room {room?.roomNumber}</DialogTitle>
+                            <DialogDescription>Update room details</DialogDescription>
                         </>
                     )}
                     {primaryImage?.url && (
-                        <DialogDescription>Cập nhật thông tin phòng</DialogDescription>
+                        <DialogDescription>Update room details</DialogDescription>
                     )}
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="edit-roomNumber">Số phòng *</Label>
+                            <Label htmlFor="edit-roomNumber">Room Number *</Label>
                             <Input
                                 id="edit-roomNumber"
-                                placeholder="VD: 101"
+                                placeholder="e.g. 101"
                                 className="rounded-xl"
                                 value={editData.roomNumber}
                                 onChange={(e) =>
@@ -100,11 +100,11 @@ export function EditRoomDialog({
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="edit-floor">Tầng *</Label>
+                            <Label htmlFor="edit-floor">Floor *</Label>
                             <Input
                                 id="edit-floor"
                                 type="number"
-                                placeholder="VD: 1"
+                                placeholder="e.g. 1"
                                 className="rounded-xl"
                                 value={editData.floor}
                                 onChange={(e) =>
@@ -114,7 +114,7 @@ export function EditRoomDialog({
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="edit-type">Loại phòng *</Label>
+                        <Label htmlFor="edit-type">Room Type *</Label>
                         <Select
                             value={editData.typeId}
                             onValueChange={(value) =>
@@ -122,7 +122,7 @@ export function EditRoomDialog({
                             }
                         >
                             <SelectTrigger className="rounded-xl">
-                                <SelectValue placeholder="Chọn loại phòng" />
+                                <SelectValue placeholder="Select room type" />
                             </SelectTrigger>
                             <SelectContent>
                                 {roomTypes.map((type) => (
@@ -134,7 +134,7 @@ export function EditRoomDialog({
                         </Select>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="edit-status">Trạng thái</Label>
+                        <Label htmlFor="edit-status">Status</Label>
                         <Select
                             value={editData.status}
                             onValueChange={(value) =>
@@ -142,7 +142,7 @@ export function EditRoomDialog({
                             }
                         >
                             <SelectTrigger className="rounded-xl">
-                                <SelectValue placeholder="Chọn trạng thái" />
+                                <SelectValue placeholder="Select status" />
                             </SelectTrigger>
                             <SelectContent>
                                 {statusOptions.map((opt) => (
@@ -154,10 +154,10 @@ export function EditRoomDialog({
                         </Select>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="edit-notes">Ghi chú</Label>
+                        <Label htmlFor="edit-notes">Notes</Label>
                         <Textarea
                             id="edit-notes"
-                            placeholder="Ghi chú về phòng..."
+                            placeholder="Notes about the room..."
                             className="rounded-xl resize-none"
                             rows={2}
                             value={editData.notes}
@@ -174,15 +174,15 @@ export function EditRoomDialog({
                         className="rounded-xl"
                         disabled={isSubmitting}
                     >
-                        Hủy
+                        Cancel
                     </Button>
                     <Button
                         onClick={onSubmit}
-                        className="rounded-xl bg-gradient-to-r from-orange-500 to-amber-500"
+                        className="rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white"
                         disabled={!editData.roomNumber || !editData.floor || !editData.typeId || isSubmitting}
                     >
                         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        Cập nhật
+                        Update
                     </Button>
                 </DialogFooter>
             </DialogContent>

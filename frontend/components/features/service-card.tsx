@@ -111,18 +111,18 @@ export function ServiceCard({ service }: ServiceCardProps) {
                     {service.duration && (
                         <div className="flex items-center gap-1">
                             <Clock className="h-3.5 w-3.5" />
-                            <span>{service.duration} phút</span>
+                            <span>{service.duration} mins</span>
                         </div>
                     )}
                     {service.maxCapacity && (
                         <div className="flex items-center gap-1">
                             <Users className="h-3.5 w-3.5" />
-                            <span>Tối đa {service.maxCapacity} người</span>
+                            <span>Max {service.maxCapacity} persons</span>
                         </div>
                     )}
                     {service.requiresBooking && (
                         <Badge variant="outline" className="text-xs py-0 h-5">
-                            Cần đặt trước
+                            Booking required
                         </Badge>
                     )}
                 </div>
@@ -130,7 +130,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
                 {/* Action Button */}
                 <Link href={`/services/${service.id}`} className="block">
                     <Button className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-medium shadow-md shadow-orange-500/20 cursor-pointer">
-                        Xem chi tiết
+                        View Details
                     </Button>
                 </Link>
             </CardContent>

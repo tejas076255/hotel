@@ -72,13 +72,13 @@ export default function AdminRoomsPage() {
     const createMutation = useMutation({
         mutationFn: roomsApi.createRoom,
         onSuccess: () => {
-            toast.success("Đã thêm phòng thành công!");
+            toast.success("Room created successfully!");
             queryClient.invalidateQueries({ queryKey: ["rooms"] });
             setIsAddDialogOpen(false);
             setNewRoom(defaultNewRoom);
         },
         onError: (error: any) => {
-            toast.error("Không thể thêm phòng", {
+            toast.error("Failed to add room", {
                 description: error.response?.data?.message || error.message,
             });
         },
@@ -89,13 +89,13 @@ export default function AdminRoomsPage() {
         mutationFn: ({ id, data }: { id: string; data: Parameters<typeof roomsApi.updateRoom>[1] }) =>
             roomsApi.updateRoom(id, data),
         onSuccess: () => {
-            toast.success("Đã cập nhật phòng thành công!");
+            toast.success("Room updated successfully!");
             queryClient.invalidateQueries({ queryKey: ["rooms"] });
             setEditingRoom(null);
             setEditData(defaultEditRoom);
         },
         onError: (error: any) => {
-            toast.error("Không thể cập nhật phòng", {
+            toast.error("Failed to update room", {
                 description: error.response?.data?.message || error.message,
             });
         },
@@ -105,12 +105,12 @@ export default function AdminRoomsPage() {
     const deleteMutation = useMutation({
         mutationFn: roomsApi.deleteRoom,
         onSuccess: () => {
-            toast.success("Đã xóa phòng thành công!");
+            toast.success("Room deleted successfully!");
             queryClient.invalidateQueries({ queryKey: ["rooms"] });
             setDeletingRoom(null);
         },
         onError: (error: any) => {
-            toast.error("Không thể xóa phòng", {
+            toast.error("Failed to delete room", {
                 description: error.response?.data?.message || error.message,
             });
         },
@@ -144,13 +144,13 @@ export default function AdminRoomsPage() {
 
     const handleAddRoom = () => {
         if (!newRoom.roomNumber || !newRoom.floor || !newRoom.typeId) {
-            toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
+            toast.error("Please fill in all required fields");
             return;
         }
 
         const floor = Number.parseInt(newRoom.floor, 10);
         if (!Number.isFinite(floor) || floor < 0) {
-            toast.error("Tầng không hợp lệ");
+            toast.error("Invalid floor number");
             return;
         }
 
@@ -178,13 +178,13 @@ export default function AdminRoomsPage() {
         if (!editingRoom) return;
 
         if (!editData.roomNumber || !editData.floor || !editData.typeId) {
-            toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
+            toast.error("Please fill in all required fields");
             return;
         }
 
         const floor = Number.parseInt(editData.floor, 10);
         if (!Number.isFinite(floor) || floor < 0) {
-            toast.error("Tầng không hợp lệ");
+            toast.error("Invalid floor number");
             return;
         }
 
@@ -212,10 +212,10 @@ export default function AdminRoomsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
-                        Quản lý phòng
+                        Rooms Management
                     </h1>
                     <p className="text-muted-foreground mt-1">
-                        Quản lý tất cả phòng trong khách sạn
+                        Manage all hotel rooms and their statuses
                     </p>
                 </div>
 

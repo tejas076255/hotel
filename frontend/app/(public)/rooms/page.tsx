@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { roomsApi, RoomTypesResponse } from "@/services/rooms.api";
+import { roomsApi } from "@/services/rooms.api";
 import { RoomType } from "@/types/room";
 import { RoomTypeCard } from "@/components/features/room-type-card";
 import { RoomFilters, RoomFilterValues } from "@/components/features/room-filters";
@@ -12,7 +12,7 @@ import { BedDouble, Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function RoomsPage() {
     const [filters, setFilters] = useState<RoomFilterValues>({
-        priceRange: [0, 10000000],
+        priceRange: [0, 15000],
         maxGuests: null,
         amenities: [],
     });
@@ -91,10 +91,10 @@ export default function RoomsPage() {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center text-white">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">
-                            Khám phá các loại phòng
+                            Explore Room Accommodations
                         </h1>
                         <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
-                            Lựa chọn không gian nghỉ ngơi hoàn hảo cho kỳ nghỉ của bạn
+                            Choose the perfect living space for your dream getaway
                         </p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@ export default function RoomsPage() {
                     <div className="lg:col-span-1">
                         <RoomFilters
                             onFilterChange={handleFilterChange}
-                            maxPrice={10000000}
+                            maxPrice={15000}
                         />
                     </div>
 
@@ -118,7 +118,7 @@ export default function RoomsPage() {
                             <div className="flex items-center gap-2">
                                 <BedDouble className="h-5 w-5 text-orange-500" />
                                 <span className="text-slate-600 dark:text-slate-400">
-                                    {isLoading ? "Đang tải..." : `${filteredRoomTypes.length} loại phòng${meta ? ` (Tổng: ${meta.total})` : ''}`}
+                                    {isLoading ? "Loading..." : `${filteredRoomTypes.length} Room Categories${meta ? ` (Total: ${meta.total})` : ''}`}
                                 </span>
                             </div>
                         </div>
@@ -143,7 +143,7 @@ export default function RoomsPage() {
                         {/* Error State */}
                         {error && (
                             <div className="text-center py-12">
-                                <p className="text-red-500">Có lỗi xảy ra khi tải danh sách phòng</p>
+                                <p className="text-red-500">An error occurred while loading room types</p>
                             </div>
                         )}
 
@@ -152,10 +152,10 @@ export default function RoomsPage() {
                             <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl shadow-lg">
                                 <Search className="h-12 w-12 text-slate-300 mx-auto mb-4" />
                                 <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                                    Không tìm thấy phòng phù hợp
+                                    No matching rooms found
                                 </h3>
                                 <p className="text-slate-500 dark:text-slate-400">
-                                    Hãy thử điều chỉnh bộ lọc để tìm kiếm kết quả khác
+                                    Try adjusting your search filters to find available options
                                 </p>
                             </div>
                         )}
@@ -180,10 +180,10 @@ export default function RoomsPage() {
                                             className="gap-2"
                                         >
                                             <ChevronLeft className="h-4 w-4" />
-                                            Trước
+                                            Previous
                                         </Button>
                                         <span className="text-sm text-slate-600 dark:text-slate-400">
-                                            Trang {meta.page} / {meta.totalPages}
+                                            Page {meta.page} of {meta.totalPages}
                                         </span>
                                         <Button
                                             variant="outline"
@@ -192,7 +192,7 @@ export default function RoomsPage() {
                                             onClick={() => setPage(p => p + 1)}
                                             className="gap-2"
                                         >
-                                            Sau
+                                            Next
                                             <ChevronRight className="h-4 w-4" />
                                         </Button>
                                     </div>

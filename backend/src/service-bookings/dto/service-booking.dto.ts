@@ -12,10 +12,10 @@ export const ServiceBookingStatusEnum = z.enum([
 
 // Create Service Booking DTO
 export const CreateServiceBookingSchema = z.object({
-  serviceId: z.string().uuid({ message: 'ID dịch vụ không hợp lệ' }),
-  bookingId: z.string().uuid({ message: 'ID đặt phòng không hợp lệ' }),
-  scheduledDate: z.coerce.date({ message: 'Ngày không hợp lệ' }),
-  scheduledTime: z.coerce.date({ message: 'Giờ không hợp lệ' }),
+  serviceId: z.string().uuid({ message: 'Invalid service ID' }),
+  bookingId: z.string().uuid({ message: 'Invalid booking ID' }),
+  scheduledDate: z.coerce.date({ message: 'Invalid date' }),
+  scheduledTime: z.coerce.date({ message: 'Invalid time' }),
   duration: z.number().int().positive().optional(),
   quantity: z.number().int().positive().default(1),
   specialRequests: z.string().optional(),
@@ -51,7 +51,7 @@ export class UpdateServiceBookingStatusDto extends createZodDto(
 
 // Assign Staff DTO
 export const AssignStaffSchema = z.object({
-  assignedStaffId: z.string().uuid({ message: 'ID nhân viên không hợp lệ' }),
+  assignedStaffId: z.string().uuid({ message: 'Invalid staff ID' }),
   staffNotes: z.string().optional(),
 });
 
@@ -61,7 +61,7 @@ export class AssignStaffDto extends createZodDto(AssignStaffSchema) {}
 export const CancelServiceBookingSchema = z.object({
   cancelReason: z
     .string()
-    .min(10, { message: 'Lý do hủy phải có ít nhất 10 ký tự' }),
+    .min(10, { message: 'Cancellation reason must be at least 10 characters' }),
 });
 
 export class CancelServiceBookingDto extends createZodDto(

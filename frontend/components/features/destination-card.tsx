@@ -48,7 +48,7 @@ export function DestinationCard({
             {featured && (
                 <div className="absolute top-4 left-4 z-10">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg">
-                        ⭐ Nổi bật
+                        ⭐ Featured
                     </span>
                 </div>
             )}
@@ -59,7 +59,7 @@ export function DestinationCard({
                     {name}
                 </h3>
                 <p className="text-white/80 text-sm">
-                    {properties} khách sạn
+                    {properties} properties
                 </p>
             </div>
 

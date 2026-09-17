@@ -43,7 +43,7 @@ export function SearchBar() {
         <div className="flex flex-col md:flex-row items-center p-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl w-full max-w-4xl gap-4 border border-slate-100">
             {/* Date Range Picker */}
             <div className="flex-1 w-full">
-                <label className="text-xs font-semibold text-slate-500 ml-1 mb-1 block">Nhận phòng - Trả phòng</label>
+                <label className="text-xs font-semibold text-slate-500 ml-1 mb-1 block">Check-in - Check-out</label>
                 <Popover>
                     <PopoverTrigger asChild>
                         <Button
@@ -58,14 +58,14 @@ export function SearchBar() {
                             {date?.from ? (
                                 date.to ? (
                                     <>
-                                        {format(date.from, "dd/MM/yyyy")} -{" "}
-                                        {format(date.to, "dd/MM/yyyy")}
+                                        {format(date.from, "MMM dd, yyyy")} -{" "}
+                                        {format(date.to, "MMM dd, yyyy")}
                                     </>
                                 ) : (
-                                    format(date.from, "dd/MM/yyyy")
+                                    format(date.from, "MMM dd, yyyy")
                                 )
                             ) : (
-                                <span>Chọn ngày</span>
+                                <span>Select dates</span>
                             )}
                         </Button>
                     </PopoverTrigger>
@@ -85,19 +85,19 @@ export function SearchBar() {
 
             {/* Guests Selector */}
             <div className="w-full md:w-48">
-                <label className="text-xs font-semibold text-slate-500 ml-1 mb-1 block">Số khách</label>
+                <label className="text-xs font-semibold text-slate-500 ml-1 mb-1 block">Guests</label>
                 <Select value={guests} onValueChange={setGuests}>
                     <SelectTrigger className="h-12 border-slate-200 cursor-pointer">
                         <div className="flex items-center">
                             <Users className="mr-2 h-4 w-4 opacity-50" />
-                            <SelectValue placeholder="Khách" />
+                            <SelectValue placeholder="Guests" />
                         </div>
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="1" className="cursor-pointer">1 Khách</SelectItem>
-                        <SelectItem value="2" className="cursor-pointer">2 Khách</SelectItem>
-                        <SelectItem value="3" className="cursor-pointer">3 Khách</SelectItem>
-                        <SelectItem value="4" className="cursor-pointer">4+ Khách</SelectItem>
+                        <SelectItem value="1" className="cursor-pointer">1 Guest</SelectItem>
+                        <SelectItem value="2" className="cursor-pointer">2 Guests</SelectItem>
+                        <SelectItem value="3" className="cursor-pointer">3 Guests</SelectItem>
+                        <SelectItem value="4" className="cursor-pointer">4+ Guests</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
@@ -109,10 +109,9 @@ export function SearchBar() {
                     onClick={handleSearch}
                 >
                     <Search className="h-5 w-5 mr-2" />
-                    Tìm kiếm
+                    Search
                 </Button>
             </div>
         </div>
     );
 }
-

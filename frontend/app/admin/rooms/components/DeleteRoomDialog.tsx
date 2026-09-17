@@ -31,22 +31,22 @@ export function DeleteRoomDialog({
         <AlertDialog open={!!room} onOpenChange={onClose}>
             <AlertDialogContent className="rounded-2xl">
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Xóa phòng?</AlertDialogTitle>
+                    <AlertDialogTitle>Delete Room?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Bạn có chắc chắn muốn xóa phòng "{room?.roomNumber}"? Hành động này không thể hoàn tác.
+                        Are you sure you want to delete room "{room?.roomNumber}"? This action cannot be undone.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel className="rounded-xl" disabled={isDeleting}>
-                        Hủy
+                        Cancel
                     </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={onConfirm}
-                        className="rounded-xl bg-red-600 hover:bg-red-700"
+                        className="rounded-xl bg-red-600 hover:bg-red-700 text-white"
                         disabled={isDeleting}
                     >
                         {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        Xóa
+                        Delete
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

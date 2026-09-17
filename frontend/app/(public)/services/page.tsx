@@ -6,7 +6,6 @@ import {
     servicesApi,
     Service,
     ServiceCategory,
-    getCategoryLabel,
 } from "@/services/services.api";
 import { ServiceCard } from "@/components/features/service-card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -28,15 +27,15 @@ import {
 } from "lucide-react";
 
 const categories: { value: ServiceCategory | "ALL"; label: string; icon: JSX.Element }[] = [
-    { value: "ALL", label: "Tất cả", icon: <LayoutGrid className="h-4 w-4" /> },
-    { value: "FOOD_BEVERAGE", label: "Ẩm thực", icon: <UtensilsCrossed className="h-4 w-4" /> },
+    { value: "ALL", label: "All", icon: <LayoutGrid className="h-4 w-4" /> },
+    { value: "FOOD_BEVERAGE", label: "Food & Beverage", icon: <UtensilsCrossed className="h-4 w-4" /> },
     { value: "SPA_WELLNESS", label: "Spa & Wellness", icon: <Sparkles className="h-4 w-4" /> },
-    { value: "RECREATION", label: "Giải trí", icon: <Coffee className="h-4 w-4" /> },
-    { value: "TRANSPORTATION", label: "Vận chuyển", icon: <Car className="h-4 w-4" /> },
-    { value: "LAUNDRY", label: "Giặt ủi", icon: <Shirt className="h-4 w-4" /> },
-    { value: "BUSINESS", label: "Doanh nghiệp", icon: <Briefcase className="h-4 w-4" /> },
-    { value: "ROOM_SERVICE", label: "Phục vụ phòng", icon: <Bell className="h-4 w-4" /> },
-    { value: "OTHER", label: "Khác", icon: <MoreHorizontal className="h-4 w-4" /> },
+    { value: "RECREATION", label: "Recreation", icon: <Coffee className="h-4 w-4" /> },
+    { value: "TRANSPORTATION", label: "Transportation", icon: <Car className="h-4 w-4" /> },
+    { value: "LAUNDRY", label: "Laundry", icon: <Shirt className="h-4 w-4" /> },
+    { value: "BUSINESS", label: "Business", icon: <Briefcase className="h-4 w-4" /> },
+    { value: "ROOM_SERVICE", label: "Room Service", icon: <Bell className="h-4 w-4" /> },
+    { value: "OTHER", label: "Other", icon: <MoreHorizontal className="h-4 w-4" /> },
 ];
 
 export default function ServicesPage() {
@@ -85,10 +84,10 @@ export default function ServicesPage() {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center text-white">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">
-                            Dịch vụ khách sạn
+                            Hotel Services
                         </h1>
                         <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
-                            Trải nghiệm các dịch vụ cao cấp được thiết kế riêng cho kỳ nghỉ hoàn hảo của bạn
+                            Experience premium luxury services tailored for your perfect stay
                         </p>
                     </div>
                 </div>
@@ -102,7 +101,7 @@ export default function ServicesPage() {
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder="Tìm kiếm dịch vụ..."
+                            placeholder="Search services..."
                             className="pl-10 rounded-xl bg-white dark:bg-slate-900"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -135,8 +134,8 @@ export default function ServicesPage() {
                         <Sparkles className="h-5 w-5 text-orange-500" />
                         <span className="text-slate-600 dark:text-slate-400">
                             {isLoading
-                                ? "Đang tải..."
-                                : `${filteredServices.length} dịch vụ${meta ? ` (Tổng: ${meta.total})` : ""}`}
+                                ? "Loading..."
+                                : `${filteredServices.length} Services${meta ? ` (Total: ${meta.total})` : ""}`}
                         </span>
                     </div>
                 </div>
@@ -161,7 +160,7 @@ export default function ServicesPage() {
                 {/* Error State */}
                 {error && (
                     <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-2xl shadow-lg">
-                        <p className="text-red-500">Có lỗi xảy ra khi tải danh sách dịch vụ</p>
+                        <p className="text-red-500">An error occurred while loading hotel services</p>
                     </div>
                 )}
 
@@ -170,10 +169,10 @@ export default function ServicesPage() {
                     <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl shadow-lg">
                         <Search className="h-12 w-12 text-slate-300 mx-auto mb-4" />
                         <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                            Không tìm thấy dịch vụ
+                            No services found
                         </h3>
                         <p className="text-slate-500 dark:text-slate-400">
-                            Hãy thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác
+                            Try searching with a different keyword or select another category
                         </p>
                     </div>
                 )}
@@ -198,10 +197,10 @@ export default function ServicesPage() {
                                     className="gap-2 rounded-xl"
                                 >
                                     <ChevronLeft className="h-4 w-4" />
-                                    Trước
+                                    Previous
                                 </Button>
                                 <span className="text-sm text-slate-600 dark:text-slate-400">
-                                    Trang {meta.page} / {meta.totalPages}
+                                    Page {meta.page} of {meta.totalPages}
                                 </span>
                                 <Button
                                     variant="outline"
@@ -210,7 +209,7 @@ export default function ServicesPage() {
                                     onClick={() => setPage((p) => p + 1)}
                                     className="gap-2 rounded-xl"
                                 >
-                                    Sau
+                                    Next
                                     <ChevronRight className="h-4 w-4" />
                                 </Button>
                             </div>

@@ -13,19 +13,16 @@ interface RoomTypeCardProps {
 }
 
 const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(amount);
+    return "₹" + amount.toLocaleString("en-IN");
 };
 
 const getBedTypeLabel = (bedType: string) => {
     switch (bedType) {
-        case "SINGLE": return "Giường đơn";
-        case "DOUBLE": return "Giường đôi";
-        case "QUEEN": return "Giường Queen";
-        case "KING": return "Giường King";
-        case "TWIN": return "2 Giường đơn";
+        case "SINGLE": return "Single Bed";
+        case "DOUBLE": return "Double Bed";
+        case "QUEEN": return "Queen Bed";
+        case "KING": return "King Bed";
+        case "TWIN": return "Twin Beds";
         default: return bedType;
     }
 };
@@ -34,8 +31,8 @@ const getAmenityIcon = (amenity: string) => {
     const lowerAmenity = amenity.toLowerCase();
     if (lowerAmenity.includes("wifi")) return <Wifi className="h-4 w-4" />;
     if (lowerAmenity.includes("tv")) return <Tv className="h-4 w-4" />;
-    if (lowerAmenity.includes("ac") || lowerAmenity.includes("điều hòa")) return <Wind className="h-4 w-4" />;
-    if (lowerAmenity.includes("coffee") || lowerAmenity.includes("cà phê")) return <Coffee className="h-4 w-4" />;
+    if (lowerAmenity.includes("ac") || lowerAmenity.includes("air conditioning")) return <Wind className="h-4 w-4" />;
+    if (lowerAmenity.includes("coffee") || lowerAmenity.includes("tea")) return <Coffee className="h-4 w-4" />;
     return null;
 };
 
@@ -79,7 +76,7 @@ export function RoomTypeCard({ roomType }: RoomTypeCardProps) {
                 {/* Price Badge */}
                 <div className="absolute top-4 right-4">
                     <Badge className="bg-white/95 dark:bg-slate-900/95 text-orange-600 font-bold text-sm px-3 py-1.5 shadow-lg backdrop-blur-sm border-0">
-                        {formatCurrency(roomType.basePrice)}/đêm
+                        {formatCurrency(roomType.basePrice)}/night
                     </Badge>
                 </div>
             </div>
@@ -101,7 +98,7 @@ export function RoomTypeCard({ roomType }: RoomTypeCardProps) {
                 <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-300 mb-4">
                     <div className="flex items-center gap-1.5">
                         <Users className="h-4 w-4 text-orange-500" />
-                        <span>{guestCount} khách</span>
+                        <span>{guestCount} Guests</span>
                     </div>
                     {roomType.size && (
                         <div className="flex items-center gap-1.5">
@@ -135,7 +132,7 @@ export function RoomTypeCard({ roomType }: RoomTypeCardProps) {
                 {/* Action Button */}
                 <Link href={`/rooms/${roomType.id}`} className="block">
                     <Button className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-medium shadow-md shadow-orange-500/20 cursor-pointer">
-                        Xem chi tiết & Đặt phòng
+                        View Details & Book
                     </Button>
                 </Link>
             </CardContent>

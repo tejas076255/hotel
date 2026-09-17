@@ -49,11 +49,11 @@ export function useCreateUser() {
     mutationFn: (data: CreateUserDto) => usersApi.createUser(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-      toast.success('Tạo người dùng thành công!');
+      toast.success('User created successfully!');
     },
     onError: (error: any) => {
       const message =
-        error.response?.data?.message || 'Tạo người dùng thất bại.';
+        error.response?.data?.message || 'Failed to create user.';
       toast.error(message);
     },
   });
@@ -71,11 +71,11 @@ export function useUpdateUser() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
       queryClient.invalidateQueries({ queryKey: userKeys.detail(variables.id) });
-      toast.success('Cập nhật người dùng thành công!');
+      toast.success('User updated successfully!');
     },
     onError: (error: any) => {
       const message =
-        error.response?.data?.message || 'Cập nhật thất bại.';
+        error.response?.data?.message || 'Failed to update user.';
       toast.error(message);
     },
   });
@@ -93,11 +93,11 @@ export function useUpdateUserStatus() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
       queryClient.invalidateQueries({ queryKey: userKeys.detail(variables.id) });
-      toast.success('Cập nhật trạng thái thành công!');
+      toast.success('Status updated successfully!');
     },
     onError: (error: any) => {
       const message =
-        error.response?.data?.message || 'Cập nhật trạng thái thất bại.';
+        error.response?.data?.message || 'Failed to update status.';
       toast.error(message);
     },
   });
@@ -115,11 +115,11 @@ export function useUpdateUserRole() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
       queryClient.invalidateQueries({ queryKey: userKeys.detail(variables.id) });
-      toast.success('Cập nhật vai trò thành công!');
+      toast.success('Role updated successfully!');
     },
     onError: (error: any) => {
       const message =
-        error.response?.data?.message || 'Cập nhật vai trò thất bại.';
+        error.response?.data?.message || 'Failed to update role.';
       toast.error(message);
     },
   });
@@ -135,11 +135,11 @@ export function useDeleteUser() {
     mutationFn: (id: string) => usersApi.deleteUser(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.lists() });
-      toast.success('Xóa người dùng thành công!');
+      toast.success('User deleted successfully!');
     },
     onError: (error: any) => {
       const message =
-        error.response?.data?.message || 'Xóa người dùng thất bại.';
+        error.response?.data?.message || 'Failed to delete user.';
       toast.error(message);
     },
   });

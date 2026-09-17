@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import {
     BedDouble,
     Calendar,
-    DollarSign,
+    IndianRupee,
     Users,
     TrendingUp,
     TrendingDown,
@@ -20,36 +20,36 @@ import {
 // Mock data for stats
 const stats = [
     {
-        title: "Tổng doanh thu",
-        value: "125.5M",
-        unit: "VNĐ",
+        title: "Total Revenue",
+        value: "₹1,25,500",
+        unit: "INR",
         change: "+12.5%",
         trend: "up",
-        icon: DollarSign,
+        icon: IndianRupee,
         color: "from-emerald-500 to-teal-500",
     },
     {
-        title: "Đặt phòng hôm nay",
+        title: "Today's Bookings",
         value: "24",
-        unit: "phòng",
+        unit: "rooms",
         change: "+8%",
         trend: "up",
         icon: Calendar,
         color: "from-orange-500 to-amber-500",
     },
     {
-        title: "Phòng trống",
+        title: "Available Rooms",
         value: "18",
-        unit: "phòng",
+        unit: "rooms",
         change: "-3",
         trend: "down",
         icon: BedDouble,
         color: "from-amber-500 to-orange-500",
     },
     {
-        title: "Khách đang lưu trú",
+        title: "Current Guests",
         value: "156",
-        unit: "khách",
+        unit: "guests",
         change: "+5%",
         trend: "up",
         icon: Users,
@@ -61,52 +61,52 @@ const stats = [
 const recentBookings = [
     {
         id: "BK001",
-        guest: "Nguyễn Văn A",
+        guest: "John Doe",
         room: "Deluxe 301",
         checkIn: "2024-12-11",
         checkOut: "2024-12-13",
         status: "confirmed",
-        amount: "2,400,000đ",
+        amount: "₹9,000",
     },
     {
         id: "BK002",
-        guest: "Trần Thị B",
+        guest: "Sarah Smith",
         room: "Suite 501",
         checkIn: "2024-12-12",
         checkOut: "2024-12-15",
         status: "pending",
-        amount: "5,600,000đ",
+        amount: "₹25,500",
     },
     {
         id: "BK003",
-        guest: "Lê Văn C",
+        guest: "Robert Johnson",
         room: "Standard 102",
         checkIn: "2024-12-11",
         checkOut: "2024-12-12",
         status: "checked-in",
-        amount: "800,000đ",
+        amount: "₹2,500",
     },
     {
         id: "BK004",
-        guest: "Phạm Thị D",
+        guest: "Emily Brown",
         room: "Deluxe 205",
         checkIn: "2024-12-10",
         checkOut: "2024-12-11",
         status: "cancelled",
-        amount: "1,200,000đ",
+        amount: "₹4,500",
     },
 ];
 
 const getStatusConfig = (status: string) => {
     switch (status) {
         case "confirmed":
-            return { label: "Đã xác nhận", icon: CheckCircle2, className: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" };
+            return { label: "Confirmed", icon: CheckCircle2, className: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" };
         case "pending":
-            return { label: "Chờ xử lý", icon: Clock, className: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" };
+            return { label: "Pending", icon: Clock, className: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" };
         case "checked-in":
-            return { label: "Đã nhận phòng", icon: CheckCircle2, className: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400" };
+            return { label: "Checked In", icon: CheckCircle2, className: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400" };
         case "cancelled":
-            return { label: "Đã hủy", icon: XCircle, className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" };
+            return { label: "Cancelled", icon: XCircle, className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" };
         default:
             return { label: status, icon: AlertCircle, className: "bg-slate-100 text-slate-700" };
     }
@@ -122,16 +122,16 @@ export default function AdminDashboardPage() {
                         Dashboard
                     </h1>
                     <p className="text-muted-foreground mt-1">
-                        Xin chào! Đây là tổng quan hoạt động hôm nay.
+                        Welcome back! Here is an overview of today's performance.
                     </p>
                 </div>
                 <div className="flex gap-2">
                     <Button variant="outline" className="rounded-xl">
                         <Clock className="h-4 w-4 mr-2" />
-                        Tuần này
+                        This Week
                     </Button>
                     <Button className="rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30">
-                        Xuất báo cáo
+                        Export Report
                     </Button>
                 </div>
             </div>
@@ -160,7 +160,7 @@ export default function AdminDashboardPage() {
                                         <span className={stat.trend === "up" ? "text-emerald-500 text-sm" : "text-red-500 text-sm"}>
                                             {stat.change}
                                         </span>
-                                        <span className="text-xs text-muted-foreground">vs tuần trước</span>
+                                        <span className="text-xs text-muted-foreground">vs last week</span>
                                     </div>
                                 </div>
                                 <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.color} shadow-lg`}>
@@ -178,11 +178,11 @@ export default function AdminDashboardPage() {
                 <Card className="lg:col-span-2 border-0 shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl">
                     <CardHeader className="flex flex-row items-center justify-between">
                         <div>
-                            <CardTitle className="text-lg">Đặt phòng gần đây</CardTitle>
-                            <CardDescription>Cập nhật realtime</CardDescription>
+                            <CardTitle className="text-lg">Recent Bookings</CardTitle>
+                            <CardDescription>Real-time updates</CardDescription>
                         </div>
                         <Button variant="ghost" size="sm" className="text-orange-600">
-                            Xem tất cả
+                            View All
                             <ArrowUpRight className="h-4 w-4 ml-1" />
                         </Button>
                     </CardHeader>
@@ -223,8 +223,8 @@ export default function AdminDashboardPage() {
                 {/* Quick Actions */}
                 <Card className="border-0 shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl">
                     <CardHeader>
-                        <CardTitle className="text-lg">Thao tác nhanh</CardTitle>
-                        <CardDescription>Các tác vụ thường dùng</CardDescription>
+                        <CardTitle className="text-lg">Quick Actions</CardTitle>
+                        <CardDescription>Frequently used tasks</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
                         <Button
@@ -232,28 +232,28 @@ export default function AdminDashboardPage() {
                             className="w-full justify-start rounded-xl h-12 hover:bg-orange-50 dark:hover:bg-orange-950/30 hover:text-orange-600 hover:border-orange-200"
                         >
                             <Calendar className="h-5 w-5 mr-3 text-orange-500" />
-                            Tạo đặt phòng mới
+                            New Booking
                         </Button>
                         <Button
                             variant="outline"
                             className="w-full justify-start rounded-xl h-12 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-600 hover:border-emerald-200"
                         >
                             <CheckCircle2 className="h-5 w-5 mr-3 text-emerald-500" />
-                            Xác nhận check-in
+                            Confirm Check-in
                         </Button>
                         <Button
                             variant="outline"
                             className="w-full justify-start rounded-xl h-12 hover:bg-amber-50 dark:hover:bg-amber-950/30 hover:text-amber-600 hover:border-amber-200"
                         >
                             <BedDouble className="h-5 w-5 mr-3 text-amber-500" />
-                            Thêm phòng mới
+                            Add New Room
                         </Button>
                         <Button
                             variant="outline"
                             className="w-full justify-start rounded-xl h-12 hover:bg-purple-50 dark:hover:bg-purple-950/30 hover:text-purple-600 hover:border-purple-200"
                         >
                             <Users className="h-5 w-5 mr-3 text-purple-500" />
-                            Quản lý khách hàng
+                            Manage Guests
                         </Button>
                     </CardContent>
                 </Card>
@@ -262,17 +262,17 @@ export default function AdminDashboardPage() {
             {/* Room Status Overview */}
             <Card className="border-0 shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl">
                 <CardHeader>
-                    <CardTitle className="text-lg">Tình trạng phòng</CardTitle>
-                    <CardDescription>Cập nhật theo thời gian thực</CardDescription>
+                    <CardTitle className="text-lg">Room Status</CardTitle>
+                    <CardDescription>Real-time room availability</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                         {[
-                            { label: "Trống", count: 18, color: "bg-emerald-500", bgColor: "bg-emerald-50 dark:bg-emerald-950/30" },
-                            { label: "Đang sử dụng", count: 45, color: "bg-orange-500", bgColor: "bg-orange-50 dark:bg-orange-950/30" },
-                            { label: "Đang dọn", count: 5, color: "bg-amber-500", bgColor: "bg-amber-50 dark:bg-amber-950/30" },
-                            { label: "Bảo trì", count: 2, color: "bg-red-500", bgColor: "bg-red-50 dark:bg-red-950/30" },
-                            { label: "Đã đặt trước", count: 10, color: "bg-purple-500", bgColor: "bg-purple-50 dark:bg-purple-950/30" },
+                            { label: "Available", count: 18, color: "bg-emerald-500", bgColor: "bg-emerald-50 dark:bg-emerald-950/30" },
+                            { label: "Occupied", count: 45, color: "bg-orange-500", bgColor: "bg-orange-50 dark:bg-orange-950/30" },
+                            { label: "Cleaning", count: 5, color: "bg-amber-500", bgColor: "bg-amber-50 dark:bg-amber-950/30" },
+                            { label: "Maintenance", count: 2, color: "bg-red-500", bgColor: "bg-red-50 dark:bg-red-950/30" },
+                            { label: "Reserved", count: 10, color: "bg-purple-500", bgColor: "bg-purple-50 dark:bg-purple-950/30" },
                         ].map((room, index) => (
                             <div key={index} className={`p-4 rounded-xl ${room.bgColor} text-center`}>
                                 <div className={`inline-flex items-center justify-center h-12 w-12 rounded-xl ${room.color} text-white font-bold text-lg mb-2`}>

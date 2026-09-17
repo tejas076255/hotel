@@ -31,9 +31,10 @@ export class BookingsService {
       throw new BadRequestException('Ngày trả phòng phải sau ngày nhận phòng');
     }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (checkInDate < today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+    if (checkInDate < yesterday) {
       throw new BadRequestException(
         'Ngày nhận phòng không được là ngày trong quá khứ',
       );
@@ -121,7 +122,7 @@ export class BookingsService {
       });
 
       if (!room) {
-        throw new NotFoundException(`Không tìm thấy phòng ${roomId}`);
+        throw new NotFoundException(`Room ${roomId} not found`);
       }
 
       // Check for dynamic pricing (PriceCalendar)
@@ -204,14 +205,15 @@ export class BookingsService {
 
     // Validate dates
     if (checkOutDate <= checkInDate) {
-      throw new BadRequestException('Ngày trả phòng phải sau ngày nhận phòng');
+      throw new BadRequestException('Check-out date must be after check-in date');
     }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (checkInDate < today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+    if (checkInDate < yesterday) {
       throw new BadRequestException(
-        'Ngày nhận phòng không được là ngày trong quá khứ',
+        'Check-in date cannot be in the past',
       );
     }
 
@@ -221,7 +223,7 @@ export class BookingsService {
     });
 
     if (!user) {
-      throw new NotFoundException('Không tìm thấy người dùng');
+      throw new NotFoundException('User not found');
     }
 
     // Use transaction for data consistency
@@ -233,7 +235,7 @@ export class BookingsService {
         });
 
         if (!room) {
-          throw new NotFoundException(`Không tìm thấy phòng ${roomId}`);
+          throw new NotFoundException(`Room ${roomId} not found`);
         }
 
         // Check if room is available (not booked for these dates)
@@ -255,9 +257,28 @@ export class BookingsService {
         });
 
         if (conflictingBookings) {
-          throw new ConflictException(
-            `Phòng ${room.roomNumber} đã được đặt trong khoảng thời gian này`,
-          );
+          const alternativeRoom = await tx.room.findFirst({
+            where: {
+              typeId: room.typeId,
+              id: { notIn: roomIds },
+              bookings: {
+                none: {
+                  booking: {
+                    status: { in: ['CONFIRMED', 'CHECKED_IN', 'PENDING'] },
+                    AND: [
+                      { checkInDate: { lt: checkOutDate } },
+                      { checkOutDate: { gt: checkInDate } },
+                    ],
+                  },
+                },
+              },
+            },
+          });
+
+          if (alternativeRoom) {
+            const idx = roomIds.indexOf(roomId);
+            if (idx !== -1) roomIds[idx] = alternativeRoom.id;
+          }
         }
       }
 
@@ -467,7 +488,7 @@ export class BookingsService {
     });
 
     if (!booking) {
-      throw new NotFoundException('Không tìm thấy đặt phòng');
+      throw new NotFoundException('Booking not found');
     }
 
     return booking;

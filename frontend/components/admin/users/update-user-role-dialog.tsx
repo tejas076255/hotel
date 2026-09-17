@@ -33,7 +33,7 @@ import { User } from '@/types/auth';
 import { useEffect } from 'react';
 
 const updateRoleSchema = z.object({
-  roleId: z.string().min(1, 'Vui lòng chọn vai trò'),
+  roleId: z.string().min(1, 'Please select a role'),
 });
 
 type UpdateRoleForm = z.infer<typeof updateRoleSchema>;
@@ -82,15 +82,15 @@ export function UpdateUserRoleDialog({ user, open, onOpenChange }: UpdateUserRol
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Cập nhật vai trò</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Update Role</DialogTitle>
           <DialogDescription>
-            Thay đổi vai trò của người dùng: {user.email}
+            Change role for user: {user.email}
           </DialogDescription>
         </DialogHeader>
 
         <div className="rounded-xl bg-slate-100 dark:bg-slate-800 p-4 space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">Vai trò hiện tại:</span>
+            <span className="text-sm text-muted-foreground">Current Role:</span>
             <span className="font-semibold text-slate-900 dark:text-slate-100">
               {user.role?.name}
             </span>
@@ -109,11 +109,11 @@ export function UpdateUserRoleDialog({ user, open, onOpenChange }: UpdateUserRol
               name="roleId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Vai trò mới</FormLabel>
+                  <FormLabel>New Role</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="rounded-xl">
-                        <SelectValue placeholder="Chọn vai trò" />
+                        <SelectValue placeholder="Select role" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -144,14 +144,14 @@ export function UpdateUserRoleDialog({ user, open, onOpenChange }: UpdateUserRol
                 disabled={isPending}
                 className="rounded-xl"
               >
-                Hủy
+                Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
                 className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500"
               >
-                {isPending ? 'Đang cập nhật...' : 'Cập nhật'}
+                {isPending ? 'Updating...' : 'Update'}
               </Button>
             </DialogFooter>
           </form>

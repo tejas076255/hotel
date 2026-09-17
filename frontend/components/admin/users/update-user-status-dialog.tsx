@@ -83,24 +83,24 @@ export function UpdateUserStatusDialog({ user, open, onOpenChange }: UpdateUserS
   };
 
   const statusLabels = {
-    ACTIVE: 'Hoạt động',
-    INACTIVE: 'Không hoạt động',
-    BANNED: 'Đã khóa',
+    ACTIVE: 'Active',
+    INACTIVE: 'Inactive',
+    BANNED: 'Banned',
   };
 
   const statusDescriptions = {
-    ACTIVE: 'Người dùng có thể đăng nhập và sử dụng hệ thống',
-    INACTIVE: 'Người dùng tạm thời không thể đăng nhập',
-    BANNED: 'Người dùng bị cấm vĩnh viễn khỏi hệ thống',
+    ACTIVE: 'User can log in and use the system',
+    INACTIVE: 'User is temporarily disabled from logging in',
+    BANNED: 'User is permanently banned from the system',
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Cập nhật trạng thái</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Update Status</DialogTitle>
           <DialogDescription>
-            Thay đổi trạng thái tài khoản: {user.email}
+            Change account status for: {user.email}
           </DialogDescription>
         </DialogHeader>
 
@@ -111,11 +111,11 @@ export function UpdateUserStatusDialog({ user, open, onOpenChange }: UpdateUserS
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Trạng thái mới</FormLabel>
+                  <FormLabel>New Status</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="rounded-xl">
-                        <SelectValue placeholder="Chọn trạng thái" />
+                        <SelectValue placeholder="Select status" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -141,10 +141,10 @@ export function UpdateUserStatusDialog({ user, open, onOpenChange }: UpdateUserS
               name="reason"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lý do (tùy chọn)</FormLabel>
+                  <FormLabel>Reason (optional)</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Nhập lý do thay đổi trạng thái..."
+                      placeholder="Enter reason for status change..."
                       className="rounded-xl resize-none"
                       rows={3}
                       {...field}
@@ -163,14 +163,14 @@ export function UpdateUserStatusDialog({ user, open, onOpenChange }: UpdateUserS
                 disabled={isPending}
                 className="rounded-xl"
               >
-                Hủy
+                Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500"
+                className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
               >
-                {isPending ? 'Đang cập nhật...' : 'Cập nhật'}
+                {isPending ? 'Updating...' : 'Update'}
               </Button>
             </DialogFooter>
           </form>

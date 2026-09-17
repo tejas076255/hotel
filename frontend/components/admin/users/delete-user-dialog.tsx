@@ -34,9 +34,9 @@ export function DeleteUserDialog({ user, open, onOpenChange }: DeleteUserDialogP
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="rounded-2xl">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-2xl font-bold">Xác nhận xóa người dùng</AlertDialogTitle>
+          <AlertDialogTitle className="text-2xl font-bold">Confirm User Deletion</AlertDialogTitle>
           <AlertDialogDescription className="space-y-2">
-            <p>Bạn có chắc chắn muốn xóa người dùng này?</p>
+            <p>Are you sure you want to delete this user?</p>
             <div className="rounded-xl bg-slate-100 dark:bg-slate-800 p-4 space-y-1">
               <p className="font-semibold text-slate-900 dark:text-slate-100">
                 {user.fullName}
@@ -46,7 +46,7 @@ export function DeleteUserDialog({ user, open, onOpenChange }: DeleteUserDialogP
               </p>
             </div>
             <p className="text-red-600 dark:text-red-400 font-medium">
-              Lưu ý: Hành động này không thể hoàn tác!
+              Note: This action cannot be undone!
             </p>
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -55,14 +55,14 @@ export function DeleteUserDialog({ user, open, onOpenChange }: DeleteUserDialogP
             disabled={isPending}
             className="rounded-xl"
           >
-            Hủy
+            Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={isPending}
             className="rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700"
           >
-            {isPending ? 'Đang xóa...' : 'Xóa'}
+            {isPending ? 'Deleting...' : 'Delete'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

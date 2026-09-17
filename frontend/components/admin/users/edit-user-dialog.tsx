@@ -26,10 +26,10 @@ import { User } from '@/types/auth';
 import { useEffect } from 'react';
 
 const updateUserSchema = z.object({
-  email: z.string().email('Email không hợp lệ'),
-  fullName: z.string().min(2, 'Họ tên phải có ít nhất 2 ký tự'),
+  email: z.string().email('Invalid email address'),
+  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   phone: z.string().optional(),
-  avatarUrl: z.string().url('URL không hợp lệ').optional().or(z.literal('')),
+  avatarUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
 });
 
 type UpdateUserForm = z.infer<typeof updateUserSchema>;
@@ -86,9 +86,9 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Chỉnh sửa người dùng</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Edit User</DialogTitle>
           <DialogDescription>
-            Cập nhật thông tin người dùng: {user.email}
+            Update user information for: {user.email}
           </DialogDescription>
         </DialogHeader>
 
@@ -113,9 +113,9 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Họ tên</FormLabel>
+                  <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nguyễn Văn A" {...field} className="rounded-xl" />
+                    <Input placeholder="John Doe" {...field} className="rounded-xl" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,9 +127,9 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Số điện thoại (tùy chọn)</FormLabel>
+                  <FormLabel>Phone Number (optional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="0123456789" {...field} className="rounded-xl" />
+                    <Input placeholder="+1234567890" {...field} className="rounded-xl" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -141,7 +141,7 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
               name="avatarUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL Avatar (tùy chọn)</FormLabel>
+                  <FormLabel>Avatar URL (optional)</FormLabel>
                   <FormControl>
                     <Input placeholder="https://example.com/avatar.jpg" {...field} className="rounded-xl" />
                   </FormControl>
@@ -158,14 +158,14 @@ export function EditUserDialog({ user, open, onOpenChange }: EditUserDialogProps
                 disabled={isPending}
                 className="rounded-xl"
               >
-                Hủy
+                Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500"
+                className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
               >
-                {isPending ? 'Đang cập nhật...' : 'Cập nhật'}
+                {isPending ? 'Updating...' : 'Update'}
               </Button>
             </DialogFooter>
           </form>

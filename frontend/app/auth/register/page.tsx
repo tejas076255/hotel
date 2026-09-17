@@ -33,12 +33,12 @@ export default function RegisterPage() {
       clearError();
       const { confirmPassword, ...registerData } = data;
       await registerUser(registerData);
-      toast.success('Đăng ký thành công!');
+      toast.success('Registration successful!');
       router.push('/auth/login');
     } catch (err) {
       // Error handled by store
       console.error('Register error:', err);
-      toast.error('Đăng ký thất bại');
+      toast.error('Registration failed');
     }
   };
 
@@ -46,10 +46,10 @@ export default function RegisterPage() {
     <div className="flex flex-col space-y-6">
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Tạo tài khoản
+          Create an Account
         </h1>
         <p className="text-sm text-muted-foreground">
-          Nhập thông tin để tạo tài khoản mới
+          Enter your details below to create your account
         </p>
       </div>
 
@@ -63,10 +63,10 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="fullName">Họ và tên</Label>
+              <Label htmlFor="fullName">Full Name</Label>
               <Input
                 id="fullName"
-                placeholder="Nguyễn Văn A"
+                placeholder="John Doe"
                 type="text"
                 autoCapitalize="words"
                 autoComplete="name"
@@ -95,10 +95,10 @@ export default function RegisterPage() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="phone">Số điện thoại (tùy chọn)</Label>
+              <Label htmlFor="phone">Phone Number (optional)</Label>
               <Input
                 id="phone"
-                placeholder="0123456789"
+                placeholder="+1 234 567 8900"
                 type="tel"
                 autoComplete="tel"
                 disabled={isLoading}
@@ -110,7 +110,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="password">Mật khẩu</Label>
+              <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -138,7 +138,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="confirmPassword">Xác nhận mật khẩu</Label>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
@@ -171,7 +171,7 @@ export default function RegisterPage() {
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Đăng ký
+              Register
             </Button>
           </div>
         </form>
@@ -182,7 +182,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-slate-50 px-2 text-muted-foreground dark:bg-slate-950">
-              Hoặc tiếp tục với
+              Or continue with
             </span>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function RegisterPage() {
           href="/auth/login"
           className="hover:text-brand underline underline-offset-4"
         >
-          Đã có tài khoản? Đăng nhập
+          Already have an account? Sign in
         </Link>
       </p>
     </div>

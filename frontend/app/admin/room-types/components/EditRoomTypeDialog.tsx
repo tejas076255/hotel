@@ -33,11 +33,11 @@ interface EditRoomTypeDialogProps {
 }
 
 const bedTypes = [
-    { value: "SINGLE", label: "Giường đơn" },
-    { value: "DOUBLE", label: "Giường đôi" },
-    { value: "QUEEN", label: "Giường Queen" },
-    { value: "KING", label: "Giường King" },
-    { value: "TWIN", label: "2 Giường đơn (Twin)" },
+    { value: "SINGLE", label: "Single Bed" },
+    { value: "DOUBLE", label: "Double Bed" },
+    { value: "QUEEN", label: "Queen Bed" },
+    { value: "KING", label: "King Bed" },
+    { value: "TWIN", label: "Twin Beds" },
 ];
 
 export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProps) {
@@ -102,11 +102,11 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
             roomsApi.updateRoomType(roomType!.id, data),
         onSuccess: async () => {
             await queryClient.refetchQueries({ queryKey: ["room-types"] });
-            toast.success("Cập nhật loại phòng thành công!");
+            toast.success("Room type updated successfully!");
             onClose();
         },
         onError: (error: any) => {
-            toast.error("Lỗi khi cập nhật loại phòng", {
+            toast.error("Error updating room type", {
                 description: error.response?.data?.message || error.message,
             });
         },
@@ -114,7 +114,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
 
     const handleSubmit = () => {
         if (!formData.name || !formData.basePrice || !formData.capacity) {
-            toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
+            toast.error("Please fill in all required fields");
             return;
         }
 
@@ -146,9 +146,9 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
         <Dialog open={!!roomType} onOpenChange={() => onClose()}>
             <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl">
                 <DialogHeader>
-                    <DialogTitle>Chỉnh sửa loại phòng</DialogTitle>
+                    <DialogTitle>Edit Room Type</DialogTitle>
                     <DialogDescription>
-                        Cập nhật thông tin loại phòng "{roomType?.name}"
+                        Update room type information for "{roomType?.name}"
                     </DialogDescription>
                 </DialogHeader>
 
@@ -156,10 +156,10 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                     {/* Basic Info */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="edit-name">Tên loại phòng *</Label>
+                            <Label htmlFor="edit-name">Room Type Name *</Label>
                             <Input
                                 id="edit-name"
-                                placeholder="VD: Deluxe Room"
+                                placeholder="e.g. Deluxe Room"
                                 className="rounded-xl"
                                 value={formData.name}
                                 onChange={(e) =>
@@ -168,11 +168,11 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="edit-price">Giá cơ bản (VNĐ) *</Label>
+                            <Label htmlFor="edit-price">Base Price ($) *</Label>
                             <Input
                                 id="edit-price"
                                 type="number"
-                                placeholder="VD: 1500000"
+                                placeholder="e.g. 150"
                                 className="rounded-xl"
                                 value={formData.basePrice}
                                 onChange={(e) =>
@@ -183,10 +183,10 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="edit-description">Mô tả</Label>
+                        <Label htmlFor="edit-description">Description</Label>
                         <Textarea
                             id="edit-description"
-                            placeholder="Mô tả chi tiết về loại phòng..."
+                            placeholder="Detailed description of room type..."
                             className="rounded-xl resize-none"
                             rows={3}
                             value={formData.description}
@@ -199,7 +199,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                     {/* Room Details */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="edit-capacity">Sức chứa *</Label>
+                            <Label htmlFor="edit-capacity">Capacity *</Label>
                             <Input
                                 id="edit-capacity"
                                 type="number"
@@ -213,7 +213,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="edit-bedType">Loại giường *</Label>
+                            <Label htmlFor="edit-bedType">Bed Type *</Label>
                             <Select
                                 value={formData.bedType}
                                 onValueChange={(value) =>
@@ -221,7 +221,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                                 }
                             >
                                 <SelectTrigger className="rounded-xl">
-                                    <SelectValue placeholder="Chọn loại giường" />
+                                    <SelectValue placeholder="Select bed type" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {bedTypes.map((type) => (
@@ -233,7 +233,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                             </Select>
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="edit-bedCount">Số giường</Label>
+                            <Label htmlFor="edit-bedCount">Bed Count</Label>
                             <Input
                                 id="edit-bedCount"
                                 type="number"
@@ -247,7 +247,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="edit-size">Diện tích (m²)</Label>
+                            <Label htmlFor="edit-size">Size (m²)</Label>
                             <Input
                                 id="edit-size"
                                 type="number"
@@ -263,10 +263,10 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
 
                     {/* Amenities */}
                     <div className="space-y-2">
-                        <Label htmlFor="edit-amenities">Tiện nghi</Label>
+                        <Label htmlFor="edit-amenities">Amenities</Label>
                         <Input
                             id="edit-amenities"
-                            placeholder="WiFi, TV, Điều hòa, Minibar..."
+                            placeholder="WiFi, TV, Air Conditioning, Minibar..."
                             className="rounded-xl"
                             value={formData.amenities}
                             onChange={(e) =>
@@ -274,13 +274,13 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                             }
                         />
                         <p className="text-xs text-muted-foreground">
-                            Nhập các tiện nghi cách nhau bởi dấu phẩy
+                            Enter amenities separated by commas
                         </p>
                     </div>
 
                     {/* Images */}
                     <div className="space-y-2">
-                        <Label>Hình ảnh</Label>
+                        <Label>Images</Label>
                         <ImageUploader
                             images={images}
                             onChange={setImages}
@@ -297,7 +297,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                         className="rounded-xl"
                         disabled={isSubmitting}
                     >
-                        Hủy
+                        Cancel
                     </Button>
                     <Button
                         onClick={handleSubmit}
@@ -310,7 +310,7 @@ export function EditRoomTypeDialog({ roomType, onClose }: EditRoomTypeDialogProp
                         }
                     >
                         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        Cập nhật
+                        Update
                     </Button>
                 </DialogFooter>
             </DialogContent>

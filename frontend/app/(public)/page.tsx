@@ -36,59 +36,59 @@ import {
 const FEATURES = [
     {
         icon: Shield,
-        title: "Đảm bảo giá tốt nhất",
-        description: "Cam kết giá tốt nhất thị trường, hoàn tiền nếu tìm thấy giá rẻ hơn.",
+        title: "Best Rate Guarantee",
+        description: "Best market rates guaranteed. Price match refund if you find a lower rate.",
     },
     {
         icon: Star,
-        title: "Phòng chất lượng cao",
-        description: "Tất cả phòng được kiểm tra kỹ lưỡng, đảm bảo sạch sẽ và tiện nghi.",
+        title: "High Quality Rooms",
+        description: "Every room is thoroughly inspected to ensure top cleanliness and luxury.",
     },
     {
         icon: Clock,
-        title: "Đặt phòng tức thì",
-        description: "Xác nhận đặt phòng ngay lập tức, không cần chờ đợi.",
+        title: "Instant Booking",
+        description: "Get instant booking confirmation with zero waiting time.",
     },
     {
         icon: Headphones,
-        title: "Hỗ trợ 24/7",
-        description: "Đội ngũ hỗ trợ luôn sẵn sàng giúp đỡ bạn mọi lúc.",
+        title: "24/7 Concierge Support",
+        description: "Our dedicated support team is available 24/7 to assist you anytime.",
     },
 ];
 
 const DESTINATIONS = [
     {
-        name: "Đà Nẵng",
+        name: "Miami Beach",
         image: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop",
         properties: 120,
         featured: true,
     },
     {
-        name: "Hội An",
+        name: "New York City",
         image: "https://images.unsplash.com/photo-1536323760109-ca8c07450053?w=800&auto=format&fit=crop",
         properties: 85,
         featured: false,
     },
     {
-        name: "Nha Trang",
+        name: "Los Angeles",
         image: "https://images.unsplash.com/photo-1573790387438-4da905039392?w=800&auto=format&fit=crop",
         properties: 95,
         featured: true,
     },
     {
-        name: "Phú Quốc",
+        name: "Honolulu",
         image: "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&auto=format&fit=crop",
         properties: 78,
         featured: false,
     },
     {
-        name: "Hà Nội",
+        name: "Chicago",
         image: "https://images.unsplash.com/photo-1509030450996-dd1a26dda07a?w=800&auto=format&fit=crop",
         properties: 150,
         featured: false,
     },
     {
-        name: "Sapa",
+        name: "Aspen Resort",
         image: "https://images.unsplash.com/photo-1584003564911-a5e0e9a89f63?w=800&auto=format&fit=crop",
         properties: 45,
         featured: false,
@@ -97,9 +97,9 @@ const DESTINATIONS = [
 
 const FEATURED_ROOMS = [
     {
-        name: "Phòng Deluxe Hướng Biển",
+        name: "Oceanfront Deluxe Room",
         image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&auto=format&fit=crop",
-        price: 2500000,
+        price: 250,
         rating: 4.9,
         reviews: 234,
         beds: 2,
@@ -107,9 +107,9 @@ const FEATURED_ROOMS = [
         guests: 4,
     },
     {
-        name: "Suite Hoàng Gia",
+        name: "Presidential Royal Suite",
         image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&auto=format&fit=crop",
-        price: 4500000,
+        price: 450,
         rating: 5.0,
         reviews: 156,
         beds: 3,
@@ -117,9 +117,9 @@ const FEATURED_ROOMS = [
         guests: 6,
     },
     {
-        name: "Phòng Standard Hiện Đại",
+        name: "Modern Standard Room",
         image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&auto=format&fit=crop",
-        price: 1200000,
+        price: 120,
         rating: 4.7,
         reviews: 412,
         beds: 1,
@@ -127,9 +127,9 @@ const FEATURED_ROOMS = [
         guests: 2,
     },
     {
-        name: "Villa Bể Bơi Riêng",
+        name: "Private Pool Luxury Villa",
         image: "https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=800&auto=format&fit=crop",
-        price: 8000000,
+        price: 800,
         rating: 4.9,
         reviews: 89,
         beds: 4,
@@ -140,46 +140,46 @@ const FEATURED_ROOMS = [
 
 const TESTIMONIALS = [
     {
-        name: "Nguyễn Minh Anh",
-        location: "Hà Nội",
+        name: "Sarah Jenkins",
+        location: "California, USA",
         rating: 5,
-        comment: "Dịch vụ tuyệt vời, phòng sạch sẽ và view đẹp. Nhân viên rất nhiệt tình và chu đáo. Chắc chắn sẽ quay lại!",
+        comment: "Outstanding service! The room was spotless with breathtaking views. The staff was incredibly welcoming and thoughtful. Will definitely return!",
         date: "12/2025",
     },
     {
-        name: "Trần Văn Hoàng",
-        location: "TP. Hồ Chí Minh",
+        name: "David Smith",
+        location: "New York, USA",
         rating: 5,
-        comment: "Đặt phòng qua Stayzy rất nhanh và tiện lợi. Giá cả hợp lý, phòng đúng như mô tả. Rất hài lòng!",
+        comment: "Booking via Stayzy was extremely fast and smooth. Great pricing and the room was exactly as described. Very satisfied!",
         date: "11/2025",
     },
     {
-        name: "Lê Thị Hương",
-        location: "Đà Nẵng",
+        name: "Emily Watson",
+        location: "London, UK",
         rating: 4,
-        comment: "Trải nghiệm nghỉ dưỡng tuyệt vời cho gia đình. Tiện nghi đầy đủ, đồ ăn ngon. Recommend cho mọi người!",
+        comment: "Wonderful vacation experience for our family. Excellent amenities, delicious food. Highly recommended to everyone!",
         date: "01/2026",
     },
 ];
 
 const AMENITIES = [
-    { icon: Wifi, label: "WiFi miễn phí", description: "Tốc độ cao" },
-    { icon: Car, label: "Đỗ xe miễn phí", description: "An toàn 24/7" },
-    { icon: UtensilsCrossed, label: "Nhà hàng", description: "Ẩm thực đa dạng" },
-    { icon: Dumbbell, label: "Phòng gym", description: "Thiết bị hiện đại" },
-    { icon: Waves, label: "Hồ bơi", description: "Nước nóng/lạnh" },
-    { icon: Sparkles, label: "Spa & Massage", description: "Thư giãn tuyệt đối" },
-    { icon: Coffee, label: "Quầy bar", description: "Đồ uống cao cấp" },
-    { icon: ConciergeBell, label: "Dịch vụ phòng", description: "Phục vụ 24/7" },
+    { icon: Wifi, label: "Free High-Speed WiFi", description: "Ultra-fast connection" },
+    { icon: Car, label: "Free Valet Parking", description: "24/7 Secure garage" },
+    { icon: UtensilsCrossed, label: "Gourmet Restaurant", description: "International cuisine" },
+    { icon: Dumbbell, label: "Fitness Gym", description: "Modern equipment" },
+    { icon: Waves, label: "Infinity Pool", description: "Heated & Panoramic" },
+    { icon: Sparkles, label: "Luxury Spa & Massage", description: "Pure relaxation" },
+    { icon: Coffee, label: "Lounge Bar", description: "Cocktails & beverages" },
+    { icon: ConciergeBell, label: "24/7 Room Service", description: "In-room dining" },
 ];
 
 // ============================================
 // HELPER FUNCTIONS
 // ============================================
 
-function formatPrice(price: number) {
-    return new Intl.NumberFormat("vi-VN").format(price) + "đ";
-}
+const formatPrice = (price: number) => {
+    return "₹" + price.toLocaleString("en-IN");
+};
 
 // ============================================
 // MAIN COMPONENT
@@ -210,19 +210,19 @@ export default function HomePage() {
                     {/* Badge */}
                     <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm">
                         <Sparkles className="w-4 h-4 mr-2 text-amber-400" />
-                        Khám phá những kỳ nghỉ tuyệt vời
+                        Discover Extraordinary Stays
                     </div>
 
                     {/* Main Heading */}
                     <div className="text-center space-y-4 max-w-4xl">
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight">
-                            Trải nghiệm kỳ nghỉ{" "}
+                            Experience Your{" "}
                             <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-300 bg-clip-text text-transparent">
-                                hoàn hảo
+                                Perfect Getaway
                             </span>
                         </h1>
                         <p className="text-lg md:text-xl text-white/90 font-light max-w-2xl mx-auto leading-relaxed">
-                            Khám phá những phòng nghỉ sang trọng, tiện nghi đẳng cấp và dịch vụ tận tâm tại Stayzy.
+                            Discover luxurious rooms, world-class amenities, and personalized hospitalities at Stayzy.
                         </p>
                     </div>
 
@@ -234,10 +234,10 @@ export default function HomePage() {
                     {/* Quick Stats */}
                     <div className="flex flex-wrap justify-center gap-8 md:gap-12 mt-8">
                         {[
-                            { value: "50+", label: "Phòng đẳng cấp" },
-                            { value: "4.9", label: "Đánh giá trung bình" },
-                            { value: "10k+", label: "Khách hài lòng" },
-                            { value: "24/7", label: "Hỗ trợ khách hàng" },
+                            { value: "50+", label: "Luxury Rooms" },
+                            { value: "4.9", label: "Average Rating" },
+                            { value: "10k+", label: "Happy Guests" },
+                            { value: "24/7", label: "Concierge Support" },
                         ].map((stat, idx) => (
                             <div key={idx} className="text-center group">
                                 <p className="text-3xl md:text-4xl font-bold text-white group-hover:text-orange-400 transition-colors">
@@ -265,18 +265,18 @@ export default function HomePage() {
                         <div className="space-y-3">
                             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
                                 <MapPin className="w-3 h-3 mr-1" />
-                                Điểm đến phổ biến
+                                Popular Destinations
                             </span>
                             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-                                Khám phá <span className="text-orange-600">Việt Nam</span>
+                                Explore <span className="text-orange-600">Top Locations</span>
                             </h2>
                             <p className="text-slate-500 dark:text-slate-400 max-w-lg">
-                                Những điểm đến được yêu thích nhất với hàng nghìn lựa chọn khách sạn chất lượng.
+                                Most sought-after destinations with thousands of luxury accommodations.
                             </p>
                         </div>
                         <Link href="/destinations" className="group">
                             <Button variant="ghost" className="text-orange-600 hover:text-orange-700 hover:bg-orange-50 dark:hover:bg-orange-900/20 cursor-pointer">
-                                Xem tất cả
+                                View All
                                 <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                             </Button>
                         </Link>
@@ -303,18 +303,18 @@ export default function HomePage() {
                         <div className="space-y-3">
                             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
                                 <Star className="w-3 h-3 mr-1" />
-                                Phòng nổi bật
+                                Featured Rooms
                             </span>
                             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-                                Phòng được <span className="text-orange-600">yêu thích</span>
+                                Guest <span className="text-orange-600">Favorites</span>
                             </h2>
                             <p className="text-slate-500 dark:text-slate-400 max-w-lg">
-                                Những căn phòng sang trọng nhất với đánh giá cao từ khách hàng.
+                                Luxurious rooms with top ratings from our guests.
                             </p>
                         </div>
                         <Link href="/rooms" className="group">
                             <Button variant="ghost" className="text-orange-600 hover:text-orange-700 hover:bg-orange-50 dark:hover:bg-orange-900/20 cursor-pointer">
-                                Xem tất cả phòng
+                                View All Rooms
                                 <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                             </Button>
                         </Link>
@@ -336,7 +336,7 @@ export default function HomePage() {
                                     />
                                     {/* Price Badge */}
                                     <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-sm font-semibold text-orange-600">
-                                        {formatPrice(room.price)}/đêm
+                                        {formatPrice(room.price)}/night
                                     </div>
                                     {/* Rating */}
                                     <div className="absolute bottom-4 left-4 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-sm">
@@ -353,26 +353,26 @@ export default function HomePage() {
                                     <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
                                         <div className="flex items-center gap-1">
                                             <Bed className="w-4 h-4" />
-                                            <span>{room.beds} giường</span>
+                                            <span>{room.beds} beds</span>
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <Bath className="w-4 h-4" />
-                                            <span>{room.baths} WC</span>
+                                            <span>{room.baths} baths</span>
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <Users className="w-4 h-4" />
-                                            <span>{room.guests} khách</span>
+                                            <span>{room.guests} guests</span>
                                         </div>
                                     </div>
                                     <div className="mt-4 flex gap-2">
                                         <Link href={`/rooms/${index + 1}`} className="flex-1">
                                             <Button variant="outline" size="sm" className="w-full border-orange-500 text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 cursor-pointer">
-                                                Chi tiết
+                                                Details
                                             </Button>
                                         </Link>
                                         <Link href={`/booking?room=${index + 1}`} className="flex-1">
                                             <Button size="sm" className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 cursor-pointer">
-                                                Đặt ngay
+                                                Book Now
                                             </Button>
                                         </Link>
                                     </div>
@@ -389,13 +389,13 @@ export default function HomePage() {
                     <div className="text-center mb-12 space-y-3">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
                             <Shield className="w-3 h-3 mr-1" />
-                            Cam kết của chúng tôi
+                            Our Guarantee
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-                            Tại sao chọn <span className="text-orange-600">Stayzy</span>?
+                            Why Choose <span className="text-orange-600">Stayzy</span>?
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-                            Chúng tôi mang đến trải nghiệm đặt phòng tuyệt vời nhất với những cam kết vượt trội.
+                            We deliver unmatched hotel reservation experience with world-class commitments.
                         </p>
                     </div>
 
@@ -428,13 +428,13 @@ export default function HomePage() {
                     <div className="text-center mb-12 space-y-3">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
                             <Sparkles className="w-3 h-3 mr-1" />
-                            Tiện ích đẳng cấp
+                            Premium Facilities
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-                            Dịch vụ & <span className="text-orange-600">Tiện nghi</span>
+                            Services & <span className="text-orange-600">Amenities</span>
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-                            Tận hưởng những tiện ích cao cấp được thiết kế cho sự thoải mái của bạn.
+                            Enjoy top-tier amenities designed for your ultimate comfort and leisure.
                         </p>
                     </div>
 
@@ -452,13 +452,13 @@ export default function HomePage() {
                     <div className="text-center mb-12 space-y-3">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
                             <Star className="w-3 h-3 mr-1" />
-                            Đánh giá từ khách hàng
+                            Guest Reviews
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-                            Khách hàng <span className="text-orange-600">nói gì?</span>
+                            What Guests <span className="text-orange-600">Say</span>
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-                            Hàng nghìn khách hàng đã tin tưởng và hài lòng với dịch vụ của Stayzy.
+                            Thousands of guests have trusted and enjoyed Stayzy services.
                         </p>
                     </div>
 
@@ -479,14 +479,14 @@ export default function HomePage() {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center max-w-2xl mx-auto space-y-6">
                         <h2 className="text-3xl md:text-4xl font-bold text-white">
-                            Nhận ưu đãi độc quyền
+                            Get Exclusive Deals
                         </h2>
                         <p className="text-white/90 text-lg">
-                            Đăng ký nhận bản tin để không bỏ lỡ những khuyến mãi hấp dẫn và thông tin du lịch mới nhất.
+                            Subscribe to our newsletter to receive secret deals and latest travel updates.
                         </p>
                         <NewsletterForm />
                         <p className="text-white/60 text-sm">
-                            Hơn 50,000 người đã đăng ký • Không spam, hủy bất cứ lúc nào
+                            Over 50,000 subscribers • No spam, unsubscribe anytime
                         </p>
                     </div>
                 </div>
@@ -504,10 +504,10 @@ export default function HomePage() {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="text-center max-w-3xl mx-auto space-y-8">
                         <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
-                            Sẵn sàng cho kỳ nghỉ <span className="text-orange-400">tiếp theo</span>?
+                            Ready for Your <span className="text-orange-400">Next Vacation</span>?
                         </h2>
                         <p className="text-slate-400 text-lg md:text-xl">
-                            Khám phá các loại phòng đa dạng và tìm không gian hoàn hảo cho bạn ngay hôm nay.
+                            Explore diverse room options and find your perfect stay today.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link href="/rooms">
@@ -515,7 +515,7 @@ export default function HomePage() {
                                     size="lg"
                                     className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-lg px-8 py-6 shadow-xl shadow-orange-500/30 hover:shadow-2xl hover:shadow-orange-500/40 transition-all cursor-pointer"
                                 >
-                                    Xem tất cả phòng
+                                    Explore Rooms
                                     <ArrowRight className="w-5 h-5 ml-2" />
                                 </Button>
                             </Link>
@@ -525,7 +525,7 @@ export default function HomePage() {
                                     variant="outline"
                                     className="border-slate-600 text-white hover:bg-slate-800 text-lg px-8 py-6 cursor-pointer"
                                 >
-                                    Liên hệ tư vấn
+                                    Contact Us
                                 </Button>
                             </Link>
                         </div>

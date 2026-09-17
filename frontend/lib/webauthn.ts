@@ -53,15 +53,15 @@ export const uint8ArrayToBase64url = (buffer: Uint8Array): string => {
  */
 export const startPasskeyRegistration = async (options: any): Promise<any> => {
   if (!isWebAuthnSupported()) {
-    throw new Error('WebAuthn không được hỗ trợ trên trình duyệt này');
+    throw new Error('WebAuthn is not supported on this browser');
   }
 
   // Convert base64url strings to Uint8Array
   const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
-    challenge: base64urlToUint8Array(options.challenge),
+    challenge: base64urlToUint8Array(options.challenge) as unknown as BufferSource,
     rp: options.rp,
     user: {
-      id: base64urlToUint8Array(options.user.id),
+      id: base64urlToUint8Array(options.user.id) as unknown as BufferSource,
       name: options.user.name,
       displayName: options.user.displayName,
     },
@@ -71,7 +71,7 @@ export const startPasskeyRegistration = async (options: any): Promise<any> => {
     authenticatorSelection: options.authenticatorSelection,
     excludeCredentials: options.excludeCredentials?.map((cred: any) => ({
       ...cred,
-      id: base64urlToUint8Array(cred.id),
+      id: base64urlToUint8Array(cred.id) as unknown as BufferSource,
     })),
   };
 
@@ -81,7 +81,7 @@ export const startPasskeyRegistration = async (options: any): Promise<any> => {
     }) as PublicKeyCredential;
 
     if (!credential) {
-      throw new Error('Không thể tạo passkey');
+      throw new Error('Failed to create passkey');
     }
 
     // Get the response
@@ -102,11 +102,11 @@ export const startPasskeyRegistration = async (options: any): Promise<any> => {
     };
   } catch (error: any) {
     if (error.name === 'NotAllowedError') {
-      throw new Error('Người dùng đã hủy đăng ký passkey');
+      throw new Error('Passkey registration cancelled by user');
     } else if (error.name === 'InvalidStateError') {
-      throw new Error('Passkey này đã được đăng ký trước đó');
+      throw new Error('This passkey has already been registered');
     } else {
-      throw new Error(`Lỗi đăng ký passkey: ${error.message}`);
+      throw new Error(`Passkey registration error: ${error.message}`);
     }
   }
 };
@@ -116,17 +116,17 @@ export const startPasskeyRegistration = async (options: any): Promise<any> => {
  */
 export const startPasskeyAuthentication = async (options: any): Promise<any> => {
   if (!isWebAuthnSupported()) {
-    throw new Error('WebAuthn không được hỗ trợ trên trình duyệt này');
+    throw new Error('WebAuthn is not supported on this browser');
   }
 
   // Convert base64url strings to Uint8Array
   const publicKeyCredentialRequestOptions: PublicKeyCredentialRequestOptions = {
-    challenge: base64urlToUint8Array(options.challenge),
+    challenge: base64urlToUint8Array(options.challenge) as unknown as BufferSource,
     timeout: options.timeout,
     rpId: options.rpId,
     allowCredentials: options.allowCredentials?.map((cred: any) => ({
       type: 'public-key' as PublicKeyCredentialType,
-      id: base64urlToUint8Array(cred.id),
+      id: base64urlToUint8Array(cred.id) as unknown as BufferSource,
       transports: cred.transports as AuthenticatorTransport[],
     })),
     userVerification: options.userVerification,
@@ -138,7 +138,7 @@ export const startPasskeyAuthentication = async (options: any): Promise<any> => 
     }) as PublicKeyCredential;
 
     if (!credential) {
-      throw new Error('Không thể xác thực với passkey');
+      throw new Error('Failed to authenticate with passkey');
     }
 
     // Get the response
@@ -162,9 +162,9 @@ export const startPasskeyAuthentication = async (options: any): Promise<any> => 
     };
   } catch (error: any) {
     if (error.name === 'NotAllowedError') {
-      throw new Error('Người dùng đã hủy xác thực');
+      throw new Error('User cancelled authentication');
     } else {
-      throw new Error(`Lỗi xác thực passkey: ${error.message}`);
+      throw new Error(`Passkey authentication error: ${error.message}`);
     }
   }
 };

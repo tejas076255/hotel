@@ -31,37 +31,37 @@ const navItems = [
         icon: LayoutDashboard,
     },
     {
-        title: "Đặt phòng",
+        title: "Bookings",
         href: "/admin/bookings",
         icon: Calendar,
     },
     {
-        title: "Quản lý phòng",
+        title: "Rooms",
         href: "/admin/rooms",
         icon: BedDouble,
     },
     {
-        title: "Loại phòng",
+        title: "Room Types",
         href: "/admin/room-types",
         icon: Layers,
     },
     {
-        title: "Dịch vụ",
+        title: "Services",
         href: "/admin/services",
         icon: HandPlatter,
     },
     {
-        title: "Đặt dịch vụ",
+        title: "Service Orders",
         href: "/admin/service-bookings",
         icon: ClipboardList,
     },
     {
-        title: "Quản lý người dùng",
+        title: "User Management",
         href: "/admin/users",
         icon: Users,
     },
     {
-        title: "Cài đặt",
+        title: "Settings",
         href: "/admin/settings",
         icon: Settings,
     },
@@ -104,14 +104,14 @@ export default function AdminLayout({
 
         const allowedRoles = ["ADMIN", "MANAGER", "RECEPTIONIST", "HOUSEKEEPING"];
         if (user?.role?.name && !allowedRoles.includes(user.role.name)) {
-            toast.error("Bạn không có quyền truy cập trang này");
+            toast.error("You do not have access permission for this page");
             router.push("/");
         }
     }, [hasHydrated, isAuthenticated, user, router]);
 
     const handleLogout = () => {
         logout();
-        toast.success("Đăng xuất thành công!");
+        toast.success("Successfully logged out!");
         router.push("/auth/login");
     };
 
@@ -146,7 +146,7 @@ export default function AdminLayout({
                                 Stayzy Admin
                             </span>
                             <span className="text-xs text-muted-foreground">
-                                Quản lý khách sạn
+                                Hotel Management
                             </span>
                         </div>
                     </Link>
@@ -157,7 +157,7 @@ export default function AdminLayout({
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                             <input
                                 type="text"
-                                placeholder="Tìm kiếm..."
+                                placeholder="Search..."
                                 className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-100/80 dark:bg-slate-800/80 border-0 focus:ring-2 focus:ring-blue-500/50 focus:outline-none text-sm"
                             />
                         </div>
@@ -231,19 +231,19 @@ export default function AdminLayout({
                             className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all duration-200 group"
                         >
                             <LogOut className="h-5 w-5 transition-transform group-hover:scale-110" />
-                            <span className="font-medium">Đăng xuất</span>
+                            <span className="font-medium">Sign Out</span>
                         </button>
 
                         {/* Stats Card */}
                         <div className="mt-4 p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border border-blue-100 dark:border-blue-900/50">
                             <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
-                                Hôm nay
+                                Today
                             </p>
                             <p className="text-2xl font-bold text-blue-700 dark:text-blue-300 mt-1">
-                                12 đặt phòng
+                                12 bookings
                             </p>
                             <p className="text-xs text-muted-foreground mt-1">
-                                +3 so với hôm qua
+                                +3 vs yesterday
                             </p>
                         </div>
                     </div>

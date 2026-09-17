@@ -21,7 +21,7 @@ import {
     Clock,
     Users,
     Calendar,
-    DollarSign,
+    IndianRupee,
     UtensilsCrossed,
     Sparkles,
     Car,
@@ -54,13 +54,13 @@ const getCategoryIcon = (category: ServiceCategory) => {
 };
 
 const dayLabels: Record<string, string> = {
-    monday: "Thứ Hai",
-    tuesday: "Thứ Ba",
-    wednesday: "Thứ Tư",
-    thursday: "Thứ Năm",
-    friday: "Thứ Sáu",
-    saturday: "Thứ Bảy",
-    sunday: "Chủ Nhật",
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+    saturday: "Saturday",
+    sunday: "Sunday",
 };
 
 export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
@@ -99,11 +99,11 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         return (
             <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-slate-700 mb-4">Không tìm thấy dịch vụ</h1>
+                    <h1 className="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-4">Service Not Found</h1>
                     <Link href="/services">
                         <Button variant="outline">
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            Quay lại danh sách
+                            Back to Services List
                         </Button>
                     </Link>
                 </div>
@@ -122,10 +122,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 {/* Back Button */}
                 <Link
                     href="/services"
-                    className="inline-flex items-center gap-2 text-slate-600 hover:text-orange-600 mb-6 transition-colors"
+                    className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 mb-6 transition-colors"
                 >
                     <ArrowLeft className="h-4 w-4" />
-                    Quay lại danh sách dịch vụ
+                    Back to Services List
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -163,7 +163,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                         {service.requiresBooking && (
                                             <Badge variant="outline" className="gap-1">
                                                 <Calendar className="h-3 w-3" />
-                                                Cần đặt trước
+                                                Advance Booking Required
                                             </Badge>
                                         )}
                                     </div>
@@ -184,8 +184,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                     <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                                         <Clock className="h-6 w-6 text-orange-500" />
                                         <div>
-                                            <p className="text-sm text-slate-500">Thời gian</p>
-                                            <p className="font-semibold">{service.duration} phút</p>
+                                            <p className="text-sm text-slate-500">Duration</p>
+                                            <p className="font-semibold">{service.duration} mins</p>
                                         </div>
                                     </div>
                                 )}
@@ -193,20 +193,20 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                     <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                                         <Users className="h-6 w-6 text-orange-500" />
                                         <div>
-                                            <p className="text-sm text-slate-500">Sức chứa</p>
-                                            <p className="font-semibold">Tối đa {service.maxCapacity} người</p>
+                                            <p className="text-sm text-slate-500">Capacity</p>
+                                            <p className="font-semibold">Max {service.maxCapacity} guests</p>
                                         </div>
                                     </div>
                                 )}
                                 <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
-                                    <DollarSign className="h-6 w-6 text-orange-500" />
+                                    <IndianRupee className="h-6 w-6 text-orange-500" />
                                     <div>
-                                        <p className="text-sm text-slate-500">Loại giá</p>
+                                        <p className="text-sm text-slate-500">Pricing Type</p>
                                         <p className="font-semibold">
-                                            {service.pricingType === "FIXED" && "Cố định"}
-                                            {service.pricingType === "PER_HOUR" && "Theo giờ"}
-                                            {service.pricingType === "PER_PERSON" && "Theo người"}
-                                            {service.pricingType === "PER_ITEM" && "Theo món"}
+                                            {service.pricingType === "FIXED" && "Fixed"}
+                                            {service.pricingType === "PER_HOUR" && "Per Hour"}
+                                            {service.pricingType === "PER_PERSON" && "Per Person"}
+                                            {service.pricingType === "PER_ITEM" && "Per Item"}
                                         </p>
                                     </div>
                                 </div>
@@ -217,7 +217,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                 <>
                                     <Separator />
                                     <div>
-                                        <h2 className="text-xl font-semibold mb-3">Mô tả</h2>
+                                        <h2 className="text-xl font-semibold mb-3">Description</h2>
                                         <p className="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line">
                                             {service.description}
                                         </p>
@@ -230,7 +230,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                 <>
                                     <Separator />
                                     <div>
-                                        <h2 className="text-xl font-semibold mb-4">Giờ hoạt động</h2>
+                                        <h2 className="text-xl font-semibold mb-4">Operating Hours</h2>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                             {Object.entries(service.operatingHours).map(([day, hours]) => (
                                                 <div
@@ -239,7 +239,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                                 >
                                                     <span className="font-medium">{dayLabels[day] || day}</span>
                                                     {hours.isClosed ? (
-                                                        <span className="text-red-500">Đóng cửa</span>
+                                                        <span className="text-red-500">Closed</span>
                                                     ) : (
                                                         <span className="text-slate-600 dark:text-slate-400">
                                                             {hours.open} - {hours.close}
@@ -269,18 +269,18 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                 <div className="space-y-3">
                                     <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
                                         <CheckCircle className="h-4 w-4 text-green-500" />
-                                        <span>Dịch vụ chất lượng cao</span>
+                                        <span>High-quality premium service</span>
                                     </div>
                                     {service.duration && (
                                         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
                                             <Clock className="h-4 w-4 text-orange-500" />
-                                            <span>Thời gian: {service.duration} phút</span>
+                                            <span>Duration: {service.duration} mins</span>
                                         </div>
                                     )}
                                     {service.maxCapacity && (
                                         <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
                                             <Users className="h-4 w-4 text-orange-500" />
-                                            <span>Phục vụ tối đa {service.maxCapacity} người</span>
+                                            <span>Serves up to {service.maxCapacity} guests</span>
                                         </div>
                                     )}
                                 </div>
@@ -293,22 +293,22 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                                         className="w-full h-12 text-lg bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold shadow-lg shadow-orange-500/30 cursor-pointer"
                                         onClick={handleBookService}
                                     >
-                                        Đặt dịch vụ ngay
+                                        Book Service Now
                                     </Button>
                                 ) : (
                                     <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
                                         <CheckCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
                                         <p className="font-medium text-green-700 dark:text-green-400">
-                                            Không cần đặt trước
+                                            No Reservation Needed
                                         </p>
                                         <p className="text-sm text-green-600 dark:text-green-500">
-                                            Sử dụng trực tiếp tại khách sạn
+                                            Use directly at the hotel
                                         </p>
                                     </div>
                                 )}
 
                                 <p className="text-center text-xs text-slate-500">
-                                    Liên hệ lễ tân để biết thêm chi tiết
+                                    Contact reception for more details
                                 </p>
                             </CardContent>
                         </Card>

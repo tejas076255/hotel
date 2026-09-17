@@ -74,7 +74,7 @@ export class BookingsController {
       booking.userId !== user.id &&
       !['ADMIN', 'RECEPTIONIST', 'MANAGER'].includes(user.role?.name)
     ) {
-      throw new Error('Bạn không có quyền xem đặt phòng này');
+      throw new Error('You do not have permission to view this booking');
     }
 
     return booking;
@@ -97,7 +97,7 @@ export class BookingsController {
       booking.userId !== user.id &&
       !['ADMIN', 'RECEPTIONIST', 'MANAGER'].includes(user.role?.name)
     ) {
-      throw new Error('Bạn không có quyền cập nhật đặt phòng này');
+      throw new Error('You do not have permission to update this booking');
     }
 
     return this.bookingsService.update(id, updateBookingDto);

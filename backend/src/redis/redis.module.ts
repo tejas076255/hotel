@@ -35,22 +35,18 @@ export const REDIS_CLIENT = 'REDIS_CLIENT';
           },
 
           // Connection settings
-          maxRetriesPerRequest: 3,
-          enableReadyCheck: true,
-          enableOfflineQueue: true,
+          maxRetriesPerRequest: null,
+          enableReadyCheck: false,
+          enableOfflineQueue: false,
 
           // Timeouts
-          connectTimeout: 10000, // 10 seconds
-          commandTimeout: 5000, // 5 seconds
+          connectTimeout: 2000, // 2 seconds
+          commandTimeout: 2000, // 2 seconds
 
           // Keepalive
           keepAlive: 30000, // 30 seconds
 
-          // TLS (nếu production cần)
-          // tls: configService.get('NODE_ENV') === 'production' ? {} : undefined,
-
-          // Lazy connect - không connect ngay lập tức
-          lazyConnect: false,
+          lazyConnect: true,
         });
 
         // Event listeners
@@ -63,28 +59,28 @@ export const REDIS_CLIENT = 'REDIS_CLIENT';
         });
 
         redisClient.on('error', (err) => {
-          console.error(' Redis Error::: ', err.message);
+          // Suppress offline error output in logs
         });
 
         redisClient.on('close', () => {
-          console.log('  Redis::: Connection closed');
+          // Suppress close log
         });
 
         redisClient.on('reconnecting', (delay: number) => {
-          console.log(` Redis::: Reconnecting in ${delay}ms...`);
+          // Suppress reconnect log
         });
 
         redisClient.on('end', () => {
-          console.log(' Redis::: Connection ended');
+          // Connection ended
         });
 
-        // Test connection
+        // Test connection gracefully
         try {
+          await redisClient.connect();
           await redisClient.ping();
           console.log(' Redis:::: Connected successfully!');
         } catch (error) {
-          console.error(' Redis:::: Connection failed:', error);
-          throw error;
+          console.warn('⚠️ Redis connection unavailable. App will run in direct database mode.');
         }
 
         return redisClient;

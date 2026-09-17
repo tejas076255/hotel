@@ -16,7 +16,7 @@ function CallbackContent() {
             const error = searchParams.get('error');
 
             if (error) {
-                toast.error('Đăng nhập thất bại', {
+                toast.error('Login Failed', {
                     description: error,
                 });
                 router.push('/auth/login');
@@ -48,11 +48,11 @@ function CallbackContent() {
                             break;
                     }
 
-                    toast.success('Đăng nhập thành công!');
+                    toast.success('Successfully logged in!');
                     router.push(redirectPath);
                 } catch (err) {
                     console.error('OAuth callback error:', err);
-                    toast.error('Có lỗi xảy ra khi đăng nhập');
+                    toast.error('An error occurred during login');
                     router.push('/auth/login');
                 }
             } else {
@@ -66,7 +66,7 @@ function CallbackContent() {
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
-            <p className="text-muted-foreground">Đang xử lý đăng nhập...</p>
+            <p className="text-muted-foreground">Processing login...</p>
         </div>
     );
 }
@@ -76,7 +76,7 @@ export default function AuthCallbackPage() {
         <Suspense fallback={
             <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
-                <p className="text-muted-foreground">Đang xử lý...</p>
+                <p className="text-muted-foreground">Processing...</p>
             </div>
         }>
             <CallbackContent />

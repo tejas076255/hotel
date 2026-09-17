@@ -3,21 +3,21 @@ import { z } from 'zod';
 
 // Login DTO
 export const LoginSchema = z.object({
-  email: z.string().email({ message: 'Địa chỉ email không hợp lệ' }),
-  password: z.string().min(6, { message: 'Mật khẩu phải có ít nhất 6 ký tự' }),
+  email: z.string().email({ message: 'Invalid email address' }),
+  password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
 });
 
 export class LoginDto extends createZodDto(LoginSchema) { }
 
 // Register DTO
 export const RegisterSchema = z.object({
-  email: z.string().email({ message: 'Địa chỉ email không hợp lệ' }),
+  email: z.string().email({ message: 'Invalid email address' }),
   password: z
     .string()
-    .min(6, { message: 'Mật khẩu phải có ít nhất 6 ký tự' }),
+    .min(6, { message: 'Password must be at least 6 characters' }),
   fullName: z
     .string()
-    .min(2, { message: 'Họ tên phải có ít nhất 2 ký tự' }),
+    .min(2, { message: 'Full name must be at least 2 characters' }),
   phone: z.string().optional(),
 });
 

@@ -83,7 +83,7 @@ function RoomCard({ room, onView, onEdit, onDelete }: RoomCardProps) {
                     <div className="w-full h-full relative overflow-hidden">
                         <img
                             src={imageUrl}
-                            alt={`Phòng ${room.roomNumber}`}
+                            alt={`Room ${room.roomNumber}`}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
@@ -107,7 +107,7 @@ function RoomCard({ room, onView, onEdit, onDelete }: RoomCardProps) {
                 {imageUrl && (
                     <div className="absolute bottom-3 left-3 z-10">
                         <p className="text-white/80 text-xs font-medium uppercase tracking-wider">{roomType?.name || "Unknown"}</p>
-                        <p className="text-white text-xl font-bold">P. {room.roomNumber}</p>
+                        <p className="text-white text-xl font-bold">Room {room.roomNumber}</p>
                     </div>
                 )}
 
@@ -124,7 +124,7 @@ function RoomCard({ room, onView, onEdit, onDelete }: RoomCardProps) {
                 {/* Info Text (If image exists, room number is on image. If no image, show room number here clearly) */}
                 {!imageUrl && (
                     <div className="mb-3">
-                        <p className={`text-2xl font-bold ${statusConfig.textColor}`}>Phòng {room.roomNumber}</p>
+                        <p className={`text-2xl font-bold ${statusConfig.textColor}`}>Room {room.roomNumber}</p>
                     </div>
                 )}
 
@@ -137,7 +137,7 @@ function RoomCard({ room, onView, onEdit, onDelete }: RoomCardProps) {
                         </div>
                         <div className="flex items-center text-sm text-muted-foreground bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
                             <BedDouble className="h-3.5 w-3.5 mr-1.5" />
-                            <span className="truncate max-w-[80px]" title={`Tầng ${room.floor}`}>Tầng {room.floor}</span>
+                            <span className="truncate max-w-[80px]" title={`Floor ${room.floor}`}>Floor {room.floor}</span>
                         </div>
                     </div>
 
@@ -176,21 +176,21 @@ function RoomCard({ room, onView, onEdit, onDelete }: RoomCardProps) {
                                 onClick={() => onView?.(room)}
                             >
                                 <Eye className="h-4 w-4 mr-2.5 text-slate-500" />
-                                Xem chi tiết
+                                View Details
                             </DropdownMenuItem>
                             <DropdownMenuItem
                                 className="cursor-pointer py-2.5"
                                 onClick={() => onEdit?.(room)}
                             >
                                 <Edit className="h-4 w-4 mr-2.5 text-slate-500" />
-                                Chỉnh sửa
+                                Edit Room
                             </DropdownMenuItem>
                             <DropdownMenuItem
                                 className="cursor-pointer py-2.5 text-red-600 focus:text-red-700 focus:bg-red-50 dark:focus:bg-red-950/30"
                                 onClick={() => onDelete?.(room)}
                             >
                                 <Trash2 className="h-4 w-4 mr-2.5" />
-                                Xóa phòng
+                                Delete Room
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -234,7 +234,7 @@ export function RoomGrid({
         return (
             <Card className="border-0 shadow-lg rounded-2xl">
                 <CardContent className="p-8 text-center text-muted-foreground">
-                    Không tìm thấy phòng nào
+                    No rooms found
                 </CardContent>
             </Card>
         );

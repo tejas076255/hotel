@@ -21,7 +21,7 @@ export function Footer() {
                             </span>
                         </div>
                         <p className="text-slate-400 text-sm leading-relaxed">
-                            Nền tảng đặt phòng khách sạn thông minh hàng đầu Việt Nam. Trải nghiệm kỳ nghỉ hoàn hảo với dịch vụ tận tâm.
+                            Premier smart hotel booking platform. Experience your perfect stay with dedicated service.
                         </p>
                         <div className="flex items-center gap-3">
                             <Link
@@ -57,31 +57,31 @@ export function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="font-semibold text-white mb-4">Khám phá</h4>
+                        <h4 className="font-semibold text-white mb-4">Explore</h4>
                         <ul className="space-y-3 text-sm text-slate-400">
                             <li>
                                 <Link href="/" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Trang chủ
+                                    Home
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/rooms" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Danh sách phòng
+                                    Rooms
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/services" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Dịch vụ
+                                    Services
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/about" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Về chúng tôi
+                                    About Us
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/contact" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Liên hệ
+                                    Contact
                                 </Link>
                             </li>
                         </ul>
@@ -89,31 +89,31 @@ export function Footer() {
 
                     {/* Support */}
                     <div>
-                        <h4 className="font-semibold text-white mb-4">Hỗ trợ</h4>
+                        <h4 className="font-semibold text-white mb-4">Support</h4>
                         <ul className="space-y-3 text-sm text-slate-400">
                             <li>
                                 <Link href="/help" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Trung tâm trợ giúp
+                                    Help Center
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/terms" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Điều khoản sử dụng
+                                    Terms of Service
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/privacy" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Chính sách bảo mật
+                                    Privacy Policy
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/cancellation" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Chính sách hủy phòng
+                                    Cancellation Policy
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/faq" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                    Câu hỏi thường gặp
+                                    FAQs
                                 </Link>
                             </li>
                         </ul>
@@ -121,25 +121,25 @@ export function Footer() {
 
                     {/* Contact */}
                     <div>
-                        <h4 className="font-semibold text-white mb-4">Liên hệ</h4>
+                        <h4 className="font-semibold text-white mb-4">Contact Us</h4>
                         <ul className="space-y-3 text-sm text-slate-400">
                             <li className="flex items-start gap-3">
                                 <MapPin size={18} className="text-orange-400 mt-0.5 shrink-0" />
-                                <span>123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh, Việt Nam</span>
+                                <span>123 Ocean Avenue, Luxury District, Suite 500</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone size={18} className="text-orange-400 shrink-0" />
-                                <span>1900 1234 56</span>
+                                <span>+1 (800) 123-4567</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail size={18} className="text-orange-400 shrink-0" />
-                                <span>support@stayzy.vn</span>
+                                <span>support@stayzy.com</span>
                             </li>
                         </ul>
 
                         {/* Payment Methods */}
                         <div className="mt-6">
-                            <h5 className="text-sm font-medium text-white mb-3">Phương thức thanh toán</h5>
+                            <h5 className="text-sm font-medium text-white mb-3">Payment Methods</h5>
                             <div className="flex flex-wrap gap-2">
                                 <div className="bg-white rounded px-2 py-1 text-xs text-slate-700 font-medium">
                                     Visa
@@ -148,10 +148,10 @@ export function Footer() {
                                     Mastercard
                                 </div>
                                 <div className="bg-white rounded px-2 py-1 text-xs text-slate-700 font-medium">
-                                    MoMo
+                                    Stripe
                                 </div>
                                 <div className="bg-white rounded px-2 py-1 text-xs text-slate-700 font-medium">
-                                    ZaloPay
+                                    Apple Pay
                                 </div>
                             </div>
                         </div>
@@ -163,13 +163,13 @@ export function Footer() {
             <div className="border-t border-slate-800">
                 <div className="container mx-auto px-4 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-                        <p>© {new Date().getFullYear()} Stayzy. Bảo lưu mọi quyền.</p>
+                        <p>© {new Date().getFullYear()} Stayzy. All rights reserved.</p>
                         <div className="flex items-center gap-6">
                             <Link href="/privacy" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                Bảo mật
+                                Privacy
                             </Link>
                             <Link href="/terms" className="hover:text-orange-400 transition-colors cursor-pointer">
-                                Điều khoản
+                                Terms
                             </Link>
                             <Link href="/sitemap" className="hover:text-orange-400 transition-colors cursor-pointer">
                                 Sitemap

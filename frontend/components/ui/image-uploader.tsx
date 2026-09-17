@@ -214,10 +214,10 @@ export function ImageUploader({
                     />
                     <Upload className="h-8 w-8 mx-auto text-slate-400 mb-2" />
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Kéo thả ảnh vào đây hoặc click để chọn
+                        Drag & drop images here or click to browse
                     </p>
                     <p className="text-xs text-slate-400 mt-1">
-                        Tối đa {maxImages} ảnh ({images.length}/{maxImages})
+                        Max {maxImages} images ({images.length}/{maxImages})
                     </p>
                 </div>
             )}
@@ -261,7 +261,7 @@ export function ImageUploader({
                                                 e.stopPropagation();
                                                 handleSetPrimary(index);
                                             }}
-                                            title={image.isPrimary ? "Ảnh chính" : "Đặt làm ảnh chính"}
+                                            title={image.isPrimary ? "Primary Image" : "Set as primary"}
                                         >
                                             <Star className={cn("h-4 w-4", image.isPrimary && "fill-current")} />
                                         </Button>
@@ -274,7 +274,7 @@ export function ImageUploader({
                                                 e.stopPropagation();
                                                 handleRemove(index);
                                             }}
-                                            title="Xóa ảnh"
+                                            title="Delete image"
                                         >
                                             <X className="h-4 w-4" />
                                         </Button>
@@ -282,7 +282,7 @@ export function ImageUploader({
                                     {/* Primary badge */}
                                     {image.isPrimary && (
                                         <div className="absolute top-1 left-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded">
-                                            Chính
+                                            Primary
                                         </div>
                                     )}
                                 </>
@@ -298,7 +298,7 @@ export function ImageUploader({
 
             {/* Help text */}
             <p className="text-xs text-slate-500">
-                Click vào biểu tượng ⭐ để chọn ảnh chính hiển thị đầu tiên
+                Click the ⭐ icon to set the primary image shown first
             </p>
         </div>
     );

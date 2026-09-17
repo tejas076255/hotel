@@ -29,17 +29,14 @@ interface CheckoutPageProps {
 }
 
 const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(amount);
+    return "₹" + amount.toLocaleString("en-IN");
 };
 
 const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("vi-VN", {
+    return date.toLocaleDateString("en-US", {
+        month: "short",
         day: "2-digit",
-        month: "2-digit",
         year: "numeric",
     });
 };
@@ -92,11 +89,11 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
     if (!booking) {
         return (
             <div className="text-center py-12">
-                <h2 className="text-2xl font-bold mb-4">Không tìm thấy đặt phòng</h2>
+                <h2 className="text-2xl font-bold mb-4">Booking Not Found</h2>
                 <Link href="/admin/bookings">
                     <Button variant="outline">
                         <ArrowLeft className="h-4 w-4 mr-2" />
-                        Quay lại danh sách
+                        Back to Bookings List
                     </Button>
                 </Link>
             </div>
@@ -114,16 +111,16 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                         </Button>
                     </Link>
                     <div>
-                        <h1 className="text-2xl font-bold">Checkout & Hóa đơn</h1>
+                        <h1 className="text-2xl font-bold">Checkout & Invoice</h1>
                         <p className="text-muted-foreground">
-                            Mã đặt phòng: <strong className="text-orange-600">{booking.bookingCode}</strong>
+                            Booking Code: <strong className="text-orange-600">{booking.bookingCode}</strong>
                         </p>
                     </div>
                 </div>
                 <div className="flex gap-2">
                     <Button variant="outline" onClick={handlePrint} className="rounded-xl gap-2">
                         <Printer className="h-4 w-4" />
-                        In hóa đơn
+                        Print Invoice
                     </Button>
                 </div>
             </div>
@@ -131,11 +128,11 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
             {/* Print Header - Only visible when printing */}
             <div className="hidden print:block text-center mb-6">
                 <h1 className="text-2xl font-bold">STAYZY HOTEL</h1>
-                <p className="text-sm">Địa chỉ: 123 Đường ABC, Quận XYZ, TP. HCM</p>
-                <p className="text-sm">Hotline: 1900 xxxx</p>
+                <p className="text-sm">Address: 123 Main Street, City, Country</p>
+                <p className="text-sm">Hotline: +1 800 123 4567</p>
                 <hr className="my-4" />
-                <h2 className="text-xl font-bold">HÓA ĐƠN THANH TOÁN</h2>
-                <p className="text-sm">Mã: {booking.bookingCode}</p>
+                <h2 className="text-xl font-bold">PAYMENT INVOICE</h2>
+                <p className="text-sm">Code: {booking.bookingCode}</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -146,16 +143,16 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                         <CardHeader className="pb-2">
                             <CardTitle className="flex items-center gap-2 text-lg">
                                 <User className="h-5 w-5 text-orange-500" />
-                                Thông tin khách hàng
+                                Guest Information
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                                <span className="text-muted-foreground">Họ tên:</span>
+                                <span className="text-muted-foreground">Full Name:</span>
                                 <p className="font-medium">{booking.guestName}</p>
                             </div>
                             <div>
-                                <span className="text-muted-foreground">Số điện thoại:</span>
+                                <span className="text-muted-foreground">Phone Number:</span>
                                 <p className="font-medium">{booking.guestPhone}</p>
                             </div>
                             <div>
@@ -163,7 +160,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                                 <p className="font-medium">{booking.guestEmail}</p>
                             </div>
                             <div>
-                                <span className="text-muted-foreground">CMND/CCCD:</span>
+                                <span className="text-muted-foreground">ID/Passport Number:</span>
                                 <p className="font-medium">{booking.guestIdNumber || "N/A"}</p>
                             </div>
                         </CardContent>
@@ -174,19 +171,19 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                         <CardHeader className="pb-2">
                             <CardTitle className="flex items-center gap-2 text-lg">
                                 <BedDouble className="h-5 w-5 text-orange-500" />
-                                Chi tiết phòng
+                                Room Details
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-2 gap-4 text-sm">
                                 <div className="flex items-center gap-2">
                                     <Calendar className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-muted-foreground">Nhận phòng:</span>
+                                    <span className="text-muted-foreground">Check-in:</span>
                                     <span className="font-medium">{formatDate(booking.checkInDate)}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Calendar className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-muted-foreground">Trả phòng:</span>
+                                    <span className="text-muted-foreground">Check-out:</span>
                                     <span className="font-medium">{formatDate(booking.checkOutDate)}</span>
                                 </div>
                             </div>
@@ -198,9 +195,9 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                                 {booking.rooms?.map((br) => (
                                     <div key={br.id} className="flex justify-between items-center py-2 border-b last:border-0">
                                         <div>
-                                            <p className="font-medium">Phòng {br.room?.roomNumber}</p>
+                                            <p className="font-medium">Room {br.room?.roomNumber}</p>
                                             <p className="text-xs text-muted-foreground">
-                                                {br.room?.roomType?.name} - {br.numberOfNights} đêm
+                                                {br.room?.roomType?.name} - {br.numberOfNights} nights
                                             </p>
                                         </div>
                                         <div className="text-right">
@@ -221,7 +218,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                             <CardHeader className="pb-2">
                                 <CardTitle className="flex items-center gap-2 text-lg">
                                     <HandPlatter className="h-5 w-5 text-orange-500" />
-                                    Dịch vụ đã sử dụng
+                                    Services Used
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2">
@@ -230,12 +227,12 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                                         <div>
                                             <p className="font-medium">{sb.service?.name}</p>
                                             <p className="text-xs text-muted-foreground">
-                                                {getCategoryLabel(sb.service?.category)} - SL: {sb.quantity}
+                                                {getCategoryLabel(sb.service?.category)} - Qty: {sb.quantity}
                                             </p>
                                         </div>
                                         <div className="text-right">
                                             <Badge variant="outline" className="text-xs mb-1">
-                                                {sb.status === "COMPLETED" ? "Hoàn thành" : sb.status}
+                                                {sb.status === "COMPLETED" ? "Completed" : sb.status}
                                             </Badge>
                                             <p className="font-semibold">{formatCurrency(Number(sb.totalPrice))}</p>
                                         </div>
@@ -252,21 +249,21 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                         <CardHeader className="pb-2">
                             <CardTitle className="flex items-center gap-2 text-lg">
                                 <Receipt className="h-5 w-5 text-orange-500" />
-                                Tổng hóa đơn
+                                Invoice Summary
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-2 text-sm">
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Tiền phòng:</span>
+                                    <span className="text-muted-foreground">Room Charges:</span>
                                     <span>{formatCurrency(roomTotal)}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Tiền dịch vụ:</span>
+                                    <span className="text-muted-foreground">Service Charges:</span>
                                     <span>{formatCurrency(serviceTotal)}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Thuế VAT (10%):</span>
+                                    <span className="text-muted-foreground">VAT Tax (10%):</span>
                                     <span>{formatCurrency(taxAmount)}</span>
                                 </div>
                             </div>
@@ -274,17 +271,17 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                             <Separator />
 
                             <div className="flex justify-between text-lg font-bold">
-                                <span>Tổng cộng:</span>
+                                <span>Total Amount:</span>
                                 <span className="text-orange-600">{formatCurrency(grandTotal)}</span>
                             </div>
 
                             <div className="flex justify-between text-sm">
-                                <span className="text-muted-foreground">Đã thanh toán:</span>
+                                <span className="text-muted-foreground">Amount Paid:</span>
                                 <span className="text-green-600">{formatCurrency(Number(booking.paidAmount))}</span>
                             </div>
 
                             <div className="flex justify-between font-semibold">
-                                <span>Còn lại:</span>
+                                <span>Balance Due:</span>
                                 <span className="text-red-600">
                                     {formatCurrency(grandTotal - Number(booking.paidAmount))}
                                 </span>
@@ -296,11 +293,11 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
                             <div className="space-y-2 print:hidden">
                                 <Button className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white gap-2">
                                     <CreditCard className="h-4 w-4" />
-                                    Thanh toán qua Stripe
+                                    Pay with Stripe
                                 </Button>
                                 <Button variant="outline" className="w-full rounded-xl gap-2">
                                     <Banknote className="h-4 w-4" />
-                                    Thanh toán tiền mặt
+                                    Pay with Cash
                                 </Button>
                             </div>
                         </CardContent>
@@ -310,8 +307,8 @@ export default function CheckoutPage({ params }: CheckoutPageProps) {
 
             {/* Print footer */}
             <div className="hidden print:block text-center mt-8 text-sm">
-                <p>Cảm ơn quý khách đã sử dụng dịch vụ!</p>
-                <p className="text-muted-foreground">Ngày in: {new Date().toLocaleString("vi-VN")}</p>
+                <p>Thank you for staying with us!</p>
+                <p className="text-muted-foreground">Printed on: {new Date().toLocaleString("en-US")}</p>
             </div>
         </div>
     );

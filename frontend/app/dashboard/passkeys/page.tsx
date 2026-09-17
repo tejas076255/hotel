@@ -26,7 +26,6 @@ import {
 } from '@/services/passkey.api';
 import PasskeyRegistrationDialog from '@/components/features/passkey/PasskeyRegistrationDialog';
 import { formatDistanceToNow } from 'date-fns';
-import { vi } from 'date-fns/locale';
 
 export default function PasskeysPage() {
   const [credentials, setCredentials] = useState<PasskeyCredential[]>([]);
@@ -49,7 +48,7 @@ export default function PasskeysPage() {
       setCredentials(data);
     } catch (error: any) {
       console.error('Error loading passkeys:', error);
-      toast.error('Không thể tải danh sách passkey');
+      toast.error('Failed to load passkeys list');
     } finally {
       setLoading(false);
     }
@@ -61,13 +60,13 @@ export default function PasskeysPage() {
     try {
       setActionLoading(true);
       await removePasskeyCredential(selectedCredential.id);
-      toast.success('Đã xóa passkey');
+      toast.success('Passkey deleted');
       setDeleteDialogOpen(false);
       setSelectedCredential(null);
       loadCredentials();
     } catch (error: any) {
       console.error('Error deleting passkey:', error);
-      toast.error(error.response?.data?.message || 'Không thể xóa passkey');
+      toast.error(error.response?.data?.message || 'Failed to delete passkey');
     } finally {
       setActionLoading(false);
     }
@@ -79,14 +78,14 @@ export default function PasskeysPage() {
     try {
       setActionLoading(true);
       await updatePasskeyCredential(selectedCredential.id, newDeviceName);
-      toast.success('Đã cập nhật tên thiết bị');
+      toast.success('Device name updated');
       setEditDialogOpen(false);
       setSelectedCredential(null);
       setNewDeviceName('');
       loadCredentials();
     } catch (error: any) {
       console.error('Error updating passkey:', error);
-      toast.error('Không thể cập nhật tên thiết bị');
+      toast.error('Failed to update device name');
     } finally {
       setActionLoading(false);
     }
@@ -114,9 +113,9 @@ export default function PasskeysPage() {
     <div className="container mx-auto py-10">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Quản lý Passkey</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Passkey Management</h1>
           <p className="text-muted-foreground mt-2">
-            Quản lý các passkey của bạn để đăng nhập nhanh và an toàn
+            Manage your passkeys for fast and secure login
           </p>
         </div>
 
@@ -126,15 +125,15 @@ export default function PasskeysPage() {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <Fingerprint className="h-5 w-5" />
-                  Passkey của bạn
+                  Your Passkeys
                 </CardTitle>
                 <CardDescription className="mt-2">
-                  Bạn có {credentials.length} passkey được đăng ký
+                  You have {credentials.length} registered passkeys
                 </CardDescription>
               </div>
               <Button onClick={() => setShowRegisterDialog(true)}>
                 <Plus className="mr-2 h-4 w-4" />
-                Thêm Passkey
+                Add Passkey
               </Button>
             </div>
           </CardHeader>
@@ -147,13 +146,13 @@ export default function PasskeysPage() {
             ) : credentials.length === 0 ? (
               <div className="text-center py-8">
                 <Fingerprint className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold">Chưa có passkey nào</h3>
+                <h3 className="text-lg font-semibold">No passkeys yet</h3>
                 <p className="text-sm text-muted-foreground mt-2 mb-4">
-                  Thêm passkey để đăng nhập nhanh hơn với sinh trắc học
+                  Add a passkey to sign in faster with biometrics
                 </p>
                 <Button onClick={() => setShowRegisterDialog(true)}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Đăng ký Passkey đầu tiên
+                  Register First Passkey
                 </Button>
               </div>
             ) : (
@@ -169,17 +168,17 @@ export default function PasskeysPage() {
                       </div>
                       <div>
                         <p className="font-medium">
-                          {credential.deviceName || 'Thiết bị không xác định'}
+                          {credential.deviceName || 'Unknown device'}
                         </p>
                         <div className="flex items-center gap-2 mt-1">
                           <p className="text-sm text-muted-foreground">
-                            Đăng ký {formatDistanceToNow(new Date(credential.createdAt), { addSuffix: true, locale: vi })}
+                            Registered {formatDistanceToNow(new Date(credential.createdAt), { addSuffix: true })}
                           </p>
                           {credential.lastUsedAt && (
                             <>
                               <span className="text-muted-foreground">•</span>
                               <p className="text-sm text-muted-foreground">
-                                Dùng lần cuối {formatDistanceToNow(new Date(credential.lastUsedAt), { addSuffix: true, locale: vi })}
+                                Last used {formatDistanceToNow(new Date(credential.lastUsedAt), { addSuffix: true })}
                               </p>
                             </>
                           )}
@@ -211,30 +210,30 @@ export default function PasskeysPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Về Passkey</CardTitle>
+            <CardTitle>About Passkeys</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h4 className="font-medium mb-2">Passkey là gì?</h4>
+              <h4 className="font-medium mb-2">What is a Passkey?</h4>
               <p className="text-sm text-muted-foreground">
-                Passkey là phương thức xác thực hiện đại sử dụng sinh trắc học (vân tay, khuôn mặt) 
-                hoặc PIN thiết bị thay vì mật khẩu truyền thống.
+                A passkey is a modern authentication method using biometrics (fingerprint, face recognition) 
+                or device PIN instead of traditional passwords.
               </p>
             </div>
             <div>
-              <h4 className="font-medium mb-2">Tại sao nên dùng Passkey?</h4>
+              <h4 className="font-medium mb-2">Why use Passkeys?</h4>
               <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-                <li>An toàn hơn mật khẩu - không thể bị đánh cắp hoặc lừa đảo</li>
-                <li>Đăng nhập nhanh hơn - chỉ cần sinh trắc học</li>
-                <li>Không cần nhớ mật khẩu phức tạp</li>
-                <li>Hoạt động trên nhiều thiết bị</li>
+                <li>Safer than passwords - immune to phishing and leaks</li>
+                <li>Faster sign in - just use your biometric scanner</li>
+                <li>No need to remember complex passwords</li>
+                <li>Works across multiple devices</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-2">Thiết bị hỗ trợ</h4>
+              <h4 className="font-medium mb-2">Supported Devices</h4>
               <p className="text-sm text-muted-foreground">
                 Face ID, Touch ID (iOS/macOS), Windows Hello, Android biometrics, 
-                và các khóa bảo mật vật lý (YubiKey, Titan Security Key).
+                and hardware security keys (YubiKey, Titan Security Key).
               </p>
             </div>
           </CardContent>
@@ -250,26 +249,26 @@ export default function PasskeysPage() {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Xác nhận xóa passkey</AlertDialogTitle>
+            <AlertDialogTitle>Confirm Delete Passkey</AlertDialogTitle>
             <AlertDialogDescription>
-              Bạn có chắc chắn muốn xóa passkey "{selectedCredential?.deviceName || 'này'}"? 
-              Bạn sẽ không thể đăng nhập bằng passkey này nữa.
+              Are you sure you want to delete passkey "{selectedCredential?.deviceName || 'this item'}"? 
+              You will no longer be able to sign in with this passkey.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={actionLoading}>Hủy</AlertDialogCancel>
+            <AlertDialogCancel disabled={actionLoading}>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={actionLoading}
-              className="bg-destructive hover:bg-destructive/90"
+              className="bg-destructive hover:bg-destructive/90 text-white"
             >
               {actionLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Đang xóa...
+                  Deleting...
                 </>
               ) : (
-                'Xóa'
+                'Delete'
               )}
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -279,31 +278,31 @@ export default function PasskeysPage() {
       <AlertDialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Đổi tên thiết bị</AlertDialogTitle>
+            <AlertDialogTitle>Rename Device</AlertDialogTitle>
             <AlertDialogDescription>
-              Đặt tên mới cho passkey này để dễ nhận diện
+              Set a new name for this passkey to easily identify it
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="py-4">
-            <Label htmlFor="newDeviceName">Tên thiết bị</Label>
+            <Label htmlFor="newDeviceName">Device Name</Label>
             <Input
               id="newDeviceName"
               value={newDeviceName}
               onChange={(e) => setNewDeviceName(e.target.value)}
-              placeholder="Ví dụ: iPhone 13, MacBook Pro"
+              placeholder="e.g. iPhone 13, MacBook Pro"
               className="mt-2"
             />
           </div>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={actionLoading}>Hủy</AlertDialogCancel>
+            <AlertDialogCancel disabled={actionLoading}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleUpdate} disabled={actionLoading || !newDeviceName.trim()}>
               {actionLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Đang lưu...
+                  Saving...
                 </>
               ) : (
-                'Lưu'
+                'Save'
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

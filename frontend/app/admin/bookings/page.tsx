@@ -36,12 +36,12 @@ export default function AdminBookingsPage() {
         mutationFn: ({ id, reason }: { id: string; reason: string }) =>
             bookingsApi.cancelBooking(id, reason),
         onSuccess: () => {
-            toast.success("Đã hủy đặt phòng!");
+            toast.success("Booking cancelled successfully!");
             queryClient.invalidateQueries({ queryKey: ["admin-bookings"] });
         },
         onError: (error: any) => {
-            toast.error("Lỗi", {
-                description: error.response?.data?.message || "Không thể hủy đặt phòng",
+            toast.error("Error", {
+                description: error.response?.data?.message || "Failed to cancel booking",
             });
         },
     });
@@ -51,12 +51,12 @@ export default function AdminBookingsPage() {
         mutationFn: ({ id, status }: { id: string; status: string }) =>
             bookingsApi.updateBookingStatus(id, status),
         onSuccess: () => {
-            toast.success("Đã cập nhật trạng thái!");
+            toast.success("Status updated successfully!");
             queryClient.invalidateQueries({ queryKey: ["admin-bookings"] });
         },
         onError: (error: any) => {
-            toast.error("Lỗi", {
-                description: error.response?.data?.message || "Không thể cập nhật trạng thái",
+            toast.error("Error", {
+                description: error.response?.data?.message || "Failed to update status",
             });
         },
     });
@@ -75,7 +75,7 @@ export default function AdminBookingsPage() {
     };
 
     const handleCancel = (booking: Booking) => {
-        if (confirm(`Bạn có chắc muốn hủy đặt phòng ${booking.bookingCode}?`)) {
+        if (confirm(`Are you sure you want to cancel booking ${booking.bookingCode}?`)) {
             cancelMutation.mutate({ id: booking.id, reason: "Cancelled by admin" });
         }
     };
@@ -105,10 +105,10 @@ export default function AdminBookingsPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
-                            Quản lý đặt phòng
+                            Booking Management
                         </h1>
                         <p className="text-muted-foreground mt-1">
-                            Theo dõi và quản lý tất cả đặt phòng khách sạn
+                            Track and manage all hotel bookings
                         </p>
                     </div>
                 </div>
@@ -137,17 +137,17 @@ export default function AdminBookingsPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
-                            Quản lý đặt phòng
+                            Booking Management
                         </h1>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <p className="text-red-500 mb-4">Có lỗi xảy ra khi tải dữ liệu</p>
+                    <p className="text-red-500 mb-4">An error occurred while loading data</p>
                     <Button
                         variant="outline"
                         onClick={() => queryClient.invalidateQueries({ queryKey: ["admin-bookings"] })}
                     >
-                        Thử lại
+                        Try Again
                     </Button>
                 </div>
             </div>
@@ -160,15 +160,15 @@ export default function AdminBookingsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
-                        Quản lý đặt phòng
+                        Booking Management
                     </h1>
                     <p className="text-muted-foreground mt-1">
-                        Theo dõi và quản lý tất cả đặt phòng khách sạn
+                        Track and manage all hotel bookings
                     </p>
                 </div>
                 <Button className="rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30">
                     <Plus className="h-4 w-4 mr-2" />
-                    Tạo đặt phòng
+                    Create Booking
                 </Button>
             </div>
 
@@ -206,7 +206,7 @@ export default function AdminBookingsPage() {
             {bookingsData?.meta && (
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <span>
-                        Hiển thị {filteredBookings.length} / {bookingsData.meta.total} đặt phòng
+                        Showing {filteredBookings.length} of {bookingsData.meta.total} bookings
                     </span>
                     {bookingsData.meta.totalPages > 1 && (
                         <div className="flex gap-2">
@@ -216,10 +216,10 @@ export default function AdminBookingsPage() {
                                 disabled={page <= 1}
                                 onClick={() => setPage(p => p - 1)}
                             >
-                                Trước
+                                Previous
                             </Button>
                             <span className="flex items-center px-2">
-                                Trang {page} / {bookingsData.meta.totalPages}
+                                Page {page} of {bookingsData.meta.totalPages}
                             </span>
                             <Button
                                 variant="outline"
@@ -227,7 +227,7 @@ export default function AdminBookingsPage() {
                                 disabled={page >= bookingsData.meta.totalPages}
                                 onClick={() => setPage(p => p + 1)}
                             >
-                                Sau
+                                Next
                             </Button>
                         </div>
                     )}

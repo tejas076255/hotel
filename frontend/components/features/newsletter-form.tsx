@@ -20,7 +20,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
         e.preventDefault();
 
         if (!email || !email.includes("@")) {
-            toast.error("Vui lòng nhập email hợp lệ");
+            toast.error("Please enter a valid email address");
             return;
         }
 
@@ -32,7 +32,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
         setIsLoading(false);
         setIsSubscribed(true);
         setEmail("");
-        toast.success("Đăng ký thành công! Cảm ơn bạn đã theo dõi Stayzy.");
+        toast.success("Subscribed successfully! Thank you for following Stayzy.");
 
         // Reset after 3 seconds
         setTimeout(() => setIsSubscribed(false), 3000);
@@ -50,7 +50,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                 <Input
                     type="email"
-                    placeholder="Nhập email của bạn"
+                    placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isLoading || isSubscribed}
@@ -77,12 +77,12 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
                 ) : isSubscribed ? (
                     <>
                         <CheckCircle className="w-5 h-5 mr-2" />
-                        Đã đăng ký
+                        Subscribed
                     </>
                 ) : (
                     <>
                         <Send className="w-5 h-5 mr-2" />
-                        Đăng ký
+                        Subscribe
                     </>
                 )}
             </Button>

@@ -11,7 +11,7 @@ export function BookingStats({ bookings, activeStatus, onStatusChange }: Booking
     const stats = [
         {
             id: "all",
-            label: "Tổng đặt phòng",
+            label: "Total Bookings",
             value: bookings.length,
             color: "text-orange-600",
             borderColor: "border-orange-500",
@@ -19,7 +19,7 @@ export function BookingStats({ bookings, activeStatus, onStatusChange }: Booking
         },
         {
             id: "PENDING",
-            label: "Chờ xử lý",
+            label: "Pending",
             value: bookings.filter(b => b.status === "PENDING").length,
             color: "text-amber-600",
             borderColor: "border-amber-500",
@@ -27,7 +27,7 @@ export function BookingStats({ bookings, activeStatus, onStatusChange }: Booking
         },
         {
             id: "CHECKED_IN",
-            label: "Đang ở (In-house)",
+            label: "In-house",
             value: bookings.filter(b => b.status === "CHECKED_IN").length,
             color: "text-blue-600",
             borderColor: "border-blue-500",
@@ -35,7 +35,7 @@ export function BookingStats({ bookings, activeStatus, onStatusChange }: Booking
         },
         {
             id: "CONFIRMED",
-            label: "Sắp đến",
+            label: "Confirmed",
             value: bookings.filter(b => b.status === "CONFIRMED").length,
             color: "text-green-600",
             borderColor: "border-green-500",

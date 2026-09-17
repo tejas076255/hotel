@@ -57,11 +57,11 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
 
     const getBedTypeLabel = (bedType?: string) => {
         switch (bedType) {
-            case "SINGLE": return "Giường đơn";
-            case "DOUBLE": return "Giường đôi";
-            case "QUEEN": return "Giường Queen";
-            case "KING": return "Giường King";
-            case "TWIN": return "2 Giường đơn";
+            case "SINGLE": return "Single Bed";
+            case "DOUBLE": return "Double Bed";
+            case "QUEEN": return "Queen Bed";
+            case "KING": return "King Bed";
+            case "TWIN": return "Twin Beds";
             default: return bedType || "N/A";
         }
     };
@@ -75,7 +75,7 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
                         <>
                             <img
                                 src={images[currentImageIndex]?.url}
-                                alt={images[currentImageIndex]?.caption || `Phòng ${room.roomNumber}`}
+                                alt={images[currentImageIndex]?.caption || `Room ${room.roomNumber}`}
                                 className="w-full h-full object-cover"
                             />
                             {images.length > 1 && (
@@ -152,7 +152,7 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
                         <div className="flex items-center justify-between">
                             <div>
                                 <DialogTitle className="text-2xl">
-                                    Phòng {room.roomNumber}
+                                    Room {room.roomNumber}
                                 </DialogTitle>
                                 <p className="text-muted-foreground">
                                     {roomType?.name || "Unknown Type"}
@@ -162,7 +162,7 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
                                 <p className="text-2xl font-bold text-orange-600">
                                     {formatCurrency(roomType?.basePrice || 0)}
                                 </p>
-                                <p className="text-sm text-muted-foreground">/đêm</p>
+                                <p className="text-sm text-muted-foreground">/night</p>
                             </div>
                         </div>
                     </DialogHeader>
@@ -171,11 +171,11 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                         <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-center">
                             <BedDouble className="h-5 w-5 mx-auto mb-1 text-orange-600" />
-                            <p className="text-sm font-medium">Tầng {room.floor}</p>
+                            <p className="text-sm font-medium">Floor {room.floor}</p>
                         </div>
                         <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-center">
                             <Users className="h-5 w-5 mx-auto mb-1 text-orange-600" />
-                            <p className="text-sm font-medium">{roomType?.maxOccupancy || 0} khách</p>
+                            <p className="text-sm font-medium">{roomType?.maxOccupancy || 0} guests</p>
                         </div>
                         <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-center">
                             <Bed className="h-5 w-5 mx-auto mb-1 text-orange-600" />
@@ -190,7 +190,7 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
                     {/* Description */}
                     {roomType?.description && (
                         <div className="mb-4">
-                            <h4 className="font-medium mb-2">Mô tả</h4>
+                            <h4 className="font-medium mb-2">Description</h4>
                             <p className="text-sm text-muted-foreground">{roomType.description}</p>
                         </div>
                     )}
@@ -211,7 +211,7 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
 
                         return (
                             <div className="mb-4">
-                                <h4 className="font-medium mb-2">Tiện nghi</h4>
+                                <h4 className="font-medium mb-2">Amenities</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {amenitiesArray.map((amenity, index) => (
                                         <div
@@ -231,7 +231,7 @@ export function ViewRoomDialog({ room, onClose }: ViewRoomDialogProps) {
                     {room.notes && (
                         <div className="p-3 rounded-xl bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-900">
                             <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-1">
-                                Ghi chú
+                                Notes
                             </h4>
                             <p className="text-sm text-yellow-700 dark:text-yellow-300">
                                 {room.notes}

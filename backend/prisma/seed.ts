@@ -11,42 +11,42 @@ async function main() {
   const roles = await Promise.all([
     prisma.role.upsert({
       where: { name: 'ADMIN' },
-      update: {},
+      update: { description: 'System Administrator' },
       create: {
         name: 'ADMIN',
-        description: 'Quản trị viên hệ thống',
+        description: 'System Administrator',
       },
     }),
     prisma.role.upsert({
       where: { name: 'MANAGER' },
-      update: {},
+      update: { description: 'Hotel Manager' },
       create: {
         name: 'MANAGER',
-        description: 'Quản lý khách sạn',
+        description: 'Hotel Manager',
       },
     }),
     prisma.role.upsert({
       where: { name: 'RECEPTIONIST' },
-      update: {},
+      update: { description: 'Front Desk Receptionist' },
       create: {
         name: 'RECEPTIONIST',
-        description: 'Lễ tân',
+        description: 'Front Desk Receptionist',
       },
     }),
     prisma.role.upsert({
       where: { name: 'HOUSEKEEPING' },
-      update: {},
+      update: { description: 'Housekeeping Staff' },
       create: {
         name: 'HOUSEKEEPING',
-        description: 'Nhân viên dọn phòng',
+        description: 'Housekeeping Staff',
       },
     }),
     prisma.role.upsert({
       where: { name: 'GUEST' },
-      update: {},
+      update: { description: 'Hotel Guest' },
       create: {
         name: 'GUEST',
-        description: 'Khách hàng',
+        description: 'Hotel Guest',
       },
     }),
   ]);
@@ -57,36 +57,36 @@ async function main() {
   console.log('📝 Creating permissions...');
   const permissionData = [
     // Booking permissions
-    { action: 'create', resource: 'booking', slug: 'booking:create', description: 'Tạo đặt phòng' },
-    { action: 'read', resource: 'booking', slug: 'booking:read', description: 'Xem đặt phòng' },
-    { action: 'update', resource: 'booking', slug: 'booking:update', description: 'Cập nhật đặt phòng' },
-    { action: 'delete', resource: 'booking', slug: 'booking:delete', description: 'Hủy đặt phòng' },
-    { action: 'manage', resource: 'booking', slug: 'booking:manage', description: 'Quản lý đặt phòng' },
+    { action: 'create', resource: 'booking', slug: 'booking:create', description: 'Create booking' },
+    { action: 'read', resource: 'booking', slug: 'booking:read', description: 'View bookings' },
+    { action: 'update', resource: 'booking', slug: 'booking:update', description: 'Update booking' },
+    { action: 'delete', resource: 'booking', slug: 'booking:delete', description: 'Cancel booking' },
+    { action: 'manage', resource: 'booking', slug: 'booking:manage', description: 'Manage all bookings' },
 
     // Room permissions
-    { action: 'create', resource: 'room', slug: 'room:create', description: 'Tạo phòng' },
-    { action: 'read', resource: 'room', slug: 'room:read', description: 'Xem phòng' },
-    { action: 'update', resource: 'room', slug: 'room:update', description: 'Cập nhật phòng' },
-    { action: 'delete', resource: 'room', slug: 'room:delete', description: 'Xóa phòng' },
+    { action: 'create', resource: 'room', slug: 'room:create', description: 'Create room' },
+    { action: 'read', resource: 'room', slug: 'room:read', description: 'View rooms' },
+    { action: 'update', resource: 'room', slug: 'room:update', description: 'Update room' },
+    { action: 'delete', resource: 'room', slug: 'room:delete', description: 'Delete room' },
 
     // User permissions
-    { action: 'create', resource: 'user', slug: 'user:create', description: 'Tạo người dùng' },
-    { action: 'read', resource: 'user', slug: 'user:read', description: 'Xem người dùng' },
-    { action: 'update', resource: 'user', slug: 'user:update', description: 'Cập nhật người dùng' },
-    { action: 'delete', resource: 'user', slug: 'user:delete', description: 'Xóa người dùng' },
+    { action: 'create', resource: 'user', slug: 'user:create', description: 'Create user' },
+    { action: 'read', resource: 'user', slug: 'user:read', description: 'View users' },
+    { action: 'update', resource: 'user', slug: 'user:update', description: 'Update user' },
+    { action: 'delete', resource: 'user', slug: 'user:delete', description: 'Delete user' },
 
     // Price permissions
-    { action: 'manage', resource: 'price', slug: 'price:manage', description: 'Quản lý giá phòng' },
+    { action: 'manage', resource: 'price', slug: 'price:manage', description: 'Manage room pricing' },
 
     // Report permissions
-    { action: 'read', resource: 'report', slug: 'report:read', description: 'Xem báo cáo' },
+    { action: 'read', resource: 'report', slug: 'report:read', description: 'View reports & analytics' },
   ];
 
   const permissions = await Promise.all(
     permissionData.map((p) =>
       prisma.permission.upsert({
         where: { slug: p.slug },
-        update: {},
+        update: { description: p.description },
         create: p,
       }),
     ),
@@ -227,58 +227,135 @@ async function main() {
   const roomTypes = await Promise.all([
     prisma.roomType.upsert({
       where: { name: 'Standard' },
-      update: {},
+      update: {
+        description: 'Standard room with comfortable bedding and essential amenities.',
+        basePrice: 2500,
+        amenities: ['WiFi', 'TV', 'Air Conditioning', 'Mini Fridge'],
+      },
       create: {
         name: 'Standard',
         slug: 'standard',
-        description: 'Phòng tiêu chuẩn với đầy đủ tiện nghi cơ bản',
-        basePrice: 500000,
+        description: 'Standard room with comfortable bedding and essential amenities.',
+        basePrice: 2500,
         capacity: 2,
         bedType: 'SINGLE',
         size: 25,
-        amenities: ['WiFi', 'TV', 'Điều hòa', 'Tủ lạnh'],
+        amenities: ['WiFi', 'TV', 'Air Conditioning', 'Mini Fridge'],
       },
     }),
     prisma.roomType.upsert({
       where: { name: 'Deluxe' },
-      update: {},
+      update: {
+        description: 'Deluxe room with scenic city view and premium comfort.',
+        basePrice: 4500,
+        amenities: ['WiFi', 'TV', 'Air Conditioning', 'Mini Fridge', 'Balcony', 'Minibar'],
+      },
       create: {
         name: 'Deluxe',
         slug: 'deluxe',
-        description: 'Phòng cao cấp với view đẹp',
-        basePrice: 800000,
+        description: 'Deluxe room with scenic city view and premium comfort.',
+        basePrice: 4500,
         capacity: 2,
         bedType: 'QUEEN',
         size: 35,
-        amenities: ['WiFi', 'TV', 'Điều hòa', 'Tủ lạnh', 'Ban công', 'Minibar'],
+        amenities: ['WiFi', 'TV', 'Air Conditioning', 'Mini Fridge', 'Balcony', 'Minibar'],
       },
     }),
     prisma.roomType.upsert({
       where: { name: 'Suite' },
-      update: {},
+      update: {
+        description: 'Luxurious suite featuring a separate living room and master bathtub.',
+        basePrice: 8500,
+        amenities: [
+          'WiFi',
+          'TV',
+          'Air Conditioning',
+          'Mini Fridge',
+          'Balcony',
+          'Minibar',
+          'Living Room',
+          'Bathtub',
+        ],
+      },
       create: {
         name: 'Suite',
         slug: 'suite',
-        description: 'Phòng suite sang trọng với phòng khách riêng',
-        basePrice: 1500000,
+        description: 'Luxurious suite featuring a separate living room and master bathtub.',
+        basePrice: 8500,
         capacity: 4,
         bedType: 'KING',
         size: 60,
         amenities: [
           'WiFi',
           'TV',
-          'Điều hòa',
-          'Tủ lạnh',
-          'Ban công',
+          'Air Conditioning',
+          'Mini Fridge',
+          'Balcony',
           'Minibar',
-          'Phòng khách',
-          'Bồn tắm',
+          'Living Room',
+          'Bathtub',
         ],
       },
     }),
   ]);
 
   console.log(`✅ Created ${roomTypes.length} room types`);
+
+  // Create room images for room types
+  console.log('🖼️ Creating room images...');
+  const roomImagesData = [
+    {
+      roomTypeId: roomTypes[0].id, // Standard
+      url: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=1000',
+      altText: 'Standard Room View',
+      isPrimary: true,
+      displayOrder: 1,
+    },
+    {
+      roomTypeId: roomTypes[0].id,
+      url: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1000',
+      altText: 'Standard Bathroom',
+      isPrimary: false,
+      displayOrder: 2,
+    },
+    {
+      roomTypeId: roomTypes[1].id, // Deluxe
+      url: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1000',
+      altText: 'Deluxe Queen Bed',
+      isPrimary: true,
+      displayOrder: 1,
+    },
+    {
+      roomTypeId: roomTypes[1].id,
+      url: 'https://images.unsplash.com/photo-1591088398332-8a7791972843?q=80&w=1000',
+      altText: 'Deluxe Balcony & Seating',
+      isPrimary: false,
+      displayOrder: 2,
+    },
+    {
+      roomTypeId: roomTypes[2].id, // Suite
+      url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1000',
+      altText: 'Presidential Suite Bedroom',
+      isPrimary: true,
+      displayOrder: 1,
+    },
+    {
+      roomTypeId: roomTypes[2].id,
+      url: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=1000',
+      altText: 'Suite Living Area & Bathtub',
+      isPrimary: false,
+      displayOrder: 2,
+    },
+  ];
+
+  await Promise.all(
+    roomImagesData.map((img) =>
+      prisma.roomImage.create({
+        data: img,
+      }),
+    ),
+  );
+  console.log(`✅ Created ${roomImagesData.length} room images`);
 
   // Create sample rooms
   console.log('📝 Creating sample rooms...');
@@ -339,27 +416,47 @@ async function main() {
   await Promise.all(rooms);
   console.log(`Created ${rooms.length} rooms`);
 
-  // Create Admin User
-  console.log(' Creating admin user...');
-
+  // Create Admin & Guest Users
+  console.log('📝 Creating demo users...');
 
   if (adminRole) {
-    const hashedPassword = await bcrypt.hash('Admin@123', 10);
+    const hashedAdminPassword = await bcrypt.hash('Admin@123', 10);
 
     await prisma.user.upsert({
-      where: { email: 'admin@stayzy.vn' },
-      update: {},
+      where: { email: 'admin@stayzy.com' },
+      update: {
+        password: hashedAdminPassword,
+        roleId: adminRole.id,
+      },
       create: {
-        email: 'admin@stayzy.vn',
-        password: hashedPassword,
-        fullName: 'Admin Stayzy',
-        phone: '0123456789',
+        email: 'admin@stayzy.com',
+        password: hashedAdminPassword,
+        fullName: 'Stayzy Admin',
+        phone: '+1234567890',
         roleId: adminRole.id,
         status: 'ACTIVE',
       },
     });
+  }
 
+  if (guestRole) {
+    const hashedUserPassword = await bcrypt.hash('User@123', 10);
 
+    await prisma.user.upsert({
+      where: { email: 'user@stayzy.com' },
+      update: {
+        password: hashedUserPassword,
+        roleId: guestRole.id,
+      },
+      create: {
+        email: 'user@stayzy.com',
+        password: hashedUserPassword,
+        fullName: 'Demo Guest User',
+        phone: '+1987654321',
+        roleId: guestRole.id,
+        status: 'ACTIVE',
+      },
+    });
   }
 
   // Create Sample Services
@@ -369,14 +466,17 @@ async function main() {
     // Food & Beverage
     prisma.service.upsert({
       where: { slug: 'breakfast-buffet' },
-      update: {},
+      update: {
+        name: 'Breakfast Buffet',
+        description: 'Rich international breakfast buffet with live cooking stations',
+      },
       create: {
-        name: 'Buffet Sáng',
+        name: 'Breakfast Buffet',
         slug: 'breakfast-buffet',
-        description: 'Buffet sáng phong phú với đa dạng món Âu - Á',
+        description: 'Rich international breakfast buffet with live cooking stations',
         category: 'FOOD_BEVERAGE',
         pricingType: 'PER_PERSON',
-        basePrice: 150000,
+        basePrice: 15,
         isActive: true,
         requiresBooking: false,
         operatingHours: {
@@ -393,14 +493,17 @@ async function main() {
     }),
     prisma.service.upsert({
       where: { slug: 'room-service-coffee' },
-      update: {},
+      update: {
+        name: 'In-Room Coffee & Tea',
+        description: 'Artisanal coffee and fine teas delivered to your room',
+      },
       create: {
-        name: 'Cà phê phục vụ tại phòng',
+        name: 'In-Room Coffee & Tea',
         slug: 'room-service-coffee',
-        description: 'Cà phê và trà cao cấp giao tận phòng',
+        description: 'Artisanal coffee and fine teas delivered to your room',
         category: 'ROOM_SERVICE',
         pricingType: 'PER_ITEM',
-        basePrice: 50000,
+        basePrice: 5,
         isActive: true,
         requiresBooking: false,
         operatingHours: {
@@ -419,14 +522,17 @@ async function main() {
     // Spa & Wellness
     prisma.service.upsert({
       where: { slug: 'massage-60min' },
-      update: {},
+      update: {
+        name: 'Relaxing Aromatherapy Massage (60 mins)',
+        description: 'Full body aromatherapy massage with organic essential oils',
+      },
       create: {
-        name: 'Massage thư giãn (60 phút)',
+        name: 'Relaxing Aromatherapy Massage (60 mins)',
         slug: 'massage-60min',
-        description: 'Massage toàn thân với tinh dầu thư giãn',
+        description: 'Full body aromatherapy massage with organic essential oils',
         category: 'SPA_WELLNESS',
         pricingType: 'FIXED',
-        basePrice: 500000,
+        basePrice: 50,
         isActive: true,
         requiresBooking: true,
         maxCapacity: 4,
@@ -445,14 +551,17 @@ async function main() {
     }),
     prisma.service.upsert({
       where: { slug: 'spa-package' },
-      update: {},
+      update: {
+        name: 'Premium Spa Package (90 mins)',
+        description: 'Comprehensive package: Full body massage + Facial care + Herbal bath',
+      },
       create: {
-        name: 'Gói Spa Cao Cấp (90 phút)',
+        name: 'Premium Spa Package (90 mins)',
         slug: 'spa-package',
-        description: 'Gói trọn gói: massage + chăm sóc da mặt + ngâm chân',
+        description: 'Comprehensive package: Full body massage + Facial care + Herbal bath',
         category: 'SPA_WELLNESS',
         pricingType: 'FIXED',
-        basePrice: 800000,
+        basePrice: 80,
         isActive: true,
         requiresBooking: true,
         maxCapacity: 2,
@@ -473,14 +582,17 @@ async function main() {
     // Recreation
     prisma.service.upsert({
       where: { slug: 'gym-access' },
-      update: {},
+      update: {
+        name: 'Fitness Center Access',
+        description: '24/7 access to fully equipped fitness gym',
+      },
       create: {
-        name: 'Phòng Gym',
+        name: 'Fitness Center Access',
         slug: 'gym-access',
-        description: 'Sử dụng phòng gym với thiết bị hiện đại',
+        description: '24/7 access to fully equipped fitness gym',
         category: 'RECREATION',
         pricingType: 'PER_HOUR',
-        basePrice: 100000,
+        basePrice: 10,
         isActive: true,
         requiresBooking: false,
         maxCapacity: 10,
@@ -498,14 +610,17 @@ async function main() {
     }),
     prisma.service.upsert({
       where: { slug: 'pool-access' },
-      update: {},
+      update: {
+        name: 'Infinity Pool Access',
+        description: 'Rooftop infinity pool with panoramic city views',
+      },
       create: {
-        name: 'Hồ Bơi',
+        name: 'Infinity Pool Access',
         slug: 'pool-access',
-        description: 'Hồ bơi ngoài trời với view đẹp',
+        description: 'Rooftop infinity pool with panoramic city views',
         category: 'RECREATION',
         pricingType: 'FIXED',
-        basePrice: 200000,
+        basePrice: 20,
         isActive: true,
         requiresBooking: false,
         maxCapacity: 30,
@@ -525,14 +640,17 @@ async function main() {
     // Transportation
     prisma.service.upsert({
       where: { slug: 'airport-pickup' },
-      update: {},
+      update: {
+        name: 'Airport Transfer Service',
+        description: 'Private luxury sedan transfer to and from the airport',
+      },
       create: {
-        name: 'Đón sân bay',
+        name: 'Airport Transfer Service',
         slug: 'airport-pickup',
-        description: 'Dịch vụ đón tiễn sân bay bằng xe riêng',
+        description: 'Private luxury sedan transfer to and from the airport',
         category: 'TRANSPORTATION',
         pricingType: 'FIXED',
-        basePrice: 300000,
+        basePrice: 30,
         isActive: true,
         requiresBooking: true,
         operatingHours: {
@@ -551,14 +669,17 @@ async function main() {
     // Laundry
     prisma.service.upsert({
       where: { slug: 'laundry-service' },
-      update: {},
+      update: {
+        name: 'Express Laundry Service',
+        description: 'Same-day washing, dry cleaning, and pressing service',
+      },
       create: {
-        name: 'Giặt ủi',
+        name: 'Express Laundry Service',
         slug: 'laundry-service',
-        description: 'Dịch vụ giặt ủi nhanh trong ngày',
+        description: 'Same-day washing, dry cleaning, and pressing service',
         category: 'LAUNDRY',
         pricingType: 'PER_ITEM',
-        basePrice: 30000,
+        basePrice: 3,
         isActive: true,
         requiresBooking: false,
         operatingHours: {
@@ -577,14 +698,17 @@ async function main() {
     // Business
     prisma.service.upsert({
       where: { slug: 'meeting-room' },
-      update: {},
+      update: {
+        name: 'Executive Meeting Room',
+        description: 'Executive conference room equipped with 4K projector and video conferencing',
+      },
       create: {
-        name: 'Phòng họp',
+        name: 'Executive Meeting Room',
         slug: 'meeting-room',
-        description: 'Phòng họp với thiết bị projector và whiteboard',
+        description: 'Executive conference room equipped with 4K projector and video conferencing',
         category: 'BUSINESS',
         pricingType: 'PER_HOUR',
-        basePrice: 200000,
+        basePrice: 25,
         isActive: true,
         requiresBooking: true,
         maxCapacity: 12,

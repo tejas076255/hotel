@@ -48,7 +48,7 @@ export const useAuthStore = create<AuthState>()(
           const errorMessage =
             error.response?.data?.message ||
             error.message ||
-            'Đăng nhập thất bại';
+            'Login failed';
 
           set({
             error: errorMessage,
@@ -78,7 +78,7 @@ export const useAuthStore = create<AuthState>()(
           const errorMessage =
             error.response?.data?.message ||
             error.message ||
-            'Đăng ký thất bại';
+            'Registration failed';
 
           set({
             error: errorMessage,

@@ -20,10 +20,10 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-    { href: "/", label: "Trang chủ" },
-    { href: "/rooms", label: "Phòng" },
-    { href: "/services", label: "Dịch vụ" },
-    { href: "/contact", label: "Liên hệ" },
+    { href: "/", label: "Home" },
+    { href: "/rooms", label: "Rooms" },
+    { href: "/services", label: "Services" },
+    { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -44,7 +44,7 @@ export function Navbar() {
 
     const handleLogout = () => {
         logout();
-        toast.success("Đăng xuất thành công!");
+        toast.success("Logged out successfully!");
         router.push("/");
     };
 
@@ -93,7 +93,7 @@ export function Navbar() {
                     {/* Book Now CTA - Desktop */}
                     <Link href="/rooms" className="hidden md:block">
                         <Button className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-lg shadow-orange-500/20 cursor-pointer">
-                            Đặt phòng ngay
+                            Book Now
                         </Button>
                     </Link>
 
@@ -123,15 +123,15 @@ export function Navbar() {
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/profile")}>
                                     <User className="mr-2 h-4 w-4" />
-                                    <span>Hồ sơ</span>
+                                    <span>Profile</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/dashboard/bookings")}>
                                     <Calendar className="mr-2 h-4 w-4" />
-                                    <span>Đặt phòng của tôi</span>
+                                    <span>My Bookings</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/settings")}>
                                     <Settings className="mr-2 h-4 w-4" />
-                                    <span>Cài đặt</span>
+                                    <span>Settings</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
@@ -139,7 +139,7 @@ export function Navbar() {
                                     onClick={handleLogout}
                                 >
                                     <LogOut className="mr-2 h-4 w-4" />
-                                    <span>Đăng xuất</span>
+                                    <span>Sign Out</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -147,12 +147,12 @@ export function Navbar() {
                         <div className="hidden md:flex items-center gap-2">
                             <Link href="/auth/login">
                                 <Button variant="outline" className="border-orange-500 text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 cursor-pointer">
-                                    Đăng nhập
+                                    Sign In
                                 </Button>
                             </Link>
                             <Link href="/auth/register">
                                 <Button className="bg-orange-600 hover:bg-orange-700 text-white cursor-pointer">
-                                    Đăng ký
+                                    Register
                                 </Button>
                             </Link>
                         </div>
@@ -194,19 +194,19 @@ export function Navbar() {
                                 <>
                                     <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>
                                         <Button variant="outline" className="w-full border-orange-500 text-orange-600">
-                                            Đăng nhập
+                                            Sign In
                                         </Button>
                                     </Link>
                                     <Link href="/auth/register" onClick={() => setMobileMenuOpen(false)}>
                                         <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                                            Đăng ký
+                                            Register
                                         </Button>
                                     </Link>
                                 </>
                             )}
                             <Link href="/rooms" onClick={() => setMobileMenuOpen(false)}>
                                 <Button className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white">
-                                    Đặt phòng ngay
+                                    Book Now
                                 </Button>
                             </Link>
                         </div>

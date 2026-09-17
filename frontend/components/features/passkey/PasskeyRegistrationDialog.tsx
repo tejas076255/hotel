@@ -34,7 +34,7 @@ export default function PasskeyRegistrationDialog({
 
   const handleRegister = async () => {
     if (!isWebAuthnSupported()) {
-      toast.error('Trình duyệt của bạn không hỗ trợ Passkey');
+      toast.error('Your browser does not support Passkeys');
       return;
     }
 
@@ -49,13 +49,13 @@ export default function PasskeyRegistrationDialog({
       // Step 3: Complete registration on server
       const result = await registerPasskeyComplete(credential, deviceName || undefined);
 
-      toast.success(result.message || 'Đăng ký passkey thành công!');
+      toast.success(result.message || 'Passkey registered successfully!');
       onOpenChange(false);
       setDeviceName('');
       onSuccess?.();
     } catch (error: any) {
       console.error('Passkey registration error:', error);
-      toast.error(error.message || 'Không thể đăng ký passkey. Vui lòng thử lại.');
+      toast.error(error.message || 'Failed to register passkey. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -67,25 +67,25 @@ export default function PasskeyRegistrationDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Fingerprint className="h-5 w-5" />
-            Đăng ký Passkey
+            Register Passkey
           </DialogTitle>
           <DialogDescription>
-            Thiết lập passkey để đăng nhập nhanh hơn với Face ID, Touch ID, hoặc Windows Hello.
+            Set up a passkey to sign in faster with Face ID, Touch ID, or Windows Hello.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="deviceName">Tên thiết bị (tùy chọn)</Label>
+            <Label htmlFor="deviceName">Device Name (optional)</Label>
             <Input
               id="deviceName"
-              placeholder="Ví dụ: MacBook Pro, iPhone 13"
+              placeholder="e.g. MacBook Pro, iPhone 13"
               value={deviceName}
               onChange={(e) => setDeviceName(e.target.value)}
               disabled={loading}
             />
             <p className="text-sm text-muted-foreground">
-              Đặt tên để dễ nhận diện thiết bị này sau này
+              Give a name to easily identify this device later
             </p>
           </div>
         </div>
@@ -96,18 +96,18 @@ export default function PasskeyRegistrationDialog({
             onClick={() => onOpenChange(false)}
             disabled={loading}
           >
-            Hủy
+            Cancel
           </Button>
           <Button onClick={handleRegister} disabled={loading}>
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Đang xử lý...
+                Processing...
               </>
             ) : (
               <>
                 <Fingerprint className="mr-2 h-4 w-4" />
-                Đăng ký Passkey
+                Register Passkey
               </>
             )}
           </Button>

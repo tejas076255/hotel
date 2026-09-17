@@ -42,39 +42,34 @@ interface BookingTableProps {
 }
 
 const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(amount);
+    return "₹" + amount.toLocaleString("en-IN");
 };
 
 const formatDate = (dateString: string) => {
     // Input YYYY-MM-DD
     const date = new Date(dateString);
-    // Return DD/MM/YYYY
-    return date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 };
 
 const formatShortDate = (dateString: string) => {
     // Input YYYY-MM-DD
     const date = new Date(dateString);
-    // Return DD/MM
-    return date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
 }
 
 
 const getStatusConfig = (status: BookingStatus) => {
     switch (status) {
         case "CONFIRMED":
-            return { label: "Đã xác nhận", icon: CheckCircle2, className: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" };
+            return { label: "Confirmed", icon: CheckCircle2, className: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" };
         case "PENDING":
-            return { label: "Chờ xử lý", icon: Clock, className: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" };
+            return { label: "Pending", icon: Clock, className: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" };
         case "CHECKED_IN":
-            return { label: "Đã nhận phòng", icon: CheckCircle2, className: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400" };
+            return { label: "Checked In", icon: CheckCircle2, className: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400" };
         case "CHECKED_OUT":
-            return { label: "Đã trả phòng", icon: CheckCircle2, className: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400" };
+            return { label: "Checked Out", icon: CheckCircle2, className: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400" };
         case "CANCELLED":
-            return { label: "Đã hủy", icon: XCircle, className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" };
+            return { label: "Cancelled", icon: XCircle, className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" };
         default:
             return { label: status, icon: Clock, className: "bg-slate-100 text-slate-700" };
     }
@@ -85,7 +80,7 @@ export function BookingTable({ bookings, onView, onEdit, onCancel, onApprove, on
         return (
             <Card className="border-0 shadow-lg rounded-2xl">
                 <CardContent className="p-8 text-center text-muted-foreground">
-                    Không tìm thấy đặt phòng nào
+                    No bookings found
                 </CardContent>
             </Card>
         );
@@ -97,12 +92,12 @@ export function BookingTable({ bookings, onView, onEdit, onCancel, onApprove, on
                 <Table>
                     <TableHeader>
                         <TableRow className="bg-slate-50/50 dark:bg-slate-800/50">
-                            <TableHead className="font-semibold">Mã</TableHead>
-                            <TableHead className="font-semibold">Khách hàng</TableHead>
-                            <TableHead className="font-semibold">Phòng & Thời gian</TableHead>
-                            <TableHead className="font-semibold">Trạng thái</TableHead>
-                            <TableHead className="font-semibold">Tổng tiền</TableHead>
-                            <TableHead className="font-semibold text-right">Thao tác</TableHead>
+                            <TableHead className="font-semibold">Code</TableHead>
+                            <TableHead className="font-semibold">Guest</TableHead>
+                            <TableHead className="font-semibold">Room & Dates</TableHead>
+                            <TableHead className="font-semibold">Status</TableHead>
+                            <TableHead className="font-semibold">Total Amount</TableHead>
+                            <TableHead className="font-semibold text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -123,7 +118,7 @@ export function BookingTable({ bookings, onView, onEdit, onCancel, onApprove, on
                                         <div>
                                             <div className="flex items-center gap-1 text-sm font-medium">
                                                 <span>{booking.rooms?.[0]?.room?.roomNumber || "N/A"}</span>
-                                                <span className="text-muted-foreground">({booking.numberOfNights} đêm)</span>
+                                                <span className="text-muted-foreground">({booking.numberOfNights} nights)</span>
                                             </div>
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
                                                 <Calendar className="h-3 w-3" />
@@ -148,7 +143,7 @@ export function BookingTable({ bookings, onView, onEdit, onCancel, onApprove, on
                                                         size="icon"
                                                         className="h-8 w-8 rounded-full bg-green-100 text-green-600 hover:bg-green-200 hover:text-green-700 shadow-none cursor-pointer"
                                                         onClick={() => onApprove(booking)}
-                                                        title="Xác nhận"
+                                                        title="Approve"
                                                     >
                                                         <Check className="h-4 w-4" />
                                                     </Button>
@@ -156,7 +151,7 @@ export function BookingTable({ bookings, onView, onEdit, onCancel, onApprove, on
                                                         size="icon"
                                                         className="h-8 w-8 rounded-full bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 shadow-none mr-1 cursor-pointer"
                                                         onClick={() => onCancel(booking)}
-                                                        title="Hủy"
+                                                        title="Cancel"
                                                     >
                                                         <X className="h-4 w-4" />
                                                     </Button>
@@ -169,10 +164,10 @@ export function BookingTable({ bookings, onView, onEdit, onCancel, onApprove, on
                                                     size="sm"
                                                     className="h-8 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 hover:text-purple-700 shadow-none cursor-pointer gap-1"
                                                     onClick={() => onAddService(booking)}
-                                                    title="Thêm dịch vụ"
+                                                    title="Add Service"
                                                 >
                                                     <HandPlatter className="h-4 w-4" />
-                                                    <span className="hidden xl:inline">Thêm dịch vụ</span>
+                                                    <span className="hidden xl:inline">Add Service</span>
                                                 </Button>
                                             )}
 
@@ -185,30 +180,30 @@ export function BookingTable({ bookings, onView, onEdit, onCancel, onApprove, on
                                                 <DropdownMenuContent align="end" className="rounded-xl">
                                                     <DropdownMenuItem className="cursor-pointer" onClick={() => onView(booking)}>
                                                         <Eye className="h-4 w-4 mr-2" />
-                                                        Xem chi tiết
+                                                        View Details
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem className="cursor-pointer" onClick={() => onEdit(booking)}>
                                                         <Edit className="h-4 w-4 mr-2" />
-                                                        Chỉnh sửa
+                                                        Edit Booking
                                                     </DropdownMenuItem>
                                                     {booking.status === 'CHECKED_IN' && onAddService && (
                                                         <DropdownMenuItem className="cursor-pointer" onClick={() => onAddService(booking)}>
                                                             <HandPlatter className="h-4 w-4 mr-2" />
-                                                            Thêm dịch vụ
+                                                            Add Service
                                                         </DropdownMenuItem>
                                                     )}
                                                     {booking.status === 'CHECKED_IN' && (
                                                         <Link href={`/admin/bookings/${booking.id}/checkout`}>
                                                             <DropdownMenuItem className="cursor-pointer text-orange-600">
                                                                 <Receipt className="h-4 w-4 mr-2" />
-                                                                Checkout & Hóa đơn
+                                                                Checkout & Invoice
                                                             </DropdownMenuItem>
                                                         </Link>
                                                     )}
                                                     {booking.status !== 'CANCELLED' && booking.status !== 'CHECKED_OUT' && (
                                                         <DropdownMenuItem className="cursor-pointer text-red-600" onClick={() => onCancel(booking)}>
                                                             <Trash2 className="h-4 w-4 mr-2" />
-                                                            Hủy đặt phòng
+                                                            Cancel Booking
                                                         </DropdownMenuItem>
                                                     )}
                                                 </DropdownMenuContent>

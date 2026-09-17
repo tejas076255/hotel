@@ -39,10 +39,10 @@ export default function UsersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
-            Quản lý người dùng
+            User Management
           </h1>
           <p className="text-muted-foreground mt-1">
-            Quản lý tài khoản người dùng trong hệ thống
+            Manage system user accounts
           </p>
         </div>
         <Button
@@ -50,7 +50,7 @@ export default function UsersPage() {
           className="rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30"
         >
           <UserPlus className="mr-2 h-4 w-4" />
-          Thêm người dùng
+          Add User
         </Button>
       </div>
 
@@ -59,7 +59,7 @@ export default function UsersPage() {
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Tìm kiếm theo email, tên, SĐT..."
+            placeholder="Search by email, name, phone..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-10 rounded-xl"
@@ -68,22 +68,22 @@ export default function UsersPage() {
 
         <Select value={status} onValueChange={setStatus}>
           <SelectTrigger className="w-full sm:w-[180px] rounded-xl">
-            <SelectValue placeholder="Trạng thái" />
+            <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Tất cả</SelectItem>
-            <SelectItem value="ACTIVE">Hoạt động</SelectItem>
-            <SelectItem value="INACTIVE">Không hoạt động</SelectItem>
-            <SelectItem value="BANNED">Đã khóa</SelectItem>
+            <SelectItem value="all">All Statuses</SelectItem>
+            <SelectItem value="ACTIVE">Active</SelectItem>
+            <SelectItem value="INACTIVE">Inactive</SelectItem>
+            <SelectItem value="BANNED">Banned</SelectItem>
           </SelectContent>
         </Select>
 
         <Select value={roleId} onValueChange={setRoleId}>
           <SelectTrigger className="w-full sm:w-[180px] rounded-xl">
-            <SelectValue placeholder="Vai trò" />
+            <SelectValue placeholder="Role" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Tất cả</SelectItem>
+            <SelectItem value="all">All Roles</SelectItem>
             {roles?.map((role) => (
               <SelectItem key={role.id} value={role.id}>
                 {role.name}

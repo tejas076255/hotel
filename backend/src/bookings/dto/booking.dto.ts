@@ -20,20 +20,20 @@ export const BookingSourceEnum = z.enum([
 
 // Create Booking DTO
 export const CreateBookingSchema = z.object({
-  userId: z.string().uuid({ message: 'ID người dùng không hợp lệ' }),
+  userId: z.string().uuid({ message: 'Invalid user ID' }),
   roomIds: z
-    .array(z.string().uuid({ message: 'ID phòng không hợp lệ' }))
-    .min(1, { message: 'Phải chọn ít nhất 1 phòng' }),
-  checkInDate: z.coerce.date({ message: 'Ngày nhận phòng không hợp lệ' }),
-  checkOutDate: z.coerce.date({ message: 'Ngày trả phòng không hợp lệ' }),
-  guestName: z.string().min(2, { message: 'Tên khách phải có ít nhất 2 ký tự' }),
-  guestEmail: z.string().email({ message: 'Email không hợp lệ' }),
-  guestPhone: z.string().min(10, { message: 'Số điện thoại không hợp lệ' }),
+    .array(z.string().uuid({ message: 'Invalid room ID' }))
+    .min(1, { message: 'Must select at least 1 room' }),
+  checkInDate: z.coerce.date({ message: 'Invalid check-in date' }),
+  checkOutDate: z.coerce.date({ message: 'Invalid check-out date' }),
+  guestName: z.string().min(2, { message: 'Guest name must be at least 2 characters' }),
+  guestEmail: z.string().email({ message: 'Invalid email' }),
+  guestPhone: z.string().min(1, { message: 'Phone number is required' }),
   guestIdNumber: z.string().optional(),
   numberOfGuests: z
     .number()
     .int()
-    .positive({ message: 'Số lượng khách phải lớn hơn 0' }),
+    .positive({ message: 'Number of guests must be greater than 0' }),
   specialRequests: z.string().optional(),
   promotionCode: z.string().optional(),
   bookingSource: BookingSourceEnum.default('WEBSITE'),
@@ -69,7 +69,7 @@ export class UpdateBookingStatusDto extends createZodDto(
 export const CancelBookingSchema = z.object({
   cancelReason: z
     .string()
-    .min(10, { message: 'Lý do hủy phải có ít nhất 10 ký tự' }),
+    .min(10, { message: 'Cancellation reason must be at least 10 characters' }),
 });
 
 export class CancelBookingDto extends createZodDto(CancelBookingSchema) {}
@@ -78,10 +78,10 @@ export class CancelBookingDto extends createZodDto(CancelBookingSchema) {}
 export const CheckAvailabilitySchema = z.object({
   roomTypeId: z
     .string()
-    .uuid({ message: 'ID loại phòng không hợp lệ' })
+    .uuid({ message: 'Invalid room type ID' })
     .optional(),
-  checkInDate: z.coerce.date({ message: 'Ngày nhận phòng không hợp lệ' }),
-  checkOutDate: z.coerce.date({ message: 'Ngày trả phòng không hợp lệ' }),
+  checkInDate: z.coerce.date({ message: 'Invalid check-in date' }),
+  checkOutDate: z.coerce.date({ message: 'Invalid check-out date' }),
   numberOfRooms: z
     .number()
     .int()
@@ -100,8 +100,8 @@ export const QueryBookingsSchema = z.object({
   userId: z.string().uuid().optional(),
   checkInDate: z.coerce.date().optional(),
   checkOutDate: z.coerce.date().optional(),
-  page: z.number().int().positive().default(1).optional(),
-  limit: z.number().int().positive().max(100).default(20).optional(),
+  page: z.coerce.number().int().positive().default(1).optional(),
+  limit: z.coerce.number().int().positive().max(100).default(20).optional(),
 });
 
 export class QueryBookingsDto extends createZodDto(QueryBookingsSchema) {}

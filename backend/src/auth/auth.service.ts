@@ -72,7 +72,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException('Email đã được sử dụng');
+      throw new ConflictException('Email is already in use');
     }
 
     // Get GUEST role (default for new registrations)
@@ -81,7 +81,7 @@ export class AuthService {
     });
 
     if (!guestRole) {
-      throw new NotFoundException('Không tìm thấy vai trò mặc định');
+      throw new NotFoundException('Default role not found');
     }
 
     // Hash password
@@ -124,7 +124,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new NotFoundException('Không tìm thấy người dùng');
+      throw new NotFoundException('User not found');
     }
 
     const { password, ...userWithoutPassword } = user;
@@ -201,7 +201,7 @@ export class AuthService {
     });
 
     if (!guestRole) {
-      throw new NotFoundException('Không tìm thấy vai trò mặc định');
+      throw new NotFoundException('Default role not found');
     }
 
     const newUser = await this.prisma.user.create({

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { roomsApi } from "@/services/rooms.api";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -37,8 +36,7 @@ import {
     ArrowLeft,
     ImageOff,
 } from "lucide-react";
-import { format, differenceInDays } from "date-fns";
-import { vi } from "date-fns/locale";
+import { format, differenceInDays, addDays } from "date-fns";
 import { DateRange } from "react-day-picker";
 import Link from "next/link";
 
@@ -47,19 +45,16 @@ interface RoomDetailPageProps {
 }
 
 const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(amount);
+    return "₹" + amount.toLocaleString("en-IN");
 };
 
 const getBedTypeLabel = (bedType: string) => {
     switch (bedType) {
-        case "SINGLE": return "Giường đơn";
-        case "DOUBLE": return "Giường đôi";
-        case "QUEEN": return "Giường Queen";
-        case "KING": return "Giường King";
-        case "TWIN": return "2 Giường đơn";
+        case "SINGLE": return "Single Bed";
+        case "DOUBLE": return "Double Bed";
+        case "QUEEN": return "Queen Bed";
+        case "KING": return "King Bed";
+        case "TWIN": return "Twin Beds";
         default: return bedType;
     }
 };
@@ -68,8 +63,8 @@ const getAmenityIcon = (amenity: string) => {
     const lowerAmenity = amenity.toLowerCase();
     if (lowerAmenity.includes("wifi")) return <Wifi className="h-5 w-5" />;
     if (lowerAmenity.includes("tv")) return <Tv className="h-5 w-5" />;
-    if (lowerAmenity.includes("ac") || lowerAmenity.includes("điều hòa")) return <Wind className="h-5 w-5" />;
-    if (lowerAmenity.includes("coffee") || lowerAmenity.includes("cà phê")) return <Coffee className="h-5 w-5" />;
+    if (lowerAmenity.includes("ac") || lowerAmenity.includes("air conditioning")) return <Wind className="h-5 w-5" />;
+    if (lowerAmenity.includes("coffee") || lowerAmenity.includes("tea")) return <Coffee className="h-5 w-5" />;
     return <div className="w-5 h-5 rounded-full bg-orange-100" />;
 };
 
@@ -78,7 +73,11 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
     const { id } = use(params);
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [dateRange, setDateRange] = useState<DateRange | undefined>();
+    const [dateRange, setDateRange] = useState<DateRange | undefined>(() => {
+        const today = new Date();
+        const tomorrow = addDays(today, 1);
+        return { from: today, to: tomorrow };
+    });
     const [guests, setGuests] = useState("2");
 
     // Fetch room type from API
@@ -107,8 +106,8 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
     const guestCount = roomType?.capacity || roomType?.maxOccupancy || 2;
 
     const nights = dateRange?.from && dateRange?.to
-        ? differenceInDays(dateRange.to, dateRange.from)
-        : 0;
+        ? Math.max(1, differenceInDays(dateRange.to, dateRange.from))
+        : 1;
 
     const totalPrice = roomType ? roomType.basePrice * nights : 0;
     const serviceFee = Math.round(totalPrice * 0.1);
@@ -123,16 +122,15 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
     };
 
     const handleBookNow = () => {
-        if (!dateRange?.from || !dateRange?.to) return;
-
-        const queryParams = new URLSearchParams({
-            roomTypeId: id,
-            checkIn: dateRange.from.toISOString(),
-            checkOut: dateRange.to.toISOString(),
-            guests: guests,
-        });
-
-        router.push(`/booking?${queryParams.toString()}`);
+        if (!dateRange?.from) return;
+        const fromDate = dateRange.from;
+        let toDate = dateRange.to || addDays(fromDate, 1);
+        if (toDate <= fromDate) {
+            toDate = addDays(fromDate, 1);
+        }
+        router.push(
+            `/booking?roomTypeId=${id}&checkIn=${fromDate.toISOString()}&checkOut=${toDate.toISOString()}&guests=${guests}`
+        );
     };
 
     // Loading state
@@ -161,11 +159,11 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
         return (
             <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-slate-700 mb-4">Không tìm thấy phòng</h1>
+                    <h1 className="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-4">Room Not Found</h1>
                     <Link href="/rooms">
                         <Button variant="outline">
                             <ArrowLeft className="h-4 w-4 mr-2" />
-                            Quay lại danh sách
+                            Back to Rooms List
                         </Button>
                     </Link>
                 </div>
@@ -177,9 +175,9 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
             <div className="container mx-auto px-4">
                 {/* Back Button */}
-                <Link href="/rooms" className="inline-flex items-center gap-2 text-slate-600 hover:text-orange-600 mb-6 transition-colors">
+                <Link href="/rooms" className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-orange-600 mb-6 transition-colors">
                     <ArrowLeft className="h-4 w-4" />
-                    Quay lại danh sách phòng
+                    Back to Rooms List
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -261,7 +259,7 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                     </h1>
                                     <p className="text-2xl font-bold text-orange-600">
                                         {formatCurrency(roomType.basePrice)}
-                                        <span className="text-base font-normal text-slate-500">/đêm</span>
+                                        <span className="text-base font-normal text-slate-500">/night</span>
                                     </p>
                                 </div>
                             </div>
@@ -273,21 +271,21 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                 <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                                     <Users className="h-6 w-6 text-orange-500" />
                                     <div>
-                                        <p className="text-sm text-slate-500">Số khách</p>
-                                        <p className="font-semibold">{guestCount} người</p>
+                                        <p className="text-sm text-slate-500">Guests</p>
+                                        <p className="font-semibold">{guestCount} Guests</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                                     <Maximize2 className="h-6 w-6 text-orange-500" />
                                     <div>
-                                        <p className="text-sm text-slate-500">Diện tích</p>
+                                        <p className="text-sm text-slate-500">Room Size</p>
                                         <p className="font-semibold">{roomType.size} m²</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                                     <Bed className="h-6 w-6 text-orange-500" />
                                     <div>
-                                        <p className="text-sm text-slate-500">Loại giường</p>
+                                        <p className="text-sm text-slate-500">Bed Type</p>
                                         <p className="font-semibold">{getBedTypeLabel(roomType.bedType)}</p>
                                     </div>
                                 </div>
@@ -298,7 +296,7 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                 <>
                                     <Separator />
                                     <div>
-                                        <h2 className="text-xl font-semibold mb-3">Mô tả</h2>
+                                        <h2 className="text-xl font-semibold mb-3">Description</h2>
                                         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                                             {roomType.description}
                                         </p>
@@ -311,7 +309,7 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                 <>
                                     <Separator />
                                     <div>
-                                        <h2 className="text-xl font-semibold mb-4">Tiện nghi</h2>
+                                        <h2 className="text-xl font-semibold mb-4">Amenities</h2>
                                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                             {amenitiesArray.map((amenity, idx) => (
                                                 <div
@@ -337,13 +335,13 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                             <CardHeader>
                                 <CardTitle className="flex items-center justify-between">
                                     <span className="text-2xl font-bold">{formatCurrency(roomType.basePrice)}</span>
-                                    <span className="text-sm font-normal text-slate-500">/đêm</span>
+                                    <span className="text-sm font-normal text-slate-500">/night</span>
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {/* Date Picker */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium">Ngày nhận/trả phòng</label>
+                                    <label className="text-sm font-medium">Check-in / Check-out Date</label>
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <Button
@@ -354,14 +352,14 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                                 {dateRange?.from ? (
                                                     dateRange.to ? (
                                                         <>
-                                                            {format(dateRange.from, "dd/MM", { locale: vi })} -{" "}
-                                                            {format(dateRange.to, "dd/MM/yyyy", { locale: vi })}
+                                                            {format(dateRange.from, "MMM dd")} -{" "}
+                                                            {format(dateRange.to, "MMM dd, yyyy")}
                                                         </>
                                                     ) : (
-                                                        format(dateRange.from, "dd/MM/yyyy", { locale: vi })
+                                                        format(dateRange.from, "MMM dd, yyyy")
                                                     )
                                                 ) : (
-                                                    <span className="text-slate-500">Chọn ngày</span>
+                                                    <span className="text-slate-500">Select dates</span>
                                                 )}
                                             </Button>
                                         </PopoverTrigger>
@@ -379,7 +377,7 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
 
                                 {/* Guests */}
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium">Số khách</label>
+                                    <label className="text-sm font-medium">Guests</label>
                                     <Select value={guests} onValueChange={setGuests}>
                                         <SelectTrigger className="h-12">
                                             <SelectValue />
@@ -387,7 +385,7 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                         <SelectContent>
                                             {Array.from({ length: guestCount }, (_, i) => i + 1).map((n) => (
                                                 <SelectItem key={n} value={String(n)}>
-                                                    {n} khách
+                                                    {n} {n === 1 ? "Guest" : "Guests"}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -400,17 +398,17 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                     <div className="space-y-2 pt-4 border-t">
                                         <div className="flex justify-between text-sm">
                                             <span className="text-slate-600">
-                                                {formatCurrency(roomType.basePrice)} x {nights} đêm
+                                                {formatCurrency(roomType.basePrice)} x {nights} nights
                                             </span>
                                             <span>{formatCurrency(totalPrice)}</span>
                                         </div>
                                         <div className="flex justify-between text-sm">
-                                            <span className="text-slate-600">Phí dịch vụ</span>
+                                            <span className="text-slate-600">Service Fee</span>
                                             <span>{formatCurrency(serviceFee)}</span>
                                         </div>
                                         <Separator className="my-2" />
                                         <div className="flex justify-between font-bold text-lg">
-                                            <span>Tổng cộng</span>
+                                            <span>Total Price</span>
                                             <span className="text-orange-600">{formatCurrency(grandTotal)}</span>
                                         </div>
                                     </div>
@@ -422,12 +420,12 @@ export default function RoomDetailPage({ params }: RoomDetailPageProps) {
                                     disabled={!dateRange?.from || !dateRange?.to}
                                     onClick={handleBookNow}
                                 >
-                                    Đặt phòng ngay
+                                    Book Now
                                 </Button>
 
                                 {!dateRange?.from && (
                                     <p className="text-center text-sm text-slate-500">
-                                        Vui lòng chọn ngày để xem giá
+                                        Please select dates to view pricing
                                     </p>
                                 )}
                             </CardContent>

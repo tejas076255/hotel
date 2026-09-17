@@ -40,11 +40,11 @@ export class ServiceBookingsService {
       });
 
       if (!service) {
-        throw new NotFoundException('Không tìm thấy dịch vụ');
+        throw new NotFoundException('Service not found');
       }
 
       if (!service.isActive) {
-        throw new BadRequestException('Dịch vụ hiện không khả dụng');
+        throw new BadRequestException('Service is currently unavailable');
       }
 
       // 2. Validate room booking exists and guest is checked in
@@ -60,13 +60,13 @@ export class ServiceBookingsService {
       });
 
       if (!booking) {
-        throw new NotFoundException('Không tìm thấy đặt phòng');
+        throw new NotFoundException('Booking not found');
       }
 
       // CRITICAL: Only allow service orders for CHECKED_IN guests
       if (booking.status !== 'CHECKED_IN') {
         throw new BadRequestException(
-          'Chỉ khách đã check-in mới có thể đặt dịch vụ. Trạng thái hiện tại: ' +
+          'Only checked-in guests can order services. Current status: ' +
           booking.status,
         );
       }
@@ -74,7 +74,7 @@ export class ServiceBookingsService {
       // 3. Validate guest authorization (booking owner can order)
       if (booking.userId !== userId) {
         throw new ForbiddenException(
-          'Bạn không có quyền đặt dịch vụ cho booking này',
+          'You do not have permission to order services for this booking',
         );
       }
 
@@ -196,14 +196,14 @@ export class ServiceBookingsService {
 
         if (!hours || hours.isClosed) {
           throw new BadRequestException(
-            `Dịch vụ không hoạt động vào ${dayOfWeek}`,
+            `Service is not available on ${dayOfWeek}`,
           );
         }
 
         const requestedTime = scheduledTime.toTimeString().slice(0, 5); // HH:MM
         if (requestedTime < hours.open || requestedTime > hours.close) {
           throw new BadRequestException(
-            `Dịch vụ chỉ hoạt động từ ${hours.open} đến ${hours.close}`,
+            `Service operating hours are from ${hours.open} to ${hours.close}`,
           );
         }
       }
@@ -224,7 +224,7 @@ export class ServiceBookingsService {
         const currentCapacity = existingBookings._sum.quantity || 0;
         if (currentCapacity + quantity > service.maxCapacity) {
           throw new BadRequestException(
-            `Dịch vụ đã đầy. Sức chứa: ${service.maxCapacity}, Đã đặt: ${currentCapacity}`,
+            `Service is fully booked. Capacity: ${service.maxCapacity}, Booked: ${currentCapacity}`,
           );
         }
       }
@@ -350,7 +350,7 @@ export class ServiceBookingsService {
     });
 
     if (!serviceBooking) {
-      throw new NotFoundException('Không tìm thấy đặt dịch vụ');
+      throw new NotFoundException('Service booking not found');
     }
 
     return serviceBooking;
@@ -364,7 +364,7 @@ export class ServiceBookingsService {
 
     if (existing.status !== 'PENDING') {
       throw new BadRequestException(
-        'Chỉ có thể cập nhật đặt dịch vụ ở trạng thái PENDING',
+        'Can only update service bookings with PENDING status',
       );
     }
 
@@ -457,13 +457,13 @@ export class ServiceBookingsService {
     });
 
     if (!staff) {
-      throw new NotFoundException('Không tìm thấy nhân viên');
+      throw new NotFoundException('Staff not found');
     }
 
     // Only allow certain roles to be assigned
     const allowedRoles = ['RECEPTIONIST', 'HOUSEKEEPING', 'MANAGER'];
     if (!allowedRoles.includes(staff.role.name)) {
-      throw new BadRequestException('Vai trò nhân viên không phù hợp');
+      throw new BadRequestException('Staff role is not appropriate for service assignment');
     }
 
     return this.prisma.serviceBooking.update({
@@ -489,7 +489,7 @@ export class ServiceBookingsService {
     // Can only cancel PENDING or CONFIRMED bookings
     if (!['PENDING', 'CONFIRMED'].includes(existing.status)) {
       throw new BadRequestException(
-        'Không thể hủy đặt dịch vụ ở trạng thái hiện tại',
+        'Cannot cancel service booking in current status',
       );
     }
 

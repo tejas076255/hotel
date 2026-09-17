@@ -27,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
 
     if (!user || user.status !== 'ACTIVE') {
-      throw new UnauthorizedException('User không tồn tại hoặc đã bị vô hiệu hóa');
+      throw new UnauthorizedException('User does not exist or has been disabled');
     }
 
     // Exclude password from user object

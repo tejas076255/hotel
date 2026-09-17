@@ -11,7 +11,7 @@ import { Providers } from "@/components/providers";
 const fontSans = Be_Vietnam_Pro({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-sans", // Khai báo biến CSS
+  variable: "--font-sans", // CSS variable declaration
 });
 
 const geistSans = Geist({
@@ -27,11 +27,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: {
-    default: "Stayzy - Đặt Phòng Khách Sạn Thông Minh",
+    default: "Stayzy - Smart Hotel Booking Platform",
     template: "%s | Stayzy",
   },
-  description: "Stayzy - Nền tảng đặt phòng khách sạn thông minh hàng đầu Việt Nam. Tìm kiếm và đặt phòng khách sạn với giá tốt nhất, trải nghiệm ấm áp như ở nhà.",
-  keywords: ["đặt phòng khách sạn", "hotel booking", "khách sạn việt nam", "du lịch", "Stayzy", "đặt phòng online"],
+  description: "Stayzy - Premier smart hotel booking platform. Discover and book luxury rooms with best rates and seamless experience.",
+  keywords: ["hotel booking", "smart hotel", "travel", "luxury rooms", "Stayzy", "online reservation"],
   authors: [{ name: "Stayzy Team" }],
   creator: "Stayzy",
   icons: {
@@ -41,11 +41,11 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "vi_VN",
-    url: "https://stayzy.vn",
+    locale: "en_US",
+    url: "https://stayzy.com",
     siteName: "Stayzy",
-    title: "Stayzy - Đặt Phòng Khách Sạn Thông Minh",
-    description: "Nền tảng đặt phòng khách sạn thông minh hàng đầu Việt Nam",
+    title: "Stayzy - Smart Hotel Booking Platform",
+    description: "Premier smart hotel booking platform with best rate guarantee",
     images: [{ url: "/logo.png", width: 512, height: 512, alt: "Stayzy Logo" }],
   },
 };

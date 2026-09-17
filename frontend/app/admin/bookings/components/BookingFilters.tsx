@@ -15,7 +15,7 @@ export function BookingFilters({ searchQuery, onSearchChange }: BookingFiltersPr
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder="Tìm theo tên khách, mã đặt phòng..."
+                            placeholder="Search by guest name, booking code..."
                             className="pl-10 rounded-xl border-0 bg-slate-100 dark:bg-slate-800 focus-visible:ring-orange-500"
                             value={searchQuery}
                             onChange={(e) => onSearchChange(e.target.value)}

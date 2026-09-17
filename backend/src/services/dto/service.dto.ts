@@ -41,12 +41,12 @@ export const OperatingHoursSchema = z.record(
 
 // Create Service DTO
 export const CreateServiceSchema = z.object({
-  name: z.string().min(2, { message: 'Tên dịch vụ phải có ít nhất 2 ký tự' }),
+  name: z.string().min(2, { message: 'Service name must be at least 2 characters' }),
   slug: z.string().min(2).regex(/^[a-z0-9-]+$/), // lowercase, numbers, hyphens only
   description: z.string().optional(),
   category: ServiceCategoryEnum,
   pricingType: ServicePricingTypeEnum,
-  basePrice: z.number().min(0, { message: 'Giá phải lớn hơn hoặc bằng 0' }),
+  basePrice: z.number().min(0, { message: 'Price must be greater than or equal to 0' }),
   isActive: z.boolean().default(true).optional(),
   requiresBooking: z.boolean().default(false).optional(),
   maxCapacity: z.number().int().positive().optional(),

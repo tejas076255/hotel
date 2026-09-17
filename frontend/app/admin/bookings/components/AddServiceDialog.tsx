@@ -34,10 +34,7 @@ interface AddServiceDialogProps {
 }
 
 const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(amount);
+    return "₹" + amount.toLocaleString("en-IN");
 };
 
 export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogProps) {
@@ -63,14 +60,14 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
         mutationFn: (data: CreateServiceBookingDto) =>
             serviceBookingsApi.createServiceBooking(data),
         onSuccess: () => {
-            toast.success("Đã thêm dịch vụ vào đặt phòng!");
+            toast.success("Service added to booking!");
             queryClient.invalidateQueries({ queryKey: ["admin-bookings"] });
             queryClient.invalidateQueries({ queryKey: ["admin-service-bookings"] });
             handleClose();
         },
         onError: (error: any) => {
-            toast.error("Không thể thêm dịch vụ", {
-                description: error.response?.data?.message || "Có lỗi xảy ra",
+            toast.error("Failed to add service", {
+                description: error.response?.data?.message || "An error occurred",
             });
         },
     });
@@ -105,13 +102,13 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
                         <HandPlatter className="h-5 w-5 text-orange-500" />
-                        Thêm dịch vụ
+                        Add Service
                     </DialogTitle>
                     <DialogDescription>
-                        Thêm dịch vụ cho đặt phòng <strong>{booking?.bookingCode}</strong>
+                        Add service for booking <strong>{booking?.bookingCode}</strong>
                         <br />
                         <span className="text-muted-foreground">
-                            Khách: {booking?.guestName} - Phòng: {booking?.rooms?.[0]?.room?.roomNumber || "N/A"}
+                            Guest: {booking?.guestName} - Room: {booking?.rooms?.[0]?.room?.roomNumber || "N/A"}
                         </span>
                     </DialogDescription>
                 </DialogHeader>
@@ -119,16 +116,16 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
                 <div className="space-y-4 py-4">
                     {/* Service Selection */}
                     <div className="space-y-2">
-                        <Label>Chọn dịch vụ *</Label>
+                        <Label>Select Service *</Label>
                         {loadingServices ? (
                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <Loader2 className="h-4 w-4 animate-spin" />
-                                Đang tải...
+                                Loading...
                             </div>
                         ) : (
                             <Select value={selectedServiceId} onValueChange={setSelectedServiceId}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Chọn dịch vụ" />
+                                    <SelectValue placeholder="Select service" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {services.map((service) => (
@@ -148,7 +145,7 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
 
                     {/* Quantity */}
                     <div className="space-y-2">
-                        <Label>Số lượng</Label>
+                        <Label>Quantity</Label>
                         <Input
                             type="number"
                             min={1}
@@ -160,7 +157,7 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
                     {/* Scheduled Date & Time */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label>Ngày</Label>
+                            <Label>Date</Label>
                             <Input
                                 type="date"
                                 value={scheduledDate}
@@ -168,7 +165,7 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label>Giờ</Label>
+                            <Label>Time</Label>
                             <Input
                                 type="time"
                                 value={scheduledTime}
@@ -179,9 +176,9 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
 
                     {/* Special Requests */}
                     <div className="space-y-2">
-                        <Label>Ghi chú</Label>
+                        <Label>Special Requests / Notes</Label>
                         <Textarea
-                            placeholder="Yêu cầu đặc biệt (nếu có)..."
+                            placeholder="Any special requests..."
                             value={specialRequests}
                             onChange={(e) => setSpecialRequests(e.target.value)}
                         />
@@ -191,13 +188,13 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
                     {selectedService && (
                         <div className="p-4 bg-orange-50 dark:bg-orange-950/30 rounded-xl">
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-muted-foreground">Tổng tiền:</span>
+                                <span className="text-sm text-muted-foreground">Total Price:</span>
                                 <span className="text-lg font-bold text-orange-600">
                                     {formatCurrency(totalPrice)}
                                 </span>
                             </div>
                             <p className="text-xs text-muted-foreground mt-1">
-                                Sẽ được tính vào hóa đơn phòng khi checkout
+                                Will be added to room bill at checkout
                             </p>
                         </div>
                     )}
@@ -205,7 +202,7 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
 
                 <DialogFooter>
                     <Button variant="outline" onClick={handleClose}>
-                        Hủy
+                        Cancel
                     </Button>
                     <Button
                         onClick={handleSubmit}
@@ -213,7 +210,7 @@ export function AddServiceDialog({ booking, open, onClose }: AddServiceDialogPro
                         className="bg-gradient-to-r from-orange-500 to-amber-500 text-white"
                     >
                         {createMutation.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-                        Thêm dịch vụ
+                        Add Service
                     </Button>
                 </DialogFooter>
             </DialogContent>
